@@ -2,3 +2,8 @@
 type = "http"
 url = "https://mcp.context7.com/mcp"
 enabled = false
+
+[mcp_servers.agentskills]
+type = "http"
+url = "https://agentskills.io/mcp"
+enabled = true
