@@ -1,0 +1,4 @@
+interface:
+  display_name: "Agent Orchestrator"
+  short_description: "Orchestrate multi-agent work"
+  default_prompt: "Use $agent-orchestrator to coordinate a multi-agent engineering loop."
