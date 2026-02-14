@@ -29,3 +29,9 @@ npx skills add https://github.com/mrclrchtr/skills/tree/main/skills/agent-orches
 # Install from a local checkout
 npx skills add . --skill agent-orchestrator
 ```
+
+# References
+
+- [OpenAi Skill Docs](https://developers.openai.com/codex/skills.md)
+- [Vercel Labs Skills CLI](https://skills.sh/docs)
+- [Agentskills Specification](https://agentskills.io/specification.md)
