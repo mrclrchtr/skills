@@ -23,7 +23,7 @@ Core pattern: dispatch a fresh implementer per cluster, then run two-stage revie
    - Identify any authoritative sources (docs/specs) and record what claims must be backed by evidence.
 
 3. Create a phase plan and keep it current
-   - Use `update_plan` to track phases and prevent drifting.
+   - Use your environment’s planning mechanism (e.g., `update_plan` if available) to track phases and prevent drifting.
    - Prefer 4–7 steps; keep exactly one step `in_progress`.
 
 4. Decompose into subsystems
@@ -31,7 +31,7 @@ Core pattern: dispatch a fresh implementer per cluster, then run two-stage revie
    - For each subsystem, define 2–5 invariants (what must always be true).
 
 5. Run dual independent audits per subsystem
-   - Spawn two auditors per subsystem (auditA and auditB) and instruct them to work independently first.
+   - Spawn two independent audits per subsystem (auditA and auditB) and keep them independent until reconciliation.
    - Require evidence for every issue (repo location, deterministic repro, expected vs actual, severity).
 
 6. Reconcile audits into a single confirmed issue list
