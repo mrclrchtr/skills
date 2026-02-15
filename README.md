@@ -16,6 +16,14 @@ npx skills add mrclrchtr/skills --skill agent-orchestrator
 npx skills add mrclrchtr/skills --skill git-commit
 ```
 
+Use `-g, --global` to install to your user directory instead of the current project:
+
+```bash
+# Install globally (available across projects; not meant to be committed)
+npx skills add mrclrchtr/skills --skill agent-orchestrator -g
+npx skills add mrclrchtr/skills --skill git-commit -g
+```
+
 Tip: install only what you need. Loading everything can dilute context and reduce quality.
 
 ## Use
