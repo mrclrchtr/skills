@@ -1,21 +1,29 @@
 # Agent Skills
 
-Reusable agent skills for the open agent skills ecosystem.
-This repo currently contains one skill (`agent-orchestrator`), and more may be added over time.
+Reusable skills for agent workflows (Codex / agent-skill loaders).
 
-## Quick start
+This repo currently contains:
+- `agent-orchestrator`: Coordinate complex work using a phase-gated, multi-agent engineering loop (audit → design → implement → review → validate → deliver).
+- `git-commit`: Create safe, repo-convention commits by inspecting diffs, staging intentionally, and writing high-quality commit messages (prefer Conventional Commits when the repo uses them).
 
-Install the skill via the `skills` CLI from `vercel-labs/skills`:
+## Install
+
+Install one skill at a time via the `skills` CLI from `vercel-labs/skills`:
 
 ```bash
+# Install from this repo (recommended)
 npx skills add mrclrchtr/skills --skill agent-orchestrator
+npx skills add mrclrchtr/skills --skill git-commit
 ```
 
-> Note: Use skills selectively. Installing/loading everything tends to dilute context and reduce quality.
+Tip: install only what you need. Loading everything can dilute context and reduce quality.
 
-## Skill catalog
+## Use
 
-- `agent-orchestrator`: Coordinate complex work using a phase-gated, multi-agent engineering loop (audit → design → implement → review → validate → deliver).
+Once installed, invoke skills by name in your prompt:
+
+- `$agent-orchestrator` — “$agent-orchestrator implement milestone 1”
+- `$git-commit` — Simply “$git-commit”
 
 ## More install options
 
@@ -23,15 +31,17 @@ npx skills add mrclrchtr/skills --skill agent-orchestrator
 # List skills available in this repo (no install)
 npx skills add mrclrchtr/skills --list
 
-# Install directly from the skill directory path
+# Install directly from a skill directory path
 npx skills add https://github.com/mrclrchtr/skills/tree/main/skills/agent-orchestrator
+npx skills add https://github.com/mrclrchtr/skills/tree/main/skills/git-commit
 
 # Install from a local checkout
 npx skills add . --skill agent-orchestrator
+npx skills add . --skill git-commit
 ```
 
-# References
+## References
 
-- [OpenAi Skill Docs](https://developers.openai.com/codex/skills.md)
+- [OpenAI Skill Docs](https://developers.openai.com/codex/skills.md)
 - [Vercel Labs Skills CLI](https://skills.sh/docs)
 - [Agentskills Specification](https://agentskills.io/specification.md)
