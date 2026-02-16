@@ -48,6 +48,33 @@ npx skills add . --skill agent-orchestrator
 npx skills add . --skill git-commit
 ```
 
+## Validation
+
+This repo validates skill metadata with [`skills-ref`](https://github.com/agentskills/agentskills/tree/main/skills-ref), pinned to:
+
+- `b7442eb9acf4c05545ea9c26b139acbda15eb718`
+
+Run validation directly:
+
+```bash
+bash scripts/validate-skills.sh
+```
+
+Set up local git hooks with `hk` + `mise`:
+
+```bash
+mise install
+hk install
+```
+
+Run hooks manually:
+
+```bash
+hk run pre-commit
+```
+
+Note: `hk install` manages `.git/hooks/pre-commit` for this clone and replaces previously generated hook scripts.
+
 ## References
 
 - [OpenAI Skill Docs](https://developers.openai.com/codex/skills.md)

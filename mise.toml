@@ -1,0 +1,12 @@
+[tools]
+hk = "1.27.0"
+pkl = "latest"
+uv = "0.10.2"
+
+[tasks.validate-skills]
+description = "Validate all skills with pinned skills-ref"
+run = "bash scripts/validate-skills.sh"
+
+[tasks.pre-commit]
+description = "Run pre-commit checks via hk"
+run = "hk run pre-commit"

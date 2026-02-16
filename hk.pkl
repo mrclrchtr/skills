@@ -1,0 +1,14 @@
+amends "package://github.com/jdx/hk/releases/download/v1.27.0/hk@1.27.0#/Config.pkl"
+
+hooks {
+    ["pre-commit"] {
+        fix = false
+        steps {
+            ["validate-skills"] {
+                // Keep local hook behavior identical to CI.
+                check = "bash scripts/validate-skills.sh"
+                exclusive = true
+            }
+        }
+    }
+}
