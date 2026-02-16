@@ -1,25 +1,17 @@
 ---
 name: git-commit
-description: "Create safe, repo-convention git commits by inspecting `git status` and diffs, staging logical changes, and generating high-quality Conventional Commit messages. Use when the user asks to commit changes, stage and commit, write/improve a commit message, create a Conventional Commit (`type(scope): summary`), or mentions `/commit`."
+description: "Create safe, repo-convention commits: inspect and stage changes, write a clear subject, add a body when useful, and commit."
 ---
 
 # Git Commit
 
-## Overview
+## Goal
 
-Commit changes safely and consistently: check what changed, stage the right files, craft a Conventional Commit message that explains the user-facing why, and run the repo’s normal checks/hooks.
+Make one logical, reviewable commit using the repo's existing message style.
 
-## When to Commit
+## Quick Workflow
 
-- Commit after completing one logical, reviewable change (avoid mixing unrelated refactors, formatting, and behavior changes).
-- Commit once the repo’s normal checks/hooks pass (or after you’ve fixed failures).
-- Avoid “WIP” commits unless the user explicitly wants a checkpoint commit (and label it clearly).
-
-## Workflow
-
-### 1) Inspect repo state
-
-Run these first (do not assume anything is staged):
+1) Inspect repo state:
 
 ```bash
 git branch --show-current
@@ -29,69 +21,49 @@ git --no-pager diff --staged
 git --no-pager log --oneline -20 --graph
 ```
 
-### 2) Do quick safety checks
-
-Before committing, scan for obvious problems:
+2) Do a quick safety scan:
 
 ```bash
-# Obvious credential/private key patterns (best-effort; hooks/scanners still apply)
 rg -n "(AKIA[0-9A-Z]{16}|BEGIN (RSA|OPENSSH|EC) PRIVATE KEY|api[_-]?key\\s*=|secret\\s*=|password\\s*=)" -S .
 ```
 
-If anything looks like a secret, stop and ask the user what to do (usually: remove from git history + rotate).
+If anything looks sensitive, stop and ask the user what to do.
 
-### 3) Stage changes intentionally
-
-Goal: one logical change per commit.
-
-Prefer:
+3) Stage changes intentionally (one logical change per commit):
 
 ```bash
-# Stage specific paths (safe default)
 git add path/to/file1 path/to/file2
 
-# Interactive staging when changes are mixed
 git add -p
 ```
 
-Avoid `git add -A` unless you’ve confirmed everything in the working tree belongs in the commit.
+Use `git add -A` only when everything belongs in this commit.
 
-### 4) Choose the commit message format
-
-Default to Conventional Commits if the repo already uses them (check `git log --oneline`).
-If the repo instead uses a simple `prefix: summary` convention (for example `tui: ...`, `core: ...`, `wip: ...`), match the repo’s existing style rather than forcing Conventional Commits.
-
-Format:
+4) Write the commit message:
+- If the repo uses Conventional Commits, use `<type>(<scope>): <summary>`.
+- Otherwise match the repo's existing format.
+- Add a body when the diff is large or reviewer context matters.
 
 ```text
-<type>(<scope>): <summary>
+type(scope): summary
+
+Why this change was needed.
+Key tradeoffs or constraints.
+Notable side effects or follow-ups.
 ```
 
-Types (common): `feat`, `fix`, `docs`, `refactor`, `test`, `perf`, `build`, `ci`, `chore`, `style`, `revert`.
-
-Pick a `scope` that matches the main area changed (package/module/directory). Omit scope if it would be guessy.
-
-Summary rules:
-- Imperative, present tense (“add”, “fix”, “remove”)
-- Describe user impact and intent (the “why”), not vague internalities
-- Keep it short (aim <72 chars)
-
-### 5) Commit (and report what happened)
-
-Commit staged changes:
+5) Commit and verify:
 
 ```bash
 git commit -m "type(scope): summary"
-```
-
-After committing:
-
-```bash
+git commit \
+  -m "type(scope): summary" \
+  -m "Why this change was needed and what constraints shaped it."
 git --no-pager show --stat
 ```
 
 ## Guardrails
 
-- Never bypass hooks with `--no-verify` unless the user explicitly asks.
-- Never run destructive history edits (`--amend`, interactive rebase, force push) unless explicitly requested.
-- If checks fail, fix the issue and re-run the normal workflow; ask if you’re unsure whether to amend vs make a follow-up commit.
+- Do not bypass hooks with `--no-verify` unless the user asks.
+- Do not use history rewrite (`--amend`, rebase, force push) unless requested.
+- If checks fail, fix and re-run the normal flow.
