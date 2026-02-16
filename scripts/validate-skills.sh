@@ -11,15 +11,16 @@ if ! command -v uvx >/dev/null 2>&1; then
   exit 2
 fi
 
-if ! command -v fd >/dev/null 2>&1; then
-  echo "Error: fd is required but was not found on PATH." >&2
-  exit 2
-fi
-
 skill_manifests=()
-while IFS= read -r manifest; do
-  skill_manifests+=("${manifest}")
-done < <(fd --type file --glob "SKILL.md" skills | sort)
+if command -v fd >/dev/null 2>&1; then
+  while IFS= read -r manifest; do
+    skill_manifests+=("${manifest}")
+  done < <(fd --type file --glob "SKILL.md" skills | sort)
+else
+  while IFS= read -r manifest; do
+    skill_manifests+=("${manifest}")
+  done < <(find skills -type f -name "SKILL.md" | sort)
+fi
 
 if [ "${#skill_manifests[@]}" -eq 0 ]; then
   echo "No SKILL.md files found under skills/."
