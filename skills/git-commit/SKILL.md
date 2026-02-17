@@ -43,6 +43,7 @@ Use `git add -A` only when everything belongs in this commit.
 - If the repo uses Conventional Commits, use `<type>(<scope>): <summary>`.
 - Otherwise match the repo's existing format.
 - Add a body when the diff is large or reviewer context matters.
+- If you include literal backticks in a `git commit -m "..."` message, escape them as `\`` (otherwise zsh/bash will treat them as command substitution).
 
 ```text
 type(scope): summary
