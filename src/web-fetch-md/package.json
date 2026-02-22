@@ -1,0 +1,30 @@
+{
+  "name": "web-fetch-md",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "fetchmd": "./dist/fetchmd.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "dev": "tsx ./src/fetchmd.ts",
+    "start": "node ./dist/fetchmd.js",
+    "build": "tsc -p tsconfig.build.json",
+    "postbuild": "esbuild ./src/fetchmd.ts --bundle --platform=node --format=cjs --target=node18 --log-level=warning --outfile=../../skills/web-fetch-md/scripts/fetchmd.js && node -e \"const fs=require('fs'); try{fs.chmodSync('../../skills/web-fetch-md/scripts/fetchmd.js',0o755);}catch{}\"",
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@mozilla/readability": "^0.6.0",
+    "linkedom": "^0.18.12",
+    "turndown": "^7.2.0",
+    "turndown-plugin-gfm": "^1.0.2"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "esbuild": "^0.25.0",
+    "tsx": "^4.20.0",
+    "typescript": "^5.8.0"
+  }
+}

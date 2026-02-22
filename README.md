@@ -6,6 +6,7 @@ This repo currently contains:
 - `agent-orchestrator`: Coordinate complex work using a phase-gated, multi-agent engineering loop (audit → design → implement → review → validate → deliver).
 - `git-commit`: Create safe, repo-convention commits by inspecting diffs, staging intentionally, and writing high-quality commit messages (prefer Conventional Commits when the repo uses them).
 - `skill-creator`: Create a new skill or update an existing skill (created by https://github.com/openai/skills/tree/main/skills/.system/skill-creator)
+- `web-fetch-md`: Fetch http/https pages as clean Markdown by preferring content negotiation, then trying sibling `*.md` endpoints, then extracting HTML via Readability and converting to Markdown.
 
 ## Install
 
@@ -16,6 +17,7 @@ Install one skill at a time via the `skills` CLI from `vercel-labs/skills`:
 npx skills add mrclrchtr/skills --skill agent-orchestrator
 npx skills add mrclrchtr/skills --skill git-commit
 npx skills add mrclrchtr/skills --skill skill-creator
+npx skills add mrclrchtr/skills --skill web-fetch-md
 ```
 
 Use `-g, --global` to install to your user directory instead of the current project:
@@ -25,6 +27,7 @@ Use `-g, --global` to install to your user directory instead of the current proj
 npx skills add mrclrchtr/skills --skill agent-orchestrator -g
 npx skills add mrclrchtr/skills --skill git-commit -g
 npx skills add mrclrchtr/skills --skill skill-creator -g
+npx skills add mrclrchtr/skills --skill web-fetch-md -g
 ```
 
 Tip: install only what you need. Loading everything can dilute context and reduce quality.
@@ -36,6 +39,7 @@ Once installed, invoke skills by name in your prompt:
 - `$agent-orchestrator` — “$agent-orchestrator implement milestone 1”
 - `$git-commit` — Simply “$git-commit”
 - `$skill-creator` — “$skill-creator”
+- `$web-fetch-md` — “$web-fetch-md https://example.com/docs/page”
 
 ## More install options
 
