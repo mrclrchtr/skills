@@ -7,11 +7,16 @@ description: Coordinate complex work using a phase-gated, multi-agent engineerin
 
 ## Overview
 
-Run a disciplined multi-agent workflow where this instance acts as the coordinator: it delegates audits and fixes to other agents, reconciles results, enforces quality gates, and drives the work to a usable, validated end state.
+Run a disciplined multi-agent workflow where this instance acts as the orchestrator: it delegates audits and fixes to other agents, reconciles results, enforces quality gates, and drives the work to a usable, validated end state.
 
-Core pattern: dispatch a fresh implementer per cluster, then run two-stage review (spec compliance first, then code quality).
+Core pattern: dispatch a fresh implementer per cluster, then run a two-stage review (spec compliance first, then code quality).
 
-## Workflow (Coordinator)
+Non-negotiable rule: the orchestrator **never** implements changes directly (no coding, no file edits).
+All implementation work must be done by spawned sub-agents.
+
+Prefer predefined available Agents over generic ones.
+
+## Workflow (Orchestrator)
 
 1. Discover and use other skills (when helpful)
    - Check the harness-provided skill list (typically present in system context). If a relevant specialized skill exists, explicitly invoke it (e.g., `$some-skill`) and follow its workflow instead of reinventing it.
@@ -31,17 +36,22 @@ Core pattern: dispatch a fresh implementer per cluster, then run two-stage revie
    - For each subsystem, define 2–5 invariants (what must always be true).
 
 5. Run dual independent audits per subsystem
-   - Spawn two independent audits per subsystem (auditA and auditB) and keep them independent until reconciliation.
+   - Spawn two independent auditors per subsystem (auditA and auditB) and instruct them to work independently until reconciliation.
    - Require evidence for every issue (repo location, deterministic repro, expected vs actual, severity).
 
 6. Reconcile audits into a single confirmed issue list
    - Compare auditA vs auditB outputs and keep only mutually confirmed issues.
    - Track rejected candidates with a brief reason (weak evidence, out of scope, non-deterministic).
    - Use this reconciled list as the only input to implementation.
+   - Reconciliation output:
+     - Confirmed issues (only mutual)
+     - Rejected candidates (reason)
+     - Consensus achieved: YES/NO
 
 7. Implement in clusters with clear ownership
    - Group confirmed issues into clusters that can be fixed with minimal coupling.
    - Spawn exactly one fixer per cluster; fixers should “own” a file set and avoid broad refactors.
+   - The orchestrator must not implement any cluster work directly; always delegate to the fixer sub-agent (even for “quick” changes).
    - Every fix must come with a regression test (unit/integration/e2e as appropriate).
    - For each cluster, run a two-stage review loop:
      - Implementer completes the cluster (tests, self-review, commit) and reports what changed.
@@ -64,6 +74,7 @@ Core pattern: dispatch a fresh implementer per cluster, then run two-stage revie
 ## Agent Prompt Templates
 
 Use these as starting points; keep subsystem- and repo-specific details in the message you send.
+Add matching skills, if available.
 
 ### Auditor (per subsystem)
 
@@ -80,23 +91,12 @@ Output (bullet list):
 - expected vs actual
 - violated invariant (if known) or propose a new invariant
 
-### Reconciler (coordinator task)
-
-Task:
-- Compare auditA vs auditB for `<SUBSYSTEM>`.
-- Produce a single decision set: confirmed issues (mutual) + rejected candidates (with reason).
-
-Output:
-- Confirmed issues (only mutual)
-- Rejected candidates (reason)
-- Consensus achieved: YES/NO
-
 ### Implementer (per cluster)
 
 Task:
 - Implement cluster `<CLUSTER_ID>` derived from confirmed issues.
 - Work from a fresh context: do not assume prior clusters’ details unless provided.
-- Do not open plan files unless explicitly instructed; the coordinator should paste the full cluster/task text and context here.
+- Do not open plan files unless explicitly instructed; the orchestrator should paste the full cluster/task text and context here.
 - Ask questions before you start if anything is unclear.
 - Stay within agreed owned files; avoid opportunistic refactors.
 - Add/adjust regression tests for every change.
