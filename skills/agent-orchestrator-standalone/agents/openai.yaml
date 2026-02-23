@@ -1,0 +1,4 @@
+interface:
+  display_name: "Agent Orchestrator (Standalone)"
+  short_description: "Orchestrate multi-agent work"
+  default_prompt: "Use $agent-orchestrator-standalone to run a phase-gated multi-agent workflow."

@@ -1,0 +1,56 @@
+# Agent role registry for this repo.
+#
+# This file is primarily documentation + a convenient registry for operators.
+# It is expected that your Codex/CLI setup already makes these roles available.
+
+[agents]
+max_threads = 12
+max_depth = 4
+
+[agents.architect]
+config_file = "agents/architect.toml"
+description = "Use for high-level system design and architecture decisions."
+
+[agents.scout]
+config_file = "agents/scout.toml"
+description = "Use for ultra-fast, read-only codebase exploration and information retrieval. It's not smart!"
+
+[agents.explorer]
+config_file = "agents/explorer.toml"
+description = "Use this agent for deeper codebase exploration tasks that require reading multiple files and synthesizing information."
+
+[agents.worker]
+config_file = "agents/worker.toml"
+description = "Generic normal (medium) worker agent, that can be used for any purpose."
+
+[agents.worker_high]
+config_file = "agents/worker_high.toml"
+description = "Generic smart (high) worker agent, that can be used for any purpose."
+
+[agents.implementer]
+config_file = "agents/implementer.toml"
+description = "Default implementer (recommended for most code changes)."
+
+[agents.implementer_medium]
+config_file = "agents/implementer_medium.toml"
+description = "Fast/cheap implementer for small, low-risk changes."
+
+[agents.implementer_xhigh]
+config_file = "agents/implementer_xhigh.toml"
+description = "Deep implementer for risky refactors, tricky bugs, or high-stakes changes."
+
+[agents.auditor]
+config_file = "agents/auditor.toml"
+description = "Fast/cheap read-only, evidence-based issue-finding audits (no fixes)."
+
+[agents.auditor_high]
+config_file = "agents/auditor_high.toml"
+description = "Deeper read-only audits when issues are subtle or cross-cutting."
+
+[agents.spec_reviewer]
+config_file = "agents/spec_reviewer.toml"
+description = "Use for read-only spec compliance reviews (PASS/FAIL: nothing missing, nothing extra)."
+
+[agents.quality_reviewer]
+config_file = "agents/quality_reviewer.toml"
+description = "Use for read-only code quality reviews after spec PASS (maintainability + test quality)."
