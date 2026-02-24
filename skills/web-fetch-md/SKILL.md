@@ -10,10 +10,10 @@ description: Fetch http/https pages as clean Markdown suitable for LLM ingestion
 Fetch a URL and print Markdown to stdout:
 
 ```bash
-bash skills/web-fetch-md/scripts/fetchmd "<url>" > page.md
+bash skills/web-fetch-md/scripts/fetchmd "<url>"
 ```
 
-Write directly to a file:
+Write directly to a file (no stdout):
 
 ```bash
 bash skills/web-fetch-md/scripts/fetchmd "<url>" page.md
