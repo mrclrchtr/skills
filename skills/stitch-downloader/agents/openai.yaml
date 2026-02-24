@@ -1,0 +1,4 @@
+interface:
+  display_name: "Stitch Downloader"
+  short_description: "Download Stitch screenshots at full resolution"
+  default_prompt: "Use $stitch-downloader to download a Stitch screenshot (screenshot.downloadUrl / lh3.googleusercontent.com) at best quality by normalizing googleusercontent size params from the canvas width/height, downloading with curl, optionally verifying pixel dimensions, and printing SHA256 fingerprints without committing signed URLs."

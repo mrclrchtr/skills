@@ -7,6 +7,7 @@ This repo currently contains:
 - `agent-orchestrator-standalone`: Run the same phase-gated workflow without relying on preconfigured agent roles (embeds role cards in the skill).
 - `git-commit`: Create safe, repo-convention commits by inspecting diffs, staging intentionally, and writing high-quality commit messages (prefer Conventional Commits when the repo uses them).
 - `skill-creator`: Create a new skill or update an existing skill (created by https://github.com/openai/skills/tree/main/skills/.system/skill-creator)
+- `stitch-downloader`: Download Stitch (stitch.withgoogle.com) screenshots at full resolution (normalize `lh3.googleusercontent.com` size params; avoid committing signed URLs).
 - `web-fetch-to-markdown`: Fetch http/https pages as clean Markdown by preferring content negotiation, then trying sibling `*.md` endpoints, then extracting HTML via Readability and converting to Markdown.
 
 ## How `agent-orchestrator` differs from `agent-orchestrator-standalone`
@@ -24,6 +25,7 @@ npx skills add mrclrchtr/skills --skill agent-orchestrator
 npx skills add mrclrchtr/skills --skill agent-orchestrator-standalone
 npx skills add mrclrchtr/skills --skill git-commit
 npx skills add mrclrchtr/skills --skill skill-creator
+npx skills add mrclrchtr/skills --skill stitch-downloader
 npx skills add mrclrchtr/skills --skill web-fetch-to-markdown
 ```
 
@@ -35,6 +37,7 @@ npx skills add mrclrchtr/skills --skill agent-orchestrator -g
 npx skills add mrclrchtr/skills --skill agent-orchestrator-standalone -g
 npx skills add mrclrchtr/skills --skill git-commit -g
 npx skills add mrclrchtr/skills --skill skill-creator -g
+npx skills add mrclrchtr/skills --skill stitch-downloader -g
 npx skills add mrclrchtr/skills --skill web-fetch-to-markdown -g
 ```
 
@@ -48,6 +51,7 @@ Once installed, invoke skills by name in your prompt:
 - `$agent-orchestrator-standalone` — “$agent-orchestrator-standalone implement milestone 1”
 - `$git-commit` — Simply “$git-commit”
 - `$skill-creator` — “$skill-creator”
+- `$stitch-downloader` — “$stitch-downloader download this Stitch screenshot at 2560x2048”
 - `$web-fetch-to-markdown` — “$web-fetch-to-markdown https://example.com/docs/page”
 
 ## More install options
