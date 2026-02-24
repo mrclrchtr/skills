@@ -7,7 +7,7 @@ import TurndownService from "turndown";
 
 const DEFAULT_ACCEPT =
   "text/markdown, text/x-markdown;q=0.99, text/plain;q=0.9, text/html;q=0.8, */*;q=0.1";
-const DEFAULT_UA = "web-fetch-md/1.0";
+const DEFAULT_UA = "web-fetch-to-markdown/1.0";
 const DEFAULT_TIMEOUT_MS = 30_000;
 
 const HELP_TEXT = [

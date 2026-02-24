@@ -30917,7 +30917,7 @@ setPrototypeOf(Document4, Document2).prototype = Document2.prototype;
 var import_readability = __toESM(require_readability(), 1);
 var import_turndown = __toESM(require_turndown_cjs(), 1);
 var DEFAULT_ACCEPT = "text/markdown, text/x-markdown;q=0.99, text/plain;q=0.9, text/html;q=0.8, */*;q=0.1";
-var DEFAULT_UA = "web-fetch-md/1.0";
+var DEFAULT_UA = "web-fetch-to-markdown/1.0";
 var DEFAULT_TIMEOUT_MS = 3e4;
 var HELP_TEXT = [
   "Usage:",

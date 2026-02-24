@@ -100,7 +100,7 @@ Output:
 ## Workflow
 
 1. Use skills when they directly match a subtask
-   - If a skill matches the task, invoke it explicitly and follow it (e.g., `$web-fetch-md <url>`).
+   - If a skill matches the task, invoke it explicitly and follow it (e.g., `$web-fetch-to-markdown <url>`).
    - When delegating, tell sub-agents which skill to use in their prompt (e.g., “Use `$git-commit` for the commit step.”).
 
 2. Freeze scope + success criteria

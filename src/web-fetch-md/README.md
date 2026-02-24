@@ -35,7 +35,7 @@ npm run -s build
 node ./dist/fetchmd.js --help
 ```
 
-`npm run build` also updates the skill entrypoint at `skills/web-fetch-md/scripts/fetchmd.js`.
+`npm run build` also updates the skill entrypoint at `skills/web-fetch-to-markdown/scripts/fetchmd.js`.
 
 ## Typecheck
 

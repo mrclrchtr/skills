@@ -7,7 +7,7 @@ This repo currently contains:
 - `agent-orchestrator-standalone`: Run the same phase-gated workflow without relying on preconfigured agent roles (embeds role cards in the skill).
 - `git-commit`: Create safe, repo-convention commits by inspecting diffs, staging intentionally, and writing high-quality commit messages (prefer Conventional Commits when the repo uses them).
 - `skill-creator`: Create a new skill or update an existing skill (created by https://github.com/openai/skills/tree/main/skills/.system/skill-creator)
-- `web-fetch-md`: Fetch http/https pages as clean Markdown by preferring content negotiation, then trying sibling `*.md` endpoints, then extracting HTML via Readability and converting to Markdown.
+- `web-fetch-to-markdown`: Fetch http/https pages as clean Markdown by preferring content negotiation, then trying sibling `*.md` endpoints, then extracting HTML via Readability and converting to Markdown.
 
 ## How `agent-orchestrator` differs from `agent-orchestrator-standalone`
 
@@ -24,7 +24,7 @@ npx skills add mrclrchtr/skills --skill agent-orchestrator
 npx skills add mrclrchtr/skills --skill agent-orchestrator-standalone
 npx skills add mrclrchtr/skills --skill git-commit
 npx skills add mrclrchtr/skills --skill skill-creator
-npx skills add mrclrchtr/skills --skill web-fetch-md
+npx skills add mrclrchtr/skills --skill web-fetch-to-markdown
 ```
 
 Use `-g, --global` to install to your user directory instead of the current project:
@@ -35,7 +35,7 @@ npx skills add mrclrchtr/skills --skill agent-orchestrator -g
 npx skills add mrclrchtr/skills --skill agent-orchestrator-standalone -g
 npx skills add mrclrchtr/skills --skill git-commit -g
 npx skills add mrclrchtr/skills --skill skill-creator -g
-npx skills add mrclrchtr/skills --skill web-fetch-md -g
+npx skills add mrclrchtr/skills --skill web-fetch-to-markdown -g
 ```
 
 Tip: install only what you need. Loading everything can dilute context and reduce quality.
@@ -48,7 +48,7 @@ Once installed, invoke skills by name in your prompt:
 - `$agent-orchestrator-standalone` — “$agent-orchestrator-standalone implement milestone 1”
 - `$git-commit` — Simply “$git-commit”
 - `$skill-creator` — “$skill-creator”
-- `$web-fetch-md` — “$web-fetch-md https://example.com/docs/page”
+- `$web-fetch-to-markdown` — “$web-fetch-to-markdown https://example.com/docs/page”
 
 ## More install options
 
