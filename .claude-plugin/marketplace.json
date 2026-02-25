@@ -1,0 +1,54 @@
+{
+  "name": "mrclrchtr-skills",
+  "owner": {
+    "name": "mrclrchtr"
+  },
+  "metadata": {
+    "description": "A collection of Claude Code skills for Git workflows, agent orchestration, skill creation, web fetching, and more.",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "agent-orchestrator",
+      "source": "./skills/agent-orchestrator",
+      "description": "Orchestrate complex work via a phase-gated multi-agent loop (audit → design → implement → review → validate → deliver). Use when you need to split work into subsystems, run independent audits, reconcile findings into a confirmed issue list, delegate fixes in clusters, enforce PASS/FAIL review gates, and drive an end-to-end validated delivery.",
+      "keywords": ["orchestration", "multi-agent", "audit", "review"]
+    },
+    {
+      "name": "agent-orchestrator-standalone",
+      "source": "./skills/agent-orchestrator-standalone",
+      "description": "Standalone version of the agent orchestrator. Orchestrate complex work via a phase-gated multi-agent loop (audit → design → implement → review → validate → deliver). Use when you need to split work into subsystems, run independent audits, reconcile findings into a confirmed issue list, delegate fixes in clusters, enforce PASS/FAIL review gates, and drive an end-to-end validated delivery.",
+      "keywords": ["orchestration", "multi-agent", "audit", "review", "standalone"]
+    },
+    {
+      "name": "git-commit",
+      "source": "./skills/git-commit",
+      "description": "Create safe, repo-convention commits: inspect and stage changes, write a clear subject, add a body when useful, and commit.",
+      "keywords": ["git", "commit", "workflow"]
+    },
+    {
+      "name": "skill-creator",
+      "source": "./skills/skill-creator",
+      "description": "Guide for creating effective skills. This skill should be used when users want to create a new skill (or update an existing skill) that extends Codex's capabilities with specialized knowledge, workflows, or tool integrations.",
+      "keywords": ["skills", "authoring", "development"]
+    },
+    {
+      "name": "stitch-downloader",
+      "source": "./skills/stitch-downloader",
+      "description": "Download Stitch (stitch.withgoogle.com) screenshots at best quality from screenshot.downloadUrl. Use to normalize googleusercontent size parameters from canvas dimensions, download with curl, optionally verify pixel dimensions, and avoid committing signed URLs.",
+      "keywords": ["stitch", "screenshot", "download", "google"]
+    },
+    {
+      "name": "web-fetch-to-markdown",
+      "source": "./skills/web-fetch-to-markdown",
+      "description": "Fetches and normalizes http(s) web pages into clean Markdown for LLM ingestion. Use when a task includes a URL, needs to fetch docs or asks to convert web docs/articles/pages into Markdown for summarizing, quoting, diffing, or saving.",
+      "keywords": ["web", "fetch", "markdown", "scraping"]
+    },
+    {
+      "name": "agent-roles",
+      "source": "./agents",
+      "description": "A collection of agent role configurations for multi-agent workflows. Includes architect, auditor, implementer, reviewer, explorer, and worker roles with tiered variants (medium, high, xhigh) for different task complexity levels.",
+      "keywords": ["agents", "roles", "multi-agent", "orchestration"]
+    }
+  ]
+}

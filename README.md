@@ -17,6 +17,25 @@ This repo currently contains:
 
 ## Install
 
+### Claude Code Plugin Marketplace
+
+This repository is a [Claude Code plugin marketplace](https://code.claude.com/docs/en/plugin-marketplaces). Install the marketplace and individual plugins:
+
+```bash
+# Add the marketplace
+/plugin marketplace add mrclrchtr/skills
+
+# Install individual plugins
+/plugin install agent-orchestrator@mrclrchtr-skills
+/plugin install git-commit@mrclrchtr-skills
+/plugin install skill-creator@mrclrchtr-skills
+/plugin install web-fetch-to-markdown@mrclrchtr-skills
+```
+
+But be cautious: All content in this repo is optimized for OpenAI Codex.
+
+### Vercel Skills CLI
+
 Install one skill at a time via the `skills` CLI from `vercel-labs/skills`:
 
 ```bash
