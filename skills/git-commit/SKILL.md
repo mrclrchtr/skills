@@ -1,70 +1,74 @@
 ---
 name: git-commit
-description: "Create safe, repo-convention commits: inspect and stage changes, write a clear subject, add a body when useful, and commit."
+description: "Creates a commit: detects conventions, stages intentionally, writes a clear subject, add a concise body when useful, and commits."
 ---
 
 # Git Commit
 
 ## Goal
 
-Make one logical, reviewable commit using the repo's existing message style.
-
-## Quick Workflow
-
-1) Inspect repo state:
-
-```bash
-git branch --show-current
-git status --porcelain=v1
-git --no-pager diff
-git --no-pager diff --staged
-git --no-pager log --oneline -20 --graph
-```
-
-2) Do a quick safety scan:
-
-```bash
-rg -n "(AKIA[0-9A-Z]{16}|BEGIN (RSA|OPENSSH|EC) PRIVATE KEY|api[_-]?key\\s*=|secret\\s*=|password\\s*=)" -S .
-```
-
-If anything looks sensitive, stop and ask the user what to do.
-
-3) Stage changes intentionally (one logical change per commit):
-
-```bash
-git add path/to/file1 path/to/file2
-
-git add -p
-```
-
-Use `git add -A` only when everything belongs in this commit.
-
-4) Write the commit message:
-- If the repo uses Conventional Commits, use `<type>(<scope>): <summary>`.
-- Otherwise match the repo's existing format.
-- Add a body when the diff is large or reviewer context matters.
-- If you include literal backticks in a `git commit -m "..."` message, escape them as `\`` (otherwise zsh/bash will treat them as command substitution).
-
-```text
-type(scope): summary
-
-Why this change was needed.
-Key tradeoffs or constraints.
-Notable side effects or follow-ups.
-```
-
-5) Commit and verify:
-
-```bash
-git commit -m "type(scope): summary"
-git commit \
-  -m "type(scope): summary" \
-  -m "Why this change was needed and what constraints shaped it."
-git --no-pager show --stat
-```
+Make a logical, reviewable concise commit using the commit style of the repository.
 
 ## Guardrails
 
-- Do not bypass hooks with `--no-verify` unless the user asks.
-- Do not use history rewrite (`--amend`, rebase, force push) unless requested.
-- If checks fail, fix and re-run the normal flow.
+- If potential secrets are found: **STOP and ask** what to do.
+- No `--no-verify`, no `--amend`/rebase/force-push, no pushing unless asked.
+- If changes look like multiple commits: **STOP and propose a split plan** (don’t commit yet).
+
+## Fast workflow
+
+1) Gather information
+
+    ```bash
+    echo "## DATE" \
+    && date \
+    && echo "## BRANCH" \
+    && git branch --show-current \
+    && echo "## STATUS" \
+    && git status --porcelain=v1 \
+    && echo "## DIFF (unstaged)" \
+    && git --no-pager diff \
+    && echo "## DIFF (staged)" \
+    && git --no-pager diff --staged \
+    && echo "## LOG (last 20)" \
+    && git --no-pager log --oneline -20 --graph
+    ```
+
+   > **NOTE**:
+   > Run as one command.
+
+2) Stage changes intentionally
+
+   ```bash
+   git add path/to/file1 path/to/file2
+   # or:
+   git add -A # when all changes belong to the commit to create
+   ```
+
+   If the staged diff contains unrelated changes, **STOP and ask** what to do.
+
+3) Write a concise commit message
+
+   Infer commit style from recent subjects:
+    - If they look like `type(scope): msg` → use Conventional Commits.
+    - Otherwise, match the common pattern (caps, prefixes, ticket IDs, etc.).
+
+   Subject rules:
+    - Imperative mood, no trailing period
+    - Prefer ≤ 72 chars (or match repo norm)
+    - Include scope only if the repo typically does
+
+   Body rules:
+    - Add a body **only** if it answers “why” or prevents confusion:
+        - Why this change is needed
+        - Key tradeoffs or constraints
+        - Notable side effects/follow-ups
+
+4) Commit and verify
+   Use multiple `-m` flags for multi-line messages (no \n).
+
+   ```bash
+   git commit -m "type(scope): concise summary"
+   # or with body:
+   git commit -m "type(scope): concise summary" -m "Why this change was needed (brief)."
+   ```
