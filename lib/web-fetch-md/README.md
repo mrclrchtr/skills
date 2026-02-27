@@ -11,9 +11,9 @@ Fetch a `http(s)` URL and output clean Markdown, preferring:
 From this directory:
 
 ```bash
-npm install
-npm run -s dev -- --help
-npm run -s dev -- https://example.com > page.md
+pnpm install
+pnpm dev -- --help
+pnpm dev -- https://example.com > page.md
 ```
 
 Flags are documented in `--help` (also accepts `-h`). Common ones:
@@ -22,23 +22,24 @@ Flags are documented in `--help` (also accepts `-h`). Common ones:
 - `--no-abs-links`
 - `--debug`
 
-If `npm install` fails due to a broken global npm cache, run it with an isolated cache:
+If you don't have `pnpm` installed yet, enable it via Corepack:
 
 ```bash
-npm_config_cache="${TMPDIR:-/tmp}/npm-cache" npm install
+corepack enable
+corepack prepare pnpm@latest --activate
 ```
 
 ## Build (local)
 
 ```bash
-npm run -s build
+pnpm build
 node ./dist/fetchmd.js --help
 ```
 
-`npm run build` also updates the skill entrypoint at `skills/web-fetch-to-markdown/scripts/fetchmd.js`.
+`pnpm build` also updates the skill entrypoint at `skills/web-fetch-to-markdown/scripts/fetchmd.js`.
 
 ## Typecheck
 
 ```bash
-npm run -s typecheck
+pnpm typecheck
 ```
