@@ -11,6 +11,7 @@
   "scripts": {
     "dev": "tsx ./src/fetchmd.ts",
     "start": "node ./dist/fetchmd.js",
+    "test": "node --test",
     "build": "tsc -p tsconfig.build.json",
     "postbuild": "esbuild ./src/fetchmd.ts --bundle --platform=node --format=cjs --target=node18 --log-level=warning --outfile=../../skills/web-fetch-to-markdown/scripts/fetchmd.js && node -e \"const fs=require('fs'); try{fs.chmodSync('../../skills/web-fetch-to-markdown/scripts/fetchmd.js',0o755);}catch{}\"",
     "typecheck": "tsc -p tsconfig.json"

@@ -71,6 +71,15 @@ function isMarkdownContentType(contentType: string | null | undefined): boolean 
   );
 }
 
+function isMarkdownUrl(url: string): boolean {
+  try {
+    const path = new URL(url).pathname.toLowerCase();
+    return path.endsWith(".md") || path.endsWith(".markdown");
+  } catch {
+    return false;
+  }
+}
+
 function isHtmlContentType(contentType: string | null | undefined): boolean {
   const ct = (contentType || "").toLowerCase();
   return ct.includes("text/html") || ct.includes("application/xhtml+xml");
@@ -79,6 +88,51 @@ function isHtmlContentType(contentType: string | null | undefined): boolean {
 function isTextContentType(contentType: string | null | undefined): boolean {
   const ct = (contentType || "").toLowerCase();
   return ct.startsWith("text/") || ct.includes("application/xml");
+}
+
+function isPlainTextContentType(contentType: string | null | undefined): boolean {
+  const ct = (contentType || "").toLowerCase();
+  return ct.startsWith("text/plain");
+}
+
+function inferFenceLanguage(url: string): string {
+  try {
+    const path = new URL(url).pathname;
+    const lower = path.toLowerCase();
+    const m = lower.match(/\.([a-z0-9]+)$/);
+    const ext = m?.[1] || "";
+    const map: Record<string, string> = {
+      bash: "bash",
+      conf: "conf",
+      ini: "ini",
+      json: "json",
+      sh: "sh",
+      toml: "toml",
+      ts: "ts",
+      yaml: "yaml",
+      yml: "yaml",
+      xml: "xml",
+      zsh: "zsh",
+    };
+    return map[ext] || "";
+  } catch {
+    return "";
+  }
+}
+
+function toFencedCodeMarkdown(text: string, url: string): string {
+  const normalized = String(text || "").replace(/\r\n/g, "\n").replace(/\r/g, "\n");
+  const lang = inferFenceLanguage(url);
+
+  const runs = normalized.match(/`+/g) || [];
+  let maxRun = 0;
+  for (const r of runs) maxRun = Math.max(maxRun, r.length);
+  const fence = "`".repeat(Math.max(3, maxRun + 1));
+
+  const content = normalized.endsWith("\n") ? normalized : `${normalized}\n`;
+  const header = lang ? `${fence}${lang}\n` : `${fence}\n`;
+  const md = `${header}${content}${fence}\n`;
+  return normalizeMarkdown(md);
 }
 
 function debugLog(enabled: boolean, msg: string): void {
@@ -284,7 +338,14 @@ async function htmlToMarkdown(
   baseUrl: string,
   opts: { absolutizeLinks: boolean; debug: boolean },
 ): Promise<string> {
-  const { document: doc } = parseHTML(html) as any;
+  let { document: doc } = parseHTML(html) as any;
+  if (!doc?.documentElement && looksLikeHtml(html)) {
+    ({ document: doc } = parseHTML(`<html><body>${html}</body></html>`) as any);
+  }
+  if (!doc?.documentElement) {
+    debugLog(opts.debug, "HTML → (non-HTML text) → fenced code");
+    return toFencedCodeMarkdown(html, baseUrl);
+  }
 
   for (const selector of ["script", "style", "noscript"]) {
     doc.querySelectorAll(selector).forEach((n: any) => n.remove());
@@ -382,11 +443,13 @@ async function main(): Promise<void> {
   try {
     const { res, preview } = await sniff(url, negotiatedHeaders, timeoutMs);
     const ct = res.headers.get("content-type") || "";
+    const effectiveUrl = res.url || url;
     debugLog(debug, `Sniff ${res.status} content-type=${ct || "(none)"}`);
     if (
       res.ok &&
       !looksLikeHtml(preview) &&
       (isMarkdownContentType(ct) ||
+        isMarkdownUrl(effectiveUrl) ||
         (isTextContentType(ct) && looksLikeMarkdown(preview)) ||
         looksLikeMarkdown(preview))
     ) {
@@ -395,6 +458,20 @@ async function main(): Promise<void> {
       if (!full.ok) throw new Error(`Fetch failed: ${full.status} ${full.statusText}`);
       const body = normalizeMarkdown(await full.text());
       return await writeOutput(body, out);
+    }
+
+    if (
+      res.ok &&
+      !looksLikeHtml(preview) &&
+      isPlainTextContentType(ct) &&
+      !isMarkdownUrl(effectiveUrl) &&
+      !looksLikeMarkdown(preview)
+    ) {
+      debugLog(debug, "Negotiated plain text (sniff) → fenced code");
+      const full = await get(url, negotiatedHeaders, timeoutMs);
+      if (!full.ok) throw new Error(`Fetch failed: ${full.status} ${full.statusText}`);
+      const body = await full.text();
+      return await writeOutput(toFencedCodeMarkdown(body, full.url || effectiveUrl), out);
     }
   } catch (err) {
     debugLog(debug, `Negotiation sniff failed: ${String(err)}`);
