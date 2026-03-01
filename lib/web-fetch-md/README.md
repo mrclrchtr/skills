@@ -36,7 +36,11 @@ pnpm build
 node ./dist/fetchmd.js --help
 ```
 
-`pnpm build` also updates the skill entrypoint at `skills/web-fetch-to-markdown/scripts/fetchmd.js`.
+To update the skill entrypoint at `skills/web-fetch-to-markdown/scripts/fetchmd.js`:
+
+```bash
+pnpm bundle:skill
+```
 
 ## Typecheck
 

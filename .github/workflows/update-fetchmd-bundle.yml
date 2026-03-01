@@ -1,0 +1,88 @@
+name: Update fetchmd.js Bundle
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - renovate/**
+    paths:
+      - lib/web-fetch-md/src/**
+      - lib/web-fetch-md/package.json
+      - lib/web-fetch-md/pnpm-lock.yaml
+      - lib/web-fetch-md/tsconfig*.json
+
+concurrency:
+  group: update-fetchmd-bundle-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  bundle:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6.0.2
+        with:
+          fetch-depth: 2
+          persist-credentials: true
+
+      - name: Setup Node
+        uses: actions/setup-node@v6.2.0
+        with:
+          node-version: "20"
+          cache: pnpm
+          cache-dependency-path: lib/web-fetch-md/pnpm-lock.yaml
+
+      - name: Enable Corepack (pnpm)
+        run: corepack enable
+
+      - name: Install deps
+        run: pnpm -C lib/web-fetch-md install --frozen-lockfile
+
+      - name: Bundle skill script
+        run: pnpm -C lib/web-fetch-md run bundle:skill
+
+      - name: Detect bundle changes
+        id: bundle-diff
+        shell: bash
+        run: |
+          if git diff --quiet -- skills/web-fetch-to-markdown/scripts/fetchmd.js; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Get last commit info
+        id: last-commit
+        if: steps.bundle-diff.outputs.changed == 'true' && startsWith(github.ref, 'refs/heads/renovate/')
+        run: |
+          message="$(git log -1 --pretty=%s)"
+          author="$(git log -1 --pretty='%an <%ae>')"
+
+          {
+            echo "message<<EOF"
+            echo "$message"
+            echo "EOF"
+            echo "author<<EOF"
+            echo "$author"
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Amend HEAD commit with bundle changes (Renovate)
+        if: steps.bundle-diff.outputs.changed == 'true' && startsWith(github.ref, 'refs/heads/renovate/')
+        uses: stefanzweifel/git-auto-commit-action@v7.1.0
+        with:
+          commit_author: ${{ steps.last-commit.outputs.author }}
+          commit_message: ${{ steps.last-commit.outputs.message }}
+          file_pattern: skills/web-fetch-to-markdown/scripts/fetchmd.js
+          commit_options: "--amend --no-edit"
+          push_options: "--force-with-lease"
+          skip_fetch: true
+
+      - name: Commit bundle changes (Manual run)
+        if: steps.bundle-diff.outputs.changed == 'true' && github.event_name == 'workflow_dispatch' && !startsWith(github.ref, 'refs/heads/renovate/')
+        uses: stefanzweifel/git-auto-commit-action@v7.1.0
+        with:
+          commit_message: "chore(web-fetch-to-markdown): update fetchmd.js bundle"
+          file_pattern: skills/web-fetch-to-markdown/scripts/fetchmd.js
