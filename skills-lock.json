@@ -1,6 +1,11 @@
 {
   "version": 1,
   "skills": {
+    "git-commit": {
+      "source": "mrclrchtr/skills",
+      "sourceType": "github",
+      "computedHash": "252d45444189389f8aa43ef93121c3e7ead7440880469e23f98ac638f11dbdd8"
+    },
     "web-fetch-to-markdown": {
       "source": "mrclrchtr/skills",
       "sourceType": "github",
