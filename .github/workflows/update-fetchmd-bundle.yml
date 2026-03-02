@@ -44,7 +44,7 @@ jobs:
           # Keep credentials out of the working copy; we'll only add auth right before pushing.
           persist-credentials: false
       - name: Setup mise
-        uses: jdx/mise-action@6d1e696aa24c1aa1bcc1adea0212707c71ab78a8 # v3.6.1
+        uses: jdx/mise-action@e79ddf65a11cec7b0e882bedced08d6e976efb2d # v3.6.2
       - name: Enable Corepack (pnpm)
         run: corepack enable
       - name: Install deps
