@@ -12,10 +12,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v6.0.2
-
       - name: Setup mise
-        uses: jdx/mise-action@v3
-
+        uses: jdx/mise-action@v3.6.1
       - name: Validate skills
         run: bash scripts/validate-skills.sh
 
@@ -24,23 +22,16 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v6.0.2
-
-      - name: Setup Node
-        uses: actions/setup-node@v6.2.0
-        with:
-          node-version: "24"
-          cache: pnpm
-          cache-dependency-path: lib/web-fetch-md/pnpm-lock.yaml
-
+      - name: Setup mise
+        uses: jdx/mise-action@v3.6.1
       - name: Enable Corepack (pnpm)
         run: corepack enable
-
       - name: Install deps
-        run: pnpm -C lib/web-fetch-md install --frozen-lockfile
-
+        working-directory: lib/web-fetch-md
+        run: pnpm install --frozen-lockfile
       - name: Bundle skill script
-        run: pnpm -C lib/web-fetch-md run bundle:skill
-
+        working-directory: lib/web-fetch-md
+        run: pnpm run bundle:skill
       - name: Check bundle is committed
         shell: bash
         run: |
