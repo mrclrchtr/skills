@@ -21,23 +21,28 @@ jobs:
     permissions:
       contents: write
     steps:
-      - name: Ensure PAT is configured (required for workflow-to-workflow triggers)
+      - name: Ensure GitHub App auth is configured (required for workflow-to-workflow triggers)
         # Commits pushed with the default GITHUB_TOKEN will not trigger other workflows
-        # (e.g. `pull_request` checks on Renovate PRs). A real PAT avoids that limitation.
+        # (e.g. `pull_request` checks on Renovate PRs). A GitHub App token avoids that limitation
+        # and is short-lived + tightly scoped.
         env:
-          FETCHMD_BUNDLE_PAT: ${{ secrets.FETCHMD_BUNDLE_PAT }}
+          FETCHMD_BUNDLE_APP_ID: ${{ vars.FETCHMD_BUNDLE_APP_ID }}
+          FETCHMD_BUNDLE_APP_PRIVATE_KEY: ${{ secrets.FETCHMD_BUNDLE_APP_PRIVATE_KEY }}
         run: |
-          if [ -z "$FETCHMD_BUNDLE_PAT" ]; then
-            echo "Missing required secret: FETCHMD_BUNDLE_PAT" >&2
-            echo "Create a PAT (fine-grained is OK) with repo Contents: Read and write, and add it as a repo secret." >&2
+          if [ -z "$FETCHMD_BUNDLE_APP_ID" ]; then
+            echo "Missing required repo variable: FETCHMD_BUNDLE_APP_ID" >&2
+            exit 1
+          fi
+          if [ -z "$FETCHMD_BUNDLE_APP_PRIVATE_KEY" ]; then
+            echo "Missing required secret: FETCHMD_BUNDLE_APP_PRIVATE_KEY" >&2
             exit 1
           fi
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           fetch-depth: 2
-          persist-credentials: true
-          token: ${{ secrets.FETCHMD_BUNDLE_PAT }}
+          # Keep credentials out of the working copy; we'll only add auth right before pushing.
+          persist-credentials: false
       - name: Setup mise
         uses: jdx/mise-action@6d1e696aa24c1aa1bcc1adea0212707c71ab78a8 # v3.6.1
       - name: Enable Corepack (pnpm)
@@ -72,11 +77,24 @@ jobs:
             echo "$author"
             echo "EOF"
           } >> "$GITHUB_OUTPUT"
+      - name: Create GitHub App token
+        id: app-token
+        if: steps.bundle-diff.outputs.changed == 'true'
+        uses: actions/create-github-app-token@29824e69f54612133e76f7eaac726eef6c875baf # v2
+        with:
+          app-id: ${{ vars.FETCHMD_BUNDLE_APP_ID }}
+          private-key: ${{ secrets.FETCHMD_BUNDLE_APP_PRIVATE_KEY }}
+      - name: Configure authenticated git remote
+        if: steps.bundle-diff.outputs.changed == 'true'
+        env:
+          GH_APP_TOKEN: ${{ steps.app-token.outputs.token }}
+        run: |
+          git remote set-url origin "https://x-access-token:${GH_APP_TOKEN}@github.com/${{ github.repository }}.git"
       - name: Amend HEAD commit with bundle changes (Renovate)
         if: steps.bundle-diff.outputs.changed == 'true' && startsWith(github.ref, 'refs/heads/renovate/')
         uses: stefanzweifel/git-auto-commit-action@04702edda442b2e678b25b537cec683a1493fcb9 # v7.1.0
         env:
-          GITHUB_TOKEN: ${{ secrets.FETCHMD_BUNDLE_PAT }}
+          GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
         with:
           commit_author: ${{ steps.last-commit.outputs.author }}
           commit_message: ${{ steps.last-commit.outputs.message }}
@@ -88,7 +106,7 @@ jobs:
         if: steps.bundle-diff.outputs.changed == 'true' && github.event_name == 'workflow_dispatch' && !startsWith(github.ref, 'refs/heads/renovate/')
         uses: stefanzweifel/git-auto-commit-action@04702edda442b2e678b25b537cec683a1493fcb9 # v7.1.0
         env:
-          GITHUB_TOKEN: ${{ secrets.FETCHMD_BUNDLE_PAT }}
+          GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
         with:
           commit_message: "chore(web-fetch-to-markdown): update fetchmd.js bundle"
           file_pattern: skills/web-fetch-to-markdown/scripts/fetchmd.js
