@@ -63,8 +63,6 @@ Network Trash Folder/
 # pnpm package manager specific files
 
 # PNPM
-pnpm-lock.yaml
-pnpm-workspace.yaml
 .pnpm/
 .pnpm-debug.log
 
