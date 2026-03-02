@@ -1,24 +1,30 @@
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "config:best-practices",
-    ":automergeMinor"
+  $schema: 'https://docs.renovatebot.com/renovate-schema.json',
+  extends: [
+    'config:best-practices',
+    ':automergeMinor',
   ],
-  "packageRules": [
+  packageRules: [
     {
-      "matchManagers": ["npm"],
-      "matchFileNames": ["lib/web-fetch-md/package.json"],
-      "postUpgradeTasks": {
-        "commands": [
-          "pnpm -C lib/web-fetch-md install --frozen-lockfile",
-          "pnpm -C lib/web-fetch-md run bundle:skill"
+      matchManagers: [
+        'npm',
+      ],
+      matchFileNames: [
+        'lib/web-fetch-md/package.json',
+      ],
+      postUpgradeTasks: {
+        commands: [
+          'pnpm -C lib/web-fetch-md install --frozen-lockfile',
+          'pnpm -C lib/web-fetch-md run bundle:skill',
         ],
-        "fileFilters": ["skills/web-fetch-to-markdown/scripts/fetchmd.js"]
-      }
-    }
+        fileFilters: [
+          'skills/web-fetch-to-markdown/scripts/fetchmd.js',
+        ],
+      },
+    },
   ],
-  "allowedPostUpgradeCommands": [
-    "^pnpm -C lib/web-fetch-md install --frozen-lockfile$",
-    "^pnpm -C lib/web-fetch-md run bundle:skill$"
-  ]
+  allowedCommands: [
+    '^pnpm -C lib/web-fetch-md install --frozen-lockfile$',
+    '^pnpm -C lib/web-fetch-md run bundle:skill$',
+  ],
 }
