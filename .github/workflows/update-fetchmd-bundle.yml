@@ -1,15 +1,7 @@
-name: Update fetchmd.js Bundle
+name: Check fetchmd.js Bundle
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - renovate/**
-    paths:
-      - lib/web-fetch-md/src/**
-      - lib/web-fetch-md/package.json
-      - lib/web-fetch-md/pnpm-lock.yaml
-      - lib/web-fetch-md/tsconfig*.json
 
 concurrency:
   group: update-fetchmd-bundle-${{ github.ref }}
@@ -18,15 +10,9 @@ concurrency:
 jobs:
   bundle:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
     steps:
       - name: Checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-        with:
-          fetch-depth: 2
-          persist-credentials: true
-          token: ${{ github.token }}
       - name: Setup mise
         uses: jdx/mise-action@6d1e696aa24c1aa1bcc1adea0212707c71ab78a8 # v3.6.1
       - name: Enable Corepack (pnpm)
@@ -46,34 +32,9 @@ jobs:
           else
             echo "changed=true" >> "$GITHUB_OUTPUT"
           fi
-      - name: Get last commit info
-        id: last-commit
-        if: steps.bundle-diff.outputs.changed == 'true' && startsWith(github.ref, 'refs/heads/renovate/')
+      - name: Fail if bundle is out of date
+        if: steps.bundle-diff.outputs.changed == 'true'
         run: |
-          message="$(git log -1 --pretty=%s)"
-          author="$(git log -1 --pretty='%an <%ae>')"
-
-          {
-            echo "message<<EOF"
-            echo "$message"
-            echo "EOF"
-            echo "author<<EOF"
-            echo "$author"
-            echo "EOF"
-          } >> "$GITHUB_OUTPUT"
-      - name: Amend HEAD commit with bundle changes (Renovate)
-        if: steps.bundle-diff.outputs.changed == 'true' && startsWith(github.ref, 'refs/heads/renovate/')
-        uses: stefanzweifel/git-auto-commit-action@04702edda442b2e678b25b537cec683a1493fcb9 # v7.1.0
-        with:
-          commit_author: ${{ steps.last-commit.outputs.author }}
-          commit_message: ${{ steps.last-commit.outputs.message }}
-          file_pattern: skills/web-fetch-to-markdown/scripts/fetchmd.js
-          commit_options: "--amend --no-edit"
-          push_options: "--force-with-lease"
-          skip_fetch: true
-      - name: Commit bundle changes (Manual run)
-        if: steps.bundle-diff.outputs.changed == 'true' && github.event_name == 'workflow_dispatch' && !startsWith(github.ref, 'refs/heads/renovate/')
-        uses: stefanzweifel/git-auto-commit-action@04702edda442b2e678b25b537cec683a1493fcb9 # v7.1.0
-        with:
-          commit_message: "chore(web-fetch-to-markdown): update fetchmd.js bundle"
-          file_pattern: skills/web-fetch-to-markdown/scripts/fetchmd.js
+          echo "fetchmd.js bundle is out of date." >&2
+          echo "Run: pnpm -C lib/web-fetch-md run bundle:skill" >&2
+          exit 1

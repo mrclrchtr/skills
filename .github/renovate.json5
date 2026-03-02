@@ -3,5 +3,22 @@
   "extends": [
     "config:best-practices",
     ":automergeMinor"
+  ],
+  "packageRules": [
+    {
+      "matchManagers": ["npm"],
+      "matchFileNames": ["lib/web-fetch-md/package.json"],
+      "postUpgradeTasks": {
+        "commands": [
+          "pnpm -C lib/web-fetch-md install --frozen-lockfile",
+          "pnpm -C lib/web-fetch-md run bundle:skill"
+        ],
+        "fileFilters": ["skills/web-fetch-to-markdown/scripts/fetchmd.js"]
+      }
+    }
+  ],
+  "allowedPostUpgradeCommands": [
+    "^pnpm -C lib/web-fetch-md install --frozen-lockfile$",
+    "^pnpm -C lib/web-fetch-md run bundle:skill$"
   ]
 }
