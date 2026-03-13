@@ -1,7 +1,7 @@
 [tools]
 hk = "1.38.0"
 pkl = "latest"
-uv = "0.10.9"
+uv = "0.10.10"
 node = "24.14.0"
 
 [tasks.validate-skills]
