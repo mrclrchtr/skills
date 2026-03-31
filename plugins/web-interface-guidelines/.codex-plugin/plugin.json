@@ -1,0 +1,21 @@
+{
+  "name": "web-interface-guidelines",
+  "version": "0.1.0",
+  "description": "Shared web interface guideline skills for UI implementation and review",
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Web Interface Guidelines",
+    "shortDescription": "Apply and review shared UI guidelines",
+    "longDescription": "Use shared skills to apply web interface guidelines during implementation and to audit existing UI against the same standards.",
+    "developerName": "mrclrchtr",
+    "category": "Productivity",
+    "capabilities": [
+      "Interactive",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Use $web-interface-guidelines-apply to update this UI with the shared guidelines.",
+      "Use $web-interface-guidelines-review to audit this UI against the shared guidelines."
+    ]
+  }
+}

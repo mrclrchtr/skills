@@ -1,0 +1,4 @@
+interface:
+  display_name: "Web Interface Guidelines Apply"
+  short_description: "Apply Vercel-style UI guidelines"
+  default_prompt: "Use $web-interface-guidelines-apply to build or update this UI with the shared web interface guidelines."
