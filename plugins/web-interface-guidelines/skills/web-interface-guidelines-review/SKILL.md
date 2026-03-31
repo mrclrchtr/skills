@@ -12,18 +12,20 @@ Review UI against the shared web interface guidelines and report concrete findin
 ## Review Workflow
 
 1. Identify the relevant surface: interaction flow, form, layout, list, modal, settings page, navigation, or content-heavy page.
-2. Read only the matching shared references under `../../references/`.
+2. Read only the matching shared references under `../../references/core/`.
 3. Produce findings first, ordered by severity.
 4. For each finding, explain the user impact and name the violated guideline category.
 
 ## Reference Map
 
-- `../../references/interactions.md`: keyboard access, focus, async states, hit targets, URL state, destructive flows
-- `../../references/forms.md`: labels, validation, submission timing, placeholder usage, field-level errors
-- `../../references/content-accessibility.md`: semantics, headings, labels, locale handling, content resilience
-- `../../references/layout-motion.md`: responsive layout, safe areas, reduced motion, animation quality
-- `../../references/performance.md`: render cost, large lists, layout work, image and font loading
-- `../../references/design-copywriting.md`: contrast, status cues, button labels, error messages, active voice
+- `../../references/core/interactions.md`: keyboard access, focus, async states, hit targets, URL state, destructive flows
+- `../../references/core/forms.md`: labels, validation, submission timing, placeholder usage, field-level errors
+- `../../references/core/animation.md`: reduced motion, animation quality, compositor-safe motion, SVG motion
+- `../../references/core/layout.md`: responsive layout, safe areas, overflow control, alignment, state-aware structure
+- `../../references/core/content-accessibility.md`: semantics, headings, labels, locale handling, content resilience
+- `../../references/core/performance.md`: render cost, large lists, layout work, image and font loading
+- `../../references/core/theming-copy.md`: contrast, status cues, button labels, error messages, active voice
+- `../../references/core/anti-patterns.md`: disabled zoom, `transition: all`, unlabeled controls, loading text regressions
 
 ## Findings Format
 

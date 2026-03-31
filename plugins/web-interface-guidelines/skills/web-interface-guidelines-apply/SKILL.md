@@ -12,18 +12,19 @@ Apply a shared set of web interface standards while implementing or updating UI.
 ## Workflow
 
 1. Identify the UI surface you are changing: navigation, form, dialog, list, settings screen, marketing page, dashboard.
-2. Read only the relevant shared references under `../../references/`.
+2. Read only the relevant shared references under `../../references/core/`.
 3. Implement the change with semantics, keyboard support, loading behavior, error handling, and responsive behavior considered together.
 4. Before finishing, check the core states the UI should support: empty, loading, dense, error, destructive, and mobile.
 
 ## Reference Map
 
-- `../../references/interactions.md`: focus handling, hit targets, async feedback, URL state, forgiving interactions
-- `../../references/forms.md`: labels, submission behavior, validation, autocomplete, placeholders, unsaved changes
-- `../../references/content-accessibility.md`: semantics, naming, headings, skip links, resilient content, locale behavior
-- `../../references/layout-motion.md`: responsive layout, safe areas, reduced motion, animation constraints, visual polish
-- `../../references/performance.md`: render cost, lists, media loading, layout work, latency budgets
-- `../../references/design-copywriting.md`: contrast, visual detail, active voice, labels, button text, error copy
+- `../../references/core/interactions.md`: focus handling, hit targets, async feedback, URL state, forgiving interactions
+- `../../references/core/forms.md`: labels, submission behavior, validation, autocomplete, placeholders, unsaved changes
+- `../../references/core/animation.md`: reduced motion, compositor-friendly transitions, interruptible motion, SVG guidance
+- `../../references/core/layout.md`: responsive layout, safe areas, overflow control, alignment, state-aware structure
+- `../../references/core/content-accessibility.md`: semantics, naming, headings, skip links, resilient content, locale behavior
+- `../../references/core/performance.md`: render cost, lists, media loading, layout work, latency budgets
+- `../../references/core/theming-copy.md`: contrast, theme metadata, visual detail, active voice, labels, button text, error copy
 
 ## Guardrails
 

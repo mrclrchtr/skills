@@ -7,6 +7,8 @@ ROOT = Path(__file__).resolve().parents[1]
 PLUGIN_JSON = ROOT / ".codex-plugin" / "plugin.json"
 DESIGN_SKILL = ROOT / "skills" / "web-interface-guidelines-design" / "SKILL.md"
 DESIGN_AGENT = ROOT / "skills" / "web-interface-guidelines-design" / "agents" / "openai.yaml"
+APPLY_SKILL = ROOT / "skills" / "web-interface-guidelines-apply" / "SKILL.md"
+REVIEW_SKILL = ROOT / "skills" / "web-interface-guidelines-review" / "SKILL.md"
 
 EXPECTED_DEFAULT_PROMPT = [
     "Use $web-interface-guidelines-design to define the visual direction for this UI before implementation.",
@@ -22,6 +24,49 @@ EXPECTED_DESIGN_DESCRIPTION = (
 EXPECTED_AGENT_DEFAULT_PROMPT = (
     "Use $web-interface-guidelines-design to define the visual direction for this UI before implementation."
 )
+
+EXPECTED_CORE_REFERENCE_FILES = [
+    "references/core/interactions.md",
+    "references/core/forms.md",
+    "references/core/animation.md",
+    "references/core/layout.md",
+    "references/core/content-accessibility.md",
+    "references/core/performance.md",
+    "references/core/theming-copy.md",
+    "references/core/anti-patterns.md",
+]
+
+EXPECTED_LEGACY_REFERENCE_FILES = [
+    "references/interactions.md",
+    "references/forms.md",
+    "references/content-accessibility.md",
+    "references/layout-motion.md",
+    "references/performance.md",
+    "references/design-copywriting.md",
+]
+
+EXPECTED_APPLY_CORE_REFERENCES = [
+    "../../references/core/interactions.md",
+    "../../references/core/forms.md",
+    "../../references/core/animation.md",
+    "../../references/core/layout.md",
+    "../../references/core/content-accessibility.md",
+    "../../references/core/performance.md",
+    "../../references/core/theming-copy.md",
+]
+
+EXPECTED_REVIEW_CORE_REFERENCES = EXPECTED_APPLY_CORE_REFERENCES + [
+    "../../references/core/anti-patterns.md",
+]
+
+REMOVED_REFERENCE_PATHS = [
+    "../../references/interactions.md",
+    "../../references/forms.md",
+    "../../references/content-accessibility.md",
+    "../../references/layout-motion.md",
+    "../../references/performance.md",
+    "../../references/design-copywriting.md",
+]
 
 
 def parse_frontmatter(text):
@@ -111,3 +156,32 @@ class PluginLayoutTest(unittest.TestCase):
                 agent["interface"]["default_prompt"],
                 EXPECTED_AGENT_DEFAULT_PROMPT,
             )
+
+    def test_core_reference_corpus_layout(self):
+        for relative_path in EXPECTED_CORE_REFERENCE_FILES:
+            with self.subTest(file=relative_path):
+                path = ROOT / relative_path
+                self.assertTrue(path.exists(), f"missing {path}")
+
+        for relative_path in EXPECTED_LEGACY_REFERENCE_FILES:
+            with self.subTest(file=relative_path):
+                path = ROOT / relative_path
+                self.assertFalse(path.exists(), f"legacy file should be removed: {path}")
+
+    def test_apply_and_review_skill_reference_maps(self):
+        apply_text = APPLY_SKILL.read_text(encoding="utf-8")
+        review_text = REVIEW_SKILL.read_text(encoding="utf-8")
+
+        with self.subTest("apply skill core references"):
+            for relative_path in EXPECTED_APPLY_CORE_REFERENCES:
+                self.assertIn(relative_path, apply_text)
+            self.assertIn("`../../references/core/`", apply_text)
+            for relative_path in REMOVED_REFERENCE_PATHS:
+                self.assertNotIn(relative_path, apply_text)
+
+        with self.subTest("review skill core references"):
+            for relative_path in EXPECTED_REVIEW_CORE_REFERENCES:
+                self.assertIn(relative_path, review_text)
+            self.assertIn("`../../references/core/`", review_text)
+            for relative_path in REMOVED_REFERENCE_PATHS:
+                self.assertNotIn(relative_path, review_text)
