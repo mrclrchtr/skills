@@ -16,6 +16,8 @@ pnpm dev -- --help
 pnpm dev -- https://example.com > page.md
 ```
 
+Requires Node `>=20.19.0`.
+
 Flags are documented in `--help` (also accepts `-h`). Common ones:
 
 - `--timeout-ms <ms>`
@@ -36,7 +38,9 @@ pnpm build
 node ./dist/fetchmd.js --help
 ```
 
-To update the skill entrypoint at `skills/web-fetch-to-markdown/scripts/fetchmd.js`:
+To build `dist/fetchmd.js` and refresh the launcher scripts at
+`.agents/skills/web-fetch-to-markdown/scripts/fetchmd.js` and
+`skills/web-fetch-to-markdown/scripts/fetchmd.js`:
 
 ```bash
 pnpm bundle:skill

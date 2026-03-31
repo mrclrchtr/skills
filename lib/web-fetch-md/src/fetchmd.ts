@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import fs from "node:fs/promises";
 import process from "node:process";
-import { parseHTML } from "linkedom";
+import { JSDOM, VirtualConsole } from "jsdom";
 import { Readability } from "@mozilla/readability";
 import TurndownService from "turndown";
 
@@ -263,6 +263,14 @@ function absolutizeDomUrls(root: any, baseUrl: string): void {
   }
 }
 
+function createDocument(html: string, baseUrl: string): Document {
+  return new JSDOM(html, {
+    url: baseUrl,
+    // Avoid leaking jsdom CSS parser warnings to normal CLI stderr.
+    virtualConsole: new VirtualConsole(),
+  }).window.document;
+}
+
 async function createTurndown(): Promise<any> {
   const turndown = new TurndownService({
     codeBlockStyle: "fenced",
@@ -338,14 +346,11 @@ async function htmlToMarkdown(
   baseUrl: string,
   opts: { absolutizeLinks: boolean; debug: boolean },
 ): Promise<string> {
-  let { document: doc } = parseHTML(html) as any;
-  if (!doc?.documentElement && looksLikeHtml(html)) {
-    ({ document: doc } = parseHTML(`<html><body>${html}</body></html>`) as any);
-  }
-  if (!doc?.documentElement) {
+  if (!looksLikeHtml(html)) {
     debugLog(opts.debug, "HTML → (non-HTML text) → fenced code");
     return toFencedCodeMarkdown(html, baseUrl);
   }
+  const doc = createDocument(html, baseUrl);
 
   for (const selector of ["script", "style", "noscript"]) {
     doc.querySelectorAll(selector).forEach((n: any) => n.remove());
@@ -363,7 +368,7 @@ async function htmlToMarkdown(
   if (article?.content) debugLog(opts.debug, "HTML → Readability → Markdown");
   else debugLog(opts.debug, "HTML → body → Markdown (Readability failed)");
 
-  const { document: fragDoc } = parseHTML(`<html><body>${contentHtml}</body></html>`) as any;
+  const fragDoc = createDocument(`<html><body>${contentHtml}</body></html>`, baseUrl);
   const fragBody = fragDoc.body;
 
   if (opts.absolutizeLinks) absolutizeDomUrls(fragBody, baseUrl);

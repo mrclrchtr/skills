@@ -7,23 +7,24 @@
     "fetchmd": "./dist/fetchmd.js"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=20.19.0"
   },
   "scripts": {
     "dev": "tsx ./src/fetchmd.ts",
     "start": "node ./dist/fetchmd.js",
     "test": "node --test",
     "build": "tsc -p tsconfig.build.json",
-    "bundle:skill": "esbuild ./src/fetchmd.ts --bundle --platform=node --format=cjs --target=node18 --log-level=warning --outfile=../../skills/web-fetch-to-markdown/scripts/fetchmd.js && node -e \"const fs=require('fs'); try{fs.chmodSync('../../skills/web-fetch-to-markdown/scripts/fetchmd.js',0o755);}catch{}\"",
+    "bundle:skill": "pnpm build && node -e \"const fs=require('fs'); const path=require('path'); const files=[['../../.agents/skills/web-fetch-to-markdown/scripts/fetchmd.js','../../../../lib/web-fetch-md/dist/fetchmd.js'],['../../skills/web-fetch-to-markdown/scripts/fetchmd.js','../../../lib/web-fetch-md/dist/fetchmd.js']]; for (const [out, rel] of files) { const content=['#!/usr/bin/env node','const path = require(\\'node:path\\');','const { pathToFileURL } = require(\\'node:url\\');','const target = pathToFileURL(path.resolve(__dirname, ' + JSON.stringify(rel) + ')).href;','import(target);',''].join('\\n'); fs.writeFileSync(out, content, 'utf8'); try{fs.chmodSync(out,0o755);}catch{} }\"",
     "typecheck": "tsc -p tsconfig.json"
   },
   "dependencies": {
     "@mozilla/readability": "^0.6.0",
-    "linkedom": "^0.18.12",
+    "jsdom": "^29.0.1",
     "turndown": "^7.2.0",
     "turndown-plugin-gfm": "^1.0.2"
   },
   "devDependencies": {
+    "@types/jsdom": "^28.0.1",
     "@types/node": "24.12.2",
     "esbuild": "0.28.0",
     "tsx": "4.21.0",
