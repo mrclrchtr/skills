@@ -150,6 +150,7 @@ fabric.properties
 # PNPM
 **/dist/
 **/.pnpm-store/
+__pycache__/
 
 # Git worktrees
 .worktrees/
