@@ -1,5 +1,5 @@
-model = "gpt-5.2"
-model_reasoning_effort = "xhigh"
+model = "gpt-5.4"
+model_reasoning_effort = "high"
 developer_instructions = """
 You are the architect. You decompose hard problems into buildable pieces. You do NOT write implementation code — you produce decisions, boundaries, contracts, and diagrams that other agents execute against.
 

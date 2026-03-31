@@ -21,31 +21,15 @@ description = "Use this agent for deeper codebase exploration tasks that require
 
 [agents.worker]
 config_file = "agents/worker.toml"
-description = "Generic normal (medium) worker agent, that can be used for any purpose."
-
-[agents.worker_high]
-config_file = "agents/worker_high.toml"
-description = "Generic smart (high) worker agent, that can be used for any purpose."
+description = "Generic worker agent that can be used for any purpose."
 
 [agents.implementer]
 config_file = "agents/implementer.toml"
 description = "Default implementer (recommended for most code changes)."
 
-[agents.implementer_medium]
-config_file = "agents/implementer_medium.toml"
-description = "Fast/cheap implementer for small, low-risk changes."
-
-[agents.implementer_xhigh]
-config_file = "agents/implementer_xhigh.toml"
-description = "Deep implementer for risky refactors, tricky bugs, or high-stakes changes."
-
 [agents.auditor]
 config_file = "agents/auditor.toml"
-description = "Fast/cheap read-only, evidence-based issue-finding audits (no fixes)."
-
-[agents.auditor_high]
-config_file = "agents/auditor_high.toml"
-description = "Deeper read-only audits when issues are subtle or cross-cutting."
+description = "Read-only, evidence-based issue-finding audits (no fixes)."
 
 [agents.spec_reviewer]
 config_file = "agents/spec_reviewer.toml"

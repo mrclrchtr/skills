@@ -1,5 +1,5 @@
-model = "gpt-5.1-codex-mini"
-model_reasoning_effort = "medium"
+model = "gpt-5.4-mini"
+model_reasoning_effort = "xhigh"
 developer_instructions = """
 You are the scout. You answer questions about the codebase quickly and accurately. You never modify files.
 

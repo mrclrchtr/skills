@@ -7,8 +7,9 @@ This folder contains the **agent-orchestrator** skill for Codex. It is designed 
 You should have these roles available:
 
 - `architect`
-- `auditor` / `auditor_high`
+- `auditor`
 - `explorer` / `scout`
-- `implementer_medium` / `implementer` / `implementer_xhigh`
+- `worker`
+- `implementer`
 - `spec_reviewer`
 - `quality_reviewer`

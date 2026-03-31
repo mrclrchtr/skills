@@ -13,15 +13,16 @@ Follow this core pattern: delegate a fresh implementer per cluster, then run a t
 
 Non-negotiable rule: **never** implement changes directly (no coding, no file edits).
 
-## Agent Roles (incl. tiered variants — choose per task complexity)
+## Agent Roles
 
-Assume these roles are available in your environment. Choose tiered variants based on task complexity and risk.
+Assume these roles are available in your environment.
 Do not edit agent definitions or configs. If a required role is missing, stop and ask the operator to configure it.
 
 - `architect` (design/decisions/contracts)
-- `auditor` / `auditor_high` (read-only issue finding; no fixes)
+- `auditor` (read-only issue finding; no fixes)
 - `explorer` / `scout` (read-only repo lookup)
-- `implementer_medium` / `implementer` / `implementer_xhigh` (code + tests)
+- `worker` (general-purpose helper)
+- `implementer` (code + tests)
 - `spec_reviewer` (read-only, PASS/FAIL: nothing missing, nothing extra)
 - `quality_reviewer` (read-only, PASS/FAIL: maintainability + test quality)
 
@@ -44,11 +45,8 @@ Do not edit agent definitions or configs. If a required role is missing, stop an
    - For each subsystem, define 2–5 invariants (what must always be true).
 
 5. Run dual independent audits per subsystem
-   - Choose the audit tiers:
-     - Default: spawn `auditor` + `auditor` (fast/cheap).
-     - High-risk or subtle work (security, auth, money, data loss, concurrency, cross-module interactions, or when prior audits disagree): spawn `auditor_high` + `auditor` (one deep, one fast).
-     - Maximum assurance: spawn `auditor_high` + `auditor_high`.
-   - Spawn two independent auditors per subsystem (auditA and auditB) using the chosen tiers.
+   - Spawn two independent `auditor` agents per subsystem (auditA and auditB).
+   - For high-risk or subtle work, narrow the subsystem scope and strengthen the invariants and evidence requirements before spawning them.
    - Tell them to work independently until reconciliation (no cross-talk).
    - Require evidence for every issue (repo location, deterministic repro, expected vs actual, severity).
 
@@ -63,10 +61,7 @@ Do not edit agent definitions or configs. If a required role is missing, stop an
 
 7. Implement in clusters with clear ownership
    - Group confirmed issues into clusters that can be fixed with minimal coupling.
-   - Spawn exactly one `implementer` tier per cluster:
-     - Use `implementer_medium` for trivial, low-risk edits.
-     - Use `implementer` for most work.
-     - Use `implementer_xhigh` for tricky bugs, risky refactors, or high-stakes changes.
+   - Spawn exactly one `implementer` per cluster.
    - Assign each implementer a file set to “own” and require them to avoid broad refactors.
    - Do not implement any cluster work directly; always delegate to the implementer (even for “quick” changes).
    - Every fix must come with a regression test (unit/integration/e2e as appropriate).
