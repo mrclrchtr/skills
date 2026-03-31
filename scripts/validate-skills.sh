@@ -27,13 +27,30 @@ if [ "${#skill_manifests[@]}" -eq 0 ]; then
   exit 0
 fi
 
+run_skills_ref_validate() {
+  local skill_dir="$1"
+
+  (
+    # Git hooks export repository-local GIT_* variables. Clear them before uvx
+    # fetches the remote skills-ref repo so nested git operations use a clean env.
+    if command -v git >/dev/null 2>&1; then
+      while IFS= read -r git_var; do
+        [ -n "${git_var}" ] || continue
+        unset "${git_var}"
+      done < <(git rev-parse --local-env-vars 2>/dev/null || true)
+    fi
+
+    uvx --from "${SKILLS_REF_FROM}" skills-ref validate "${skill_dir}"
+  )
+}
+
 failures=0
 
 for manifest in "${skill_manifests[@]}"; do
   skill_dir="$(dirname "${manifest}")"
   echo "Validating ${skill_dir}"
 
-  if uvx --from "${SKILLS_REF_FROM}" skills-ref validate "${skill_dir}"; then
+  if run_skills_ref_validate "${skill_dir}"; then
     echo "PASS ${skill_dir}"
   else
     echo "FAIL ${skill_dir}" >&2
