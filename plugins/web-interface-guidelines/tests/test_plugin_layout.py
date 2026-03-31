@@ -45,6 +45,40 @@ EXPECTED_DESIGN_AND_FRAMEWORK_REFERENCE_FILES = [
     "references/source-notes.md",
 ]
 
+EXPECTED_DESIGN_REFERENCE_CONTENT = {
+    "references/design/direction.md": [
+        "# Design Direction",
+        "purpose, audience, and tone",
+        "2-3 distinct directions",
+        "memorable differentiator",
+    ],
+    "references/design/typography-color.md": [
+        "# Typography and Color",
+        "typography as a first-class design choice",
+        "interchangeable sans stacks",
+        "purple-on-white startup gradients",
+    ],
+    "references/design/motion-composition.md": [
+        "# Motion and Composition",
+        "motion to reinforce hierarchy",
+        "cause and effect",
+        "gradients, texture, pattern, shadow, and depth",
+    ],
+    "references/design/anti-slop.md": [
+        "# Anti-Slop",
+        "interchangeable SaaS layouts",
+        "Distinctive minimalism",
+    ],
+    "references/frameworks/react-next.md": [
+        "# React and Next.js",
+        "hydration-safe rendering",
+        "controlled inputs",
+        "uncontrolled inputs",
+        "URL state",
+        "loading primitives",
+    ],
+}
+
 EXPECTED_LEGACY_REFERENCE_FILES = [
     "references/interactions.md",
     "references/forms.md",
@@ -66,6 +100,14 @@ EXPECTED_APPLY_CORE_REFERENCES = [
 
 EXPECTED_REVIEW_CORE_REFERENCES = EXPECTED_APPLY_CORE_REFERENCES + [
     "../../references/core/anti-patterns.md",
+]
+
+EXPECTED_SOURCE_NOTES_SNIPPETS = [
+    "https://github.com/vercel-labs/web-interface-guidelines",
+    "3f6b1449dee158479deb8019f6372ff85e663406",
+    "https://github.com/anthropics/claude-code/tree/main/plugins/frontend-design",
+    "2d5c1bab92971bbdaecdb1767481973215ee7f2d",
+    "organized for consumption by the skill files",
 ]
 
 REMOVED_REFERENCE_PATHS = [
@@ -178,6 +220,15 @@ class PluginLayoutTest(unittest.TestCase):
                 path = ROOT / relative_path
                 self.assertTrue(path.exists(), f"missing {path}")
 
+    def test_design_and_framework_reference_content(self):
+        for relative_path, snippets in EXPECTED_DESIGN_REFERENCE_CONTENT.items():
+            path = ROOT / relative_path
+            text = path.read_text(encoding="utf-8")
+
+            with self.subTest(file=relative_path):
+                for snippet in snippets:
+                    self.assertIn(snippet, text)
+
     def test_legacy_reference_paths_removed(self):
         for relative_path in EXPECTED_LEGACY_REFERENCE_FILES:
             with self.subTest(file=relative_path):
@@ -203,3 +254,10 @@ class PluginLayoutTest(unittest.TestCase):
             self.assertIn("`../../references/core/`", review_text)
             for relative_path in REMOVED_REFERENCE_PATHS:
                 self.assertNotIn(relative_path, review_text)
+
+    def test_source_notes_provenance_and_adaptation(self):
+        text = (ROOT / "references/source-notes.md").read_text(encoding="utf-8")
+
+        for snippet in EXPECTED_SOURCE_NOTES_SNIPPETS:
+            with self.subTest(snippet=snippet):
+                self.assertIn(snippet, text)

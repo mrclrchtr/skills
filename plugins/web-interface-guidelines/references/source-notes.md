@@ -21,7 +21,7 @@ The `references/design/` files preserve that aesthetic-direction guidance in loc
 - `references/core/` remains the closest local match to the Vercel source by topic and severity.
 - `references/design/` holds the local design-point-of-view guidance and keeps the Anthropic influence focused on art direction rather than implementation mechanics.
 - `references/frameworks/react-next.md` holds framework-specific guidance so React and Next.js constraints do not get buried inside the broader core rules.
-- Skill files point into these shared references instead of duplicating the corpus in multiple places.
+- The shared references are organized for consumption by the skill files: `apply` and `review` already point into `references/core/`, while the design and framework docs are prepared for the next skill rewrites.
 
 ## Intentional Omissions
 
