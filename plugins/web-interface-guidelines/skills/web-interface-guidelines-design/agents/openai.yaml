@@ -1,0 +1,4 @@
+interface:
+  display_name: "Web Interface Guidelines Design"
+  short_description: "Define a UI direction before implementation"
+  default_prompt: "Use $web-interface-guidelines-design to define the visual direction for this UI before implementation."
