@@ -1,31 +1,30 @@
 # Source Notes
 
-## Primary Source
+## Vercel Source
 
-These references are adapted from Vercel's public web interface guidelines:
-
-- `https://github.com/vercel-labs/web-interface-guidelines`
+- Source URL: `https://github.com/vercel-labs/web-interface-guidelines`
 - Pinned revision: `3f6b1449dee158479deb8019f6372ff85e663406`
-- Accessed: `2026-03-31`
+- Role: concrete interface rules, anti-patterns, and review discipline
 
-The local reference files reorganize the source material into topic groupings for Codex skill use. They paraphrase and condense the original guidance instead of mirroring the repository verbatim.
+The `references/core/` files stay close to this source by topic and intent, but they are rewritten into shorter local rules that are easier to apply during implementation and review.
 
-## Structural Reference
+## Anthropic Source
 
-Packaging choices were informed by Anthropic's `frontend-design` plugin:
-
-- `https://github.com/anthropics/claude-code/tree/main/plugins/frontend-design`
+- Source URL: `https://github.com/anthropics/claude-code/tree/main/plugins/frontend-design`
 - Pinned revision: `2d5c1bab92971bbdaecdb1767481973215ee7f2d`
-- Accessed: `2026-03-31`
+- Role: design direction, anti-generic stance, and generation posture
 
-The useful pattern from that plugin is structural, not substantive:
+The `references/design/` files preserve that aesthetic-direction guidance in local wording, keeping the opinionated tone without mirroring the upstream plugin structure.
 
-- thin plugin wrapper
-- value concentrated in skill content
-- opinionated, triggerable skill descriptions
+## Local Adaptation Rules
 
-## Adaptation Notes
+- `references/core/` remains the closest local match to the Vercel source by topic and severity.
+- `references/design/` holds the local design-point-of-view guidance and keeps the Anthropic influence focused on art direction rather than implementation mechanics.
+- `references/frameworks/react-next.md` holds framework-specific guidance so React and Next.js constraints do not get buried inside the broader core rules.
+- Skill files point into these shared references instead of duplicating the corpus in multiple places.
 
-- The Vercel guideline set was split into interaction, form, content/accessibility, layout/motion, performance, and design/copywriting references.
-- The plugin intentionally uses two skills instead of one: `apply` for implementation-time guidance and `review` for findings-first audits.
-- No Claude-specific plugin wrapper was added in this iteration.
+## Intentional Omissions
+
+- No Claude-specific wrapper files were added.
+- No marketplace integration is included in this iteration.
+- No exact mirror of the upstream repository layout is attempted.

@@ -36,6 +36,15 @@ EXPECTED_CORE_REFERENCE_FILES = [
     "references/core/anti-patterns.md",
 ]
 
+EXPECTED_DESIGN_AND_FRAMEWORK_REFERENCE_FILES = [
+    "references/design/direction.md",
+    "references/design/typography-color.md",
+    "references/design/motion-composition.md",
+    "references/design/anti-slop.md",
+    "references/frameworks/react-next.md",
+    "references/source-notes.md",
+]
+
 EXPECTED_LEGACY_REFERENCE_FILES = [
     "references/interactions.md",
     "references/forms.md",
@@ -163,10 +172,19 @@ class PluginLayoutTest(unittest.TestCase):
                 path = ROOT / relative_path
                 self.assertTrue(path.exists(), f"missing {path}")
 
+    def test_design_and_framework_reference_layout(self):
+        for relative_path in EXPECTED_DESIGN_AND_FRAMEWORK_REFERENCE_FILES:
+            with self.subTest(file=relative_path):
+                path = ROOT / relative_path
+                self.assertTrue(path.exists(), f"missing {path}")
+
+    def test_legacy_reference_paths_removed(self):
         for relative_path in EXPECTED_LEGACY_REFERENCE_FILES:
             with self.subTest(file=relative_path):
                 path = ROOT / relative_path
-                self.assertFalse(path.exists(), f"legacy file should be removed: {path}")
+                self.assertFalse(
+                    path.exists(), f"legacy file should be removed: {path}"
+                )
 
     def test_apply_and_review_skill_reference_maps(self):
         apply_text = APPLY_SKILL.read_text(encoding="utf-8")
