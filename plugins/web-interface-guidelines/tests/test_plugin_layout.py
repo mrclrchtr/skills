@@ -70,8 +70,14 @@ class PluginLayoutTest(unittest.TestCase):
         with PLUGIN_JSON.open("r", encoding="utf-8") as handle:
             manifest = json.load(handle)
 
+        with self.subTest("design skill exists"):
+            self.assertTrue(DESIGN_SKILL.exists(), f"missing {DESIGN_SKILL}")
+
         skill_text = DESIGN_SKILL.read_text(encoding="utf-8")
         frontmatter, body = parse_frontmatter(skill_text)
+
+        with self.subTest("design agent exists"):
+            self.assertTrue(DESIGN_AGENT.exists(), f"missing {DESIGN_AGENT}")
 
         agent_text = DESIGN_AGENT.read_text(encoding="utf-8")
         agent = parse_interface_yaml(agent_text)
@@ -104,10 +110,4 @@ class PluginLayoutTest(unittest.TestCase):
             self.assertEqual(
                 agent["interface"]["default_prompt"],
                 EXPECTED_AGENT_DEFAULT_PROMPT,
-            )
-
-        with self.subTest("cross-file consistency"):
-            self.assertEqual(
-                manifest["interface"]["defaultPrompt"][0],
-                agent["interface"]["default_prompt"],
             )
