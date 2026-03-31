@@ -9,32 +9,32 @@ max_depth = 4
 
 [agents.architect]
 config_file = "agents/architect.toml"
-description = "Use for high-level system design and architecture decisions."
+description = "Use when the task needs architecture, decomposition, or interface decisions across components. Best for turning ambiguous work into buildable plans, boundaries, and contracts. Avoid for direct implementation or simple code lookup."
 
 [agents.scout]
 config_file = "agents/scout.toml"
-description = "Use for ultra-fast, read-only codebase exploration and information retrieval. It's not smart!"
+description = "Use when you need a fast, read-only lookup such as files, symbols, callers, or entry points. Best for quick answers with minimal synthesis. Avoid for deep multi-file investigation or architectural reasoning."
 
 [agents.explorer]
 config_file = "agents/explorer.toml"
-description = "Use this agent for deeper codebase exploration tasks that require reading multiple files and synthesizing information."
+description = "Use when you need read-only investigation across multiple files. Best for tracing behavior, summarizing subsystems, and gathering evidence before implementation. Avoid for quick lookups or any task that requires edits."
 
 [agents.worker]
 config_file = "agents/worker.toml"
-description = "Generic worker agent that can be used for any purpose."
+description = "Use for clearly scoped work that does not fit a specialist role. Best for general-purpose delegated tasks and parallel execution. Prefer a specialist whenever one clearly matches the job."
 
 [agents.implementer]
 config_file = "agents/implementer.toml"
-description = "Default implementer (recommended for most code changes)."
+description = "Use when the task requires code changes, focused refactors, tests, or validation. Best default for bounded implementation work, and the preferred choice once the plan is clear. Avoid for read-only review or high-level architecture."
 
 [agents.auditor]
 config_file = "agents/auditor.toml"
-description = "Read-only, evidence-based issue-finding audits (no fixes)."
+description = "Use when you want a read-only bug hunt, risk audit, or invariant check backed by concrete evidence. Best for surfacing issues without fixing them. Avoid when the goal is implementation or broad design advice."
 
 [agents.spec_reviewer]
 config_file = "agents/spec_reviewer.toml"
-description = "Use for read-only spec compliance reviews (PASS/FAIL: nothing missing, nothing extra)."
+description = "Use when you need a read-only PASS/FAIL check that implementation matches requirements exactly. Best for verifying nothing is missing and nothing extra was added. Avoid for general code quality review or open-ended bug finding."
 
 [agents.quality_reviewer]
 config_file = "agents/quality_reviewer.toml"
-description = "Use for read-only code quality reviews after spec PASS (maintainability + test quality)."
+description = "Use after spec compliance passes and you want a read-only review of maintainability, correctness risks, and test quality. Best for merge-readiness feedback. Avoid for requirement-matching checks or implementation work."
