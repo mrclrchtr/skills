@@ -8,3 +8,4 @@
 - Avoid overused AI defaults such as interchangeable sans stacks and purple-on-white startup gradients unless the host product explicitly wants them.
 - Use color to communicate emphasis, state, and meaning without flattening every surface into the same treatment.
 - Favor a system that reads clearly on real content, not just on a polished mockup.
+- When two semantic roles share the same hue, mitigate confusion by restricting one role to specific component types so they never appear ambiguous in the same view.

@@ -1,5 +1,6 @@
 # Theming and Copy
 
+- SHOULD edit component library source files when their defaults conflict with the design system's token scale or conventions, rather than layering theme overrides or wrapper hacks on top.
 - MUST set `color-scheme` so form controls and scrollbars match the intended theme.
 - SHOULD set `theme-color` metadata to match the current surface.
 - MUST check contrast with APCA or other perceptual methods when available, and keep contrast higher on hover, active, and focus states.
