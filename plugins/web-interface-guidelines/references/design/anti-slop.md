@@ -7,3 +7,4 @@
 - Distinctive minimalism is valid when it is intentional and coherent.
 - Generic minimalism is not a substitute for a point of view.
 - If the interface is meant to stand out, let typography, spacing, layout rhythm, and surface treatment do real work.
+- Resist the first aesthetic direction that comes to mind; it is usually the most familiar and therefore the most generic.

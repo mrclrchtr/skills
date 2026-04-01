@@ -9,3 +9,5 @@
 - Use color to communicate emphasis, state, and meaning without flattening every surface into the same treatment.
 - Favor a system that reads clearly on real content, not just on a polished mockup.
 - When two semantic roles share the same hue, mitigate confusion by restricting one role to specific component types so they never appear ambiguous in the same view.
+- Anchor the palette around a dominant color with a sharp accent rather than distributing hues evenly; unequal weight creates more visual presence.
+- Choose light or dark mode based on product context and audience rather than defaulting to a personal convention.

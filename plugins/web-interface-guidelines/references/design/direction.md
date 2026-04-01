@@ -7,3 +7,4 @@
 - Preserve the host system's conventions unless the redesign request clearly justifies a stronger departure.
 - Let structure, hierarchy, and content framing do the work before reaching for decorative novelty.
 - Make the final direction feel intentional enough that someone could describe it back after one pass.
+- Reach beyond SaaS conventions for reference: editorial design, gaming UIs, developer tools, physical media, and cultural aesthetics are all valid sources.

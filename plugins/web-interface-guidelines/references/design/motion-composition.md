@@ -7,3 +7,4 @@
 - Use gradients, texture, pattern, shadow, and depth when they strengthen the atmosphere instead of muddying it.
 - Keep composition and motion aligned so the interface feels designed by one hand.
 - Avoid decorative movement that competes with the content or makes the system feel busy.
+- Treat entry and reveal moments as the primary animation budget; a well-orchestrated page load does more than the same effort spread across minor interactions.
