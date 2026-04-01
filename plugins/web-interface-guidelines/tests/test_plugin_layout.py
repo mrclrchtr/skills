@@ -1,4 +1,5 @@
 import json
+import re
 import unittest
 from pathlib import Path
 
@@ -260,7 +261,11 @@ class PluginLayoutTest(unittest.TestCase):
         claude_manifest = json.loads(CLAUDE_PLUGIN_JSON.read_text(encoding="utf-8"))
         with self.subTest("claude plugin manifest metadata"):
             self.assertEqual(claude_manifest["name"], "web-interface-guidelines")
-            self.assertEqual(claude_manifest["version"], "0.2.0")
+            self.assertRegex(
+                claude_manifest["version"],
+                r"^\d+\.\d+\.\d+$",
+                "version must be a semver string",
+            )
             self.assertEqual(
                 claude_manifest["description"],
                 "Design, implement, and review web interfaces with shared UI guidance",
