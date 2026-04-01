@@ -310,13 +310,6 @@ class PluginLayoutTest(unittest.TestCase):
                     self.assertIn(snippet, text)
 
     def test_review_skill_keeps_findings_first_output_contract(self):
-        review_skill = REVIEW_SKILL.read_text(encoding="utf-8")
-
-        self.assertIn("findings first", review_skill)
-        self.assertIn("grouped by file", review_skill)
-        self.assertIn("file:line", review_skill)
-
-    def test_review_skill_keeps_findings_first_output_contract(self):
         review_text = REVIEW_SKILL.read_text(encoding="utf-8")
 
         self.assertIn("findings first", review_text)
@@ -329,10 +322,3 @@ class PluginLayoutTest(unittest.TestCase):
         self.assertIn("findings first", text)
         self.assertIn("grouped by file", text)
         self.assertIn("file:line", text)
-
-    def test_review_skill_keeps_findings_first_output_contract(self):
-        review_text = REVIEW_SKILL.read_text(encoding="utf-8")
-
-        self.assertIn("findings first", review_text)
-        self.assertIn("grouped by file", review_text)
-        self.assertIn("file:line", review_text)
