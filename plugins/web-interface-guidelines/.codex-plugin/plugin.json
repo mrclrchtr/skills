@@ -1,6 +1,6 @@
 {
   "name": "web-interface-guidelines",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Design, implement, and review web interfaces with shared UI guidance",
   "skills": "./skills/",
   "interface": {
