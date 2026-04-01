@@ -8,7 +8,9 @@ PLUGIN_JSON = ROOT / ".codex-plugin" / "plugin.json"
 DESIGN_SKILL = ROOT / "skills" / "web-interface-guidelines-design" / "SKILL.md"
 DESIGN_AGENT = ROOT / "skills" / "web-interface-guidelines-design" / "agents" / "openai.yaml"
 APPLY_SKILL = ROOT / "skills" / "web-interface-guidelines-apply" / "SKILL.md"
+APPLY_AGENT = ROOT / "skills" / "web-interface-guidelines-apply" / "agents" / "openai.yaml"
 REVIEW_SKILL = ROOT / "skills" / "web-interface-guidelines-review" / "SKILL.md"
+REVIEW_AGENT = ROOT / "skills" / "web-interface-guidelines-review" / "agents" / "openai.yaml"
 
 EXPECTED_DEFAULT_PROMPT = [
     "Use $web-interface-guidelines-design to define the visual direction for this UI before implementation.",
@@ -24,6 +26,24 @@ EXPECTED_DESIGN_DESCRIPTION = (
 EXPECTED_AGENT_DEFAULT_PROMPT = (
     "Use $web-interface-guidelines-design to define the visual direction for this UI before implementation."
 )
+
+EXPECTED_AGENT_METADATA = {
+    DESIGN_AGENT: {
+        "display_name": "Web Interface Guidelines Design",
+        "short_description": "Define a strong UI direction before implementation",
+        "default_prompt": EXPECTED_AGENT_DEFAULT_PROMPT,
+    },
+    APPLY_AGENT: {
+        "display_name": "Web Interface Guidelines Apply",
+        "short_description": "Build UI with the shared design and interface guidance",
+        "default_prompt": "Use $web-interface-guidelines-apply to build or update this UI with the shared design and interface guidelines.",
+    },
+    REVIEW_AGENT: {
+        "display_name": "Web Interface Guidelines Review",
+        "short_description": "Audit UI code with findings-first web guidance",
+        "default_prompt": "Use $web-interface-guidelines-review to audit this UI or diff against the shared design and interface guidelines.",
+    },
+}
 
 EXPECTED_CORE_REFERENCE_FILES = [
     "references/core/interactions.md",
@@ -101,6 +121,21 @@ EXPECTED_APPLY_CORE_REFERENCES = [
 EXPECTED_REVIEW_CORE_REFERENCES = EXPECTED_APPLY_CORE_REFERENCES + [
     "../../references/core/anti-patterns.md",
 ]
+
+EXPECTED_SKILL_CONTRACT_MARKERS = {
+    DESIGN_SKILL: [
+        "Present two or three viable directions",
+        "references/design/",
+    ],
+    APPLY_SKILL: [
+        "references/core/",
+        "references/frameworks/react-next.md",
+    ],
+    REVIEW_SKILL: [
+        "file:line",
+        "anti-patterns",
+    ],
+}
 
 EXPECTED_SOURCE_NOTES_SNIPPETS = [
     "https://github.com/vercel-labs/web-interface-guidelines",
@@ -195,17 +230,20 @@ class PluginLayoutTest(unittest.TestCase):
             self.assertIn("two or three viable directions with trade-offs", body)
 
         with self.subTest("design agent interface"):
+            self.assertEqual(agent["interface"], EXPECTED_AGENT_METADATA[DESIGN_AGENT])
+
+        with self.subTest("apply agent interface"):
+            apply_agent = parse_interface_yaml(APPLY_AGENT.read_text(encoding="utf-8"))
             self.assertEqual(
-                agent["interface"]["display_name"],
-                "Web Interface Guidelines Design",
+                apply_agent["interface"], EXPECTED_AGENT_METADATA[APPLY_AGENT]
+            )
+
+        with self.subTest("review agent interface"):
+            review_agent = parse_interface_yaml(
+                REVIEW_AGENT.read_text(encoding="utf-8")
             )
             self.assertEqual(
-                agent["interface"]["short_description"],
-                "Define a UI direction before implementation",
-            )
-            self.assertEqual(
-                agent["interface"]["default_prompt"],
-                EXPECTED_AGENT_DEFAULT_PROMPT,
+                review_agent["interface"], EXPECTED_AGENT_METADATA[REVIEW_AGENT]
             )
 
     def test_core_reference_corpus_layout(self):
@@ -251,7 +289,8 @@ class PluginLayoutTest(unittest.TestCase):
         with self.subTest("review skill core references"):
             for relative_path in EXPECTED_REVIEW_CORE_REFERENCES:
                 self.assertIn(relative_path, review_text)
-            self.assertIn("`../../references/core/`", review_text)
+            self.assertIn("`../../references/core/anti-patterns.md`", review_text)
+            self.assertIn("`../../references/design/anti-slop.md`", review_text)
             for relative_path in REMOVED_REFERENCE_PATHS:
                 self.assertNotIn(relative_path, review_text)
 
@@ -261,3 +300,11 @@ class PluginLayoutTest(unittest.TestCase):
         for snippet in EXPECTED_SOURCE_NOTES_SNIPPETS:
             with self.subTest(snippet=snippet):
                 self.assertIn(snippet, text)
+
+    def test_skill_contract_markers(self):
+        for path, snippets in EXPECTED_SKILL_CONTRACT_MARKERS.items():
+            text = path.read_text(encoding="utf-8")
+
+            for snippet in snippets:
+                with self.subTest(file=path.name, snippet=snippet):
+                    self.assertIn(snippet, text)

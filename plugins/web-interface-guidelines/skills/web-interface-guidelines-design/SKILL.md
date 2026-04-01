@@ -7,19 +7,28 @@ description: Use when creating, redesigning, or restyling a UI and Codex should 
 
 ## Overview
 
-Use this skill when a UI needs a clear visual direction before implementation. The goal is to settle the design intent first so the implementation skill can execute against a concrete direction instead of guessing at style.
+Use this skill to establish a strong design direction before implementation and prevent generic output. It is for moments when the interface needs a deliberate point of view, not a default UI blend.
 
 ## Workflow
 
-1. Review the product context, the UI surface, and any existing design language that should carry through.
-2. Present two or three viable directions with trade-offs so the user can compare the options.
-3. Recommend one direction and explain why it best fits the scope, constraints, and product goals.
-4. Translate the chosen direction into layout, hierarchy, tone, density, and interaction feel before implementation starts.
-5. Hand off to implementation only after the direction is clear and the chosen approach is explicit.
+1. Identify the UI surface, the intended audience, the constraints, and the host product conventions that must stay recognizable.
+2. Read the relevant files under `../../references/design/` and only the core constraints that materially shape the direction.
+3. Present two or three viable directions with trade-offs so the options are explicit, not implicit.
+4. Recommend one direction, commit to it, and explain why it best fits the product goals and constraints.
+5. Name one memorable differentiator that should still be visible after implementation.
+
+## Reference Map
+
+- `../../references/design/direction.md`
+- `../../references/design/typography-color.md`
+- `../../references/design/motion-composition.md`
+- `../../references/design/anti-slop.md`
+- `../../references/core/layout.md`
+- `../../references/core/content-accessibility.md`
 
 ## Guardrails
 
-- Preserve existing design systems unless the task explicitly asks for a stronger redesign.
-- Reject generic default SaaS aesthetics unless that look is intentional.
-- Keep decisions compatible with accessibility, responsiveness, and interactions.
-- Do not choose visual directions that would undermine keyboard support, readable contrast, or mobile behavior.
+- Preserve established product systems unless the task explicitly asks for a stronger redesign.
+- Distinctive minimalism is acceptable; generic output is not.
+- Keep the chosen direction compatible with accessibility, responsiveness, and interactions.
+- Do not trade away keyboard support, contrast, or narrow-width behavior for style.

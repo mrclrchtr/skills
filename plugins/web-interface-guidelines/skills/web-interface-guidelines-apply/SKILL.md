@@ -7,39 +7,35 @@ description: Use when building or modifying frontend UI and implementation choic
 
 ## Overview
 
-Apply a shared set of web interface standards while implementing or updating UI. Use this skill to guide decisions, not to cargo-cult every bullet.
+Implement or update UI while preserving the intended design direction and shared standards. Use this skill to keep the build aligned with the chosen interface instead of drifting toward generic defaults.
 
 ## Workflow
 
-1. Identify the UI surface you are changing: navigation, form, dialog, list, settings screen, marketing page, dashboard.
-2. Read only the relevant shared references under `../../references/core/`.
-3. Implement the change with semantics, keyboard support, loading behavior, error handling, and responsive behavior considered together.
-4. Before finishing, check the core states the UI should support: empty, loading, dense, error, destructive, and mobile.
+1. Start from an approved design direction; if none exists, infer one explicitly from the product context before changing code.
+2. Read the relevant files under `../../references/core/`, `../../references/design/`, and `../../references/frameworks/` that materially affect the surface you are building.
+3. Implement semantics, keyboard interaction, loading states, error states, responsive behavior, and performance together rather than as separate cleanup passes.
+4. Before finishing, check empty, loading, dense, error, destructive, and narrow-width behavior.
+5. Confirm the implementation still matches the chosen design direction and the host product language.
 
 ## Reference Map
 
-- `../../references/core/interactions.md`: focus handling, hit targets, async feedback, URL state, forgiving interactions
-- `../../references/core/forms.md`: labels, submission behavior, validation, autocomplete, placeholders, unsaved changes
-- `../../references/core/animation.md`: reduced motion, compositor-friendly transitions, interruptible motion, SVG guidance
-- `../../references/core/layout.md`: responsive layout, safe areas, overflow control, alignment, state-aware structure
-- `../../references/core/content-accessibility.md`: semantics, naming, headings, skip links, resilient content, locale behavior
-- `../../references/core/performance.md`: render cost, lists, media loading, layout work, latency budgets
-- `../../references/core/theming-copy.md`: contrast, theme metadata, visual detail, active voice, labels, button text, error copy
+- `../../references/core/interactions.md`
+- `../../references/core/forms.md`
+- `../../references/core/animation.md`
+- `../../references/core/layout.md`
+- `../../references/core/content-accessibility.md`
+- `../../references/core/performance.md`
+- `../../references/core/theming-copy.md`
+- `../../references/core/anti-patterns.md`
+- `../../references/design/direction.md`
+- `../../references/design/typography-color.md`
+- `../../references/design/motion-composition.md`
+- `../../references/design/anti-slop.md`
+- `../../references/frameworks/react-next.md`
 
 ## Guardrails
 
 - Prefer native elements before ARIA-heavy custom controls.
-- Preserve established design systems and product language when working in an existing product.
-- Do not add decorative motion that obscures cause and effect or ignores `prefers-reduced-motion`.
-- Keep loading indicators, destructive actions, and form validation explicit.
-- If the task conflicts with the host product's existing patterns, follow the product unless the user asks for a redesign.
-
-## Completion Check
-
-Before claiming the work is ready, verify:
-
-- keyboard access and visible focus for any interactive change
-- loading and error behavior for async actions
-- mobile and narrow-width behavior
-- accessible names for icon-only controls and custom UI
-- copy labels that tell the user what happens next
+- Preserve product language and system conventions when working in an existing interface.
+- Do not add decorative motion that fights the interaction model or ignores `prefers-reduced-motion`.
+- Avoid checklist recital; implement the states, then verify them in context.
