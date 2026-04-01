@@ -9,6 +9,7 @@ This repo currently contains:
 - `skill-creator`: Create a new skill or update an existing skill (created by https://github.com/openai/skills/tree/main/skills/.system/skill-creator)
 - `stitch-downloader`: Download Stitch (stitch.withgoogle.com) screenshots at full resolution (normalize `lh3.googleusercontent.com` size params; avoid committing signed URLs).
 - `web-fetch-to-markdown`: Fetch http/https pages as clean Markdown by preferring content negotiation, then trying sibling `*.md` endpoints, then extracting HTML via Readability and converting to Markdown.
+- `web-interface-guidelines` plugin: Design, implement, and review web interfaces with shared UI guidance for both Codex and Claude.
 
 ## How `agent-orchestrator` differs from `agent-orchestrator-standalone`
 
@@ -30,6 +31,7 @@ This repository is a [Claude Code plugin marketplace](https://code.claude.com/do
 /plugin install git-commit@mrclrchtr-skills
 /plugin install skill-creator@mrclrchtr-skills
 /plugin install web-fetch-to-markdown@mrclrchtr-skills
+/plugin install web-interface-guidelines@mrclrchtr-skills
 ```
 
 But be cautious: All content in this repo is optimized for OpenAI Codex.

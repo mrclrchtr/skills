@@ -45,6 +45,12 @@
       "keywords": ["web", "fetch", "markdown", "scraping"]
     },
     {
+      "name": "web-interface-guidelines",
+      "source": "./plugins/web-interface-guidelines",
+      "description": "Design, implement, and review web interfaces with shared UI guidance",
+      "keywords": ["web", "ui", "frontend", "design", "accessibility"]
+    },
+    {
       "name": "agent-roles",
       "source": "./agents",
       "description": "A collection of agent role configurations for multi-agent workflows. Includes architect, auditor, implementer, reviewer, explorer, and worker roles with tiered variants (medium, high, xhigh) for different task complexity levels.",

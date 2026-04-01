@@ -23,8 +23,13 @@ The `references/design/` files preserve that aesthetic-direction guidance in loc
 - `references/frameworks/react-next.md` holds framework-specific guidance so React and Next.js constraints do not get buried inside the broader core rules.
 - The shared references are organized for consumption by the skill files: `apply` and `review` already point into `references/core/`, while the design and framework docs are prepared for the next skill rewrites.
 
+## Packaging
+
+- The plugin is packaged for both Codex and Claude.
+- `plugins/web-interface-guidelines/.codex-plugin/plugin.json` carries the Codex-facing interface metadata and default prompt list.
+- `plugins/web-interface-guidelines/.claude-plugin/plugin.json` carries the minimal Claude plugin metadata needed for marketplace discovery.
+- The shared `skills/` and `references/` trees remain the single source of truth.
+
 ## Intentional Omissions
 
-- No Claude-specific wrapper files were added.
-- No marketplace integration is included in this iteration.
 - No exact mirror of the upstream repository layout is attempted.

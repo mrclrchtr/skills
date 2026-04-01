@@ -4,7 +4,10 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
+REPO_ROOT = ROOT.parents[1]
 PLUGIN_JSON = ROOT / ".codex-plugin" / "plugin.json"
+CLAUDE_PLUGIN_JSON = ROOT / ".claude-plugin" / "plugin.json"
+ROOT_MARKETPLACE_JSON = REPO_ROOT / ".claude-plugin" / "marketplace.json"
 DESIGN_SKILL = ROOT / "skills" / "web-interface-guidelines-design" / "SKILL.md"
 DESIGN_AGENT = ROOT / "skills" / "web-interface-guidelines-design" / "agents" / "openai.yaml"
 APPLY_SKILL = ROOT / "skills" / "web-interface-guidelines-apply" / "SKILL.md"
@@ -143,6 +146,8 @@ EXPECTED_SOURCE_NOTES_SNIPPETS = [
     "https://github.com/anthropics/claude-code/tree/main/plugins/frontend-design",
     "2d5c1bab92971bbdaecdb1767481973215ee7f2d",
     "organized for consumption by the skill files",
+    "packaged for both Codex and Claude",
+    ".claude-plugin/plugin.json",
 ]
 
 REMOVED_REFERENCE_PATHS = [
@@ -244,6 +249,38 @@ class PluginLayoutTest(unittest.TestCase):
             )
             self.assertEqual(
                 review_agent["interface"], EXPECTED_AGENT_METADATA[REVIEW_AGENT]
+            )
+
+    def test_claude_plugin_manifest_and_marketplace_entry(self):
+        with self.subTest("claude plugin manifest exists"):
+            self.assertTrue(
+                CLAUDE_PLUGIN_JSON.exists(), f"missing {CLAUDE_PLUGIN_JSON}"
+            )
+
+        claude_manifest = json.loads(CLAUDE_PLUGIN_JSON.read_text(encoding="utf-8"))
+        with self.subTest("claude plugin manifest metadata"):
+            self.assertEqual(claude_manifest["name"], "web-interface-guidelines")
+            self.assertEqual(claude_manifest["version"], "0.2.0")
+            self.assertEqual(
+                claude_manifest["description"],
+                "Design, implement, and review web interfaces with shared UI guidance",
+            )
+            self.assertEqual(claude_manifest["author"]["name"], "mrclrchtr")
+            self.assertNotIn("interface", claude_manifest)
+            self.assertNotIn("skills", claude_manifest)
+
+        marketplace = json.loads(ROOT_MARKETPLACE_JSON.read_text(encoding="utf-8"))
+        entry = next(
+            item
+            for item in marketplace["plugins"]
+            if item["name"] == "web-interface-guidelines"
+        )
+
+        with self.subTest("claude marketplace entry"):
+            self.assertEqual(entry["source"], "./plugins/web-interface-guidelines")
+            self.assertEqual(
+                entry["description"],
+                "Design, implement, and review web interfaces with shared UI guidance",
             )
 
     def test_core_reference_corpus_layout(self):
