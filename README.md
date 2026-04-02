@@ -36,6 +36,49 @@ This repository is a [Claude Code plugin marketplace](https://code.claude.com/do
 
 But be cautious: All content in this repo is optimized for OpenAI Codex.
 
+### Codex Local Marketplace
+
+For Codex, the reliable local install pattern is a marketplace entry that points at a local plugin directory.
+
+For a user-global install, add the plugin under `~/.codex/plugins/` and reference it from `~/.agents/plugins/marketplace.json`.
+
+For a repo-local install without committing machine-specific paths:
+
+1. Commit a repo-local marketplace file such as `.agents/plugins/marketplace.json`.
+2. Point the plugin source at a relative path like `./.codex/plugins/web-interface-guidelines`.
+3. Ignore `.codex/plugins/` in the repo's `.gitignore`.
+4. On each machine, create a local symlink from `.codex/plugins/web-interface-guidelines` to your checkout of this plugin.
+
+Example repo-local marketplace entry:
+
+```json
+{
+  "name": "my-repo-local",
+  "plugins": [
+    {
+      "name": "web-interface-guidelines",
+      "source": {
+        "source": "local",
+        "path": "./.codex/plugins/web-interface-guidelines"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}
+```
+
+Example local symlink:
+
+```bash
+mkdir -p .codex/plugins
+ln -s /absolute/path/to/skills/plugins/web-interface-guidelines \
+  .codex/plugins/web-interface-guidelines
+```
+
 ### Vercel Skills CLI
 
 Install one skill at a time via the `skills` CLI from `vercel-labs/skills`:
