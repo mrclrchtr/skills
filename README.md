@@ -9,7 +9,7 @@ This repo currently contains:
 - `skill-creator`: Create a new skill or update an existing skill (created by https://github.com/openai/skills/tree/main/skills/.system/skill-creator)
 - `stitch-downloader`: Download Stitch (stitch.withgoogle.com) screenshots at full resolution (normalize `lh3.googleusercontent.com` size params; avoid committing signed URLs).
 - `web-fetch-to-markdown`: Fetch http/https pages as clean Markdown by preferring content negotiation, then trying sibling `*.md` endpoints, then extracting HTML via Readability and converting to Markdown.
-- `web-interface-guidelines` plugin: Design, implement, and review web interfaces with shared UI guidance for both Codex and Claude.
+- `web-design-guidelines` plugin: Design, implement, and review web interfaces with shared UI guidance for both Codex and Claude.
 
 ## How `agent-orchestrator` differs from `agent-orchestrator-standalone`
 
@@ -31,7 +31,7 @@ This repository is a [Claude Code plugin marketplace](https://code.claude.com/do
 /plugin install git-commit@mrclrchtr-skills
 /plugin install skill-creator@mrclrchtr-skills
 /plugin install web-fetch-to-markdown@mrclrchtr-skills
-/plugin install web-interface-guidelines@mrclrchtr-skills
+/plugin install web-design-guidelines@mrclrchtr-skills
 ```
 
 But be cautious: All content in this repo is optimized for OpenAI Codex.
@@ -45,9 +45,9 @@ For a user-global install, add the plugin under `~/.codex/plugins/` and referenc
 For a repo-local install without committing machine-specific paths:
 
 1. Commit a repo-local marketplace file such as `.agents/plugins/marketplace.json`.
-2. Point the plugin source at a relative path like `./.codex/plugins/web-interface-guidelines`.
+2. Point the plugin source at a relative path like `./.codex/plugins/web-design-guidelines`.
 3. Ignore `.codex/plugins/` in the repo's `.gitignore`.
-4. On each machine, create a local symlink from `.codex/plugins/web-interface-guidelines` to your checkout of this plugin.
+4. On each machine, create a local symlink from `.codex/plugins/web-design-guidelines` to your checkout of this plugin.
 
 Example repo-local marketplace entry:
 
@@ -56,10 +56,10 @@ Example repo-local marketplace entry:
   "name": "my-repo-local",
   "plugins": [
     {
-      "name": "web-interface-guidelines",
+      "name": "web-design-guidelines",
       "source": {
         "source": "local",
-        "path": "./.codex/plugins/web-interface-guidelines"
+        "path": "./.codex/plugins/web-design-guidelines"
       },
       "policy": {
         "installation": "AVAILABLE",
@@ -75,8 +75,8 @@ Example local symlink:
 
 ```bash
 mkdir -p .codex/plugins
-ln -s /absolute/path/to/skills/plugins/web-interface-guidelines \
-  .codex/plugins/web-interface-guidelines
+ln -s /absolute/path/to/skills/plugins/web-design-guidelines \
+  .codex/plugins/web-design-guidelines
 ```
 
 ### Vercel Skills CLI

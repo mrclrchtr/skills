@@ -1,9 +1,9 @@
 ---
-name: web-interface-guidelines-review
+name: web-design-guidelines-review
 description: Use when reviewing existing frontend UI, UI code, or design changes for issues in interactions, accessibility, forms, motion, performance, responsive behavior, or copy.
 ---
 
-# Web Interface Guidelines Review
+# Web Design Guidelines Review
 
 ## Overview
 

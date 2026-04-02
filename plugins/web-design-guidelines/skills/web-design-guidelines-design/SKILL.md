@@ -1,9 +1,9 @@
 ---
-name: web-interface-guidelines-design
+name: web-design-guidelines-design
 description: Use when creating, redesigning, or restyling a UI and Codex should establish a clear design direction before implementation.
 ---
 
-# Web Interface Guidelines Design
+# Web Design Guidelines Design
 
 ## Overview
 

@@ -26,8 +26,8 @@ The `references/design/` files preserve that aesthetic-direction guidance in loc
 ## Packaging
 
 - The plugin is packaged for both Codex and Claude.
-- `plugins/web-interface-guidelines/.codex-plugin/plugin.json` carries the Codex-facing interface metadata and default prompt list.
-- `plugins/web-interface-guidelines/.claude-plugin/plugin.json` carries the minimal Claude plugin metadata needed for marketplace discovery.
+- `plugins/web-design-guidelines/.codex-plugin/plugin.json` carries the Codex-facing interface metadata and default prompt list.
+- `plugins/web-design-guidelines/.claude-plugin/plugin.json` carries the minimal Claude plugin metadata needed for marketplace discovery.
 - The shared `skills/` and `references/` trees remain the single source of truth.
 
 ## Intentional Omissions

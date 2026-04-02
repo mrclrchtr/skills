@@ -1,4 +1,0 @@
-interface:
-  display_name: "Web Interface Guidelines Apply"
-  short_description: "Build UI with the shared design and interface guidance"
-  default_prompt: "Use $web-interface-guidelines-apply to build or update this UI with the shared design and interface guidelines."

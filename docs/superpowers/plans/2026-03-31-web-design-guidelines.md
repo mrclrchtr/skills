@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Redesign `plugins/web-interface-guidelines` into a three-skill plugin with a close-to-source shared reference corpus for design, implementation, and review.
+**Goal:** Redesign `plugins/web-design-guidelines` into a three-skill plugin with a close-to-source shared reference corpus for design, implementation, and review.
 
 **Architecture:** Keep the plugin repo-local and thin. Move most of the value into three focused skills plus a shared `references/` tree split into `core/`, `design/`, and `frameworks/`; use one lightweight Python structure test and the repo's skill validator to keep the layout, prompts, and critical contract markers from drifting.
 
@@ -14,49 +14,49 @@
 
 ### Create
 
-- `plugins/web-interface-guidelines/skills/web-interface-guidelines-design/SKILL.md`
-- `plugins/web-interface-guidelines/skills/web-interface-guidelines-design/agents/openai.yaml`
-- `plugins/web-interface-guidelines/references/core/interactions.md`
-- `plugins/web-interface-guidelines/references/core/forms.md`
-- `plugins/web-interface-guidelines/references/core/animation.md`
-- `plugins/web-interface-guidelines/references/core/layout.md`
-- `plugins/web-interface-guidelines/references/core/content-accessibility.md`
-- `plugins/web-interface-guidelines/references/core/performance.md`
-- `plugins/web-interface-guidelines/references/core/theming-copy.md`
-- `plugins/web-interface-guidelines/references/core/anti-patterns.md`
-- `plugins/web-interface-guidelines/references/design/direction.md`
-- `plugins/web-interface-guidelines/references/design/typography-color.md`
-- `plugins/web-interface-guidelines/references/design/motion-composition.md`
-- `plugins/web-interface-guidelines/references/design/anti-slop.md`
-- `plugins/web-interface-guidelines/references/frameworks/react-next.md`
-- `plugins/web-interface-guidelines/tests/test_plugin_layout.py`
+- `plugins/web-design-guidelines/skills/web-design-guidelines-design/SKILL.md`
+- `plugins/web-design-guidelines/skills/web-design-guidelines-design/agents/openai.yaml`
+- `plugins/web-design-guidelines/references/core/interactions.md`
+- `plugins/web-design-guidelines/references/core/forms.md`
+- `plugins/web-design-guidelines/references/core/animation.md`
+- `plugins/web-design-guidelines/references/core/layout.md`
+- `plugins/web-design-guidelines/references/core/content-accessibility.md`
+- `plugins/web-design-guidelines/references/core/performance.md`
+- `plugins/web-design-guidelines/references/core/theming-copy.md`
+- `plugins/web-design-guidelines/references/core/anti-patterns.md`
+- `plugins/web-design-guidelines/references/design/direction.md`
+- `plugins/web-design-guidelines/references/design/typography-color.md`
+- `plugins/web-design-guidelines/references/design/motion-composition.md`
+- `plugins/web-design-guidelines/references/design/anti-slop.md`
+- `plugins/web-design-guidelines/references/frameworks/react-next.md`
+- `plugins/web-design-guidelines/tests/test_plugin_layout.py`
 
 ### Modify
 
-- `plugins/web-interface-guidelines/.codex-plugin/plugin.json`
-- `plugins/web-interface-guidelines/skills/web-interface-guidelines-apply/SKILL.md`
-- `plugins/web-interface-guidelines/skills/web-interface-guidelines-apply/agents/openai.yaml`
-- `plugins/web-interface-guidelines/skills/web-interface-guidelines-review/SKILL.md`
-- `plugins/web-interface-guidelines/skills/web-interface-guidelines-review/agents/openai.yaml`
-- `plugins/web-interface-guidelines/references/source-notes.md`
+- `plugins/web-design-guidelines/.codex-plugin/plugin.json`
+- `plugins/web-design-guidelines/skills/web-design-guidelines-apply/SKILL.md`
+- `plugins/web-design-guidelines/skills/web-design-guidelines-apply/agents/openai.yaml`
+- `plugins/web-design-guidelines/skills/web-design-guidelines-review/SKILL.md`
+- `plugins/web-design-guidelines/skills/web-design-guidelines-review/agents/openai.yaml`
+- `plugins/web-design-guidelines/references/source-notes.md`
 
 ### Delete
 
-- `plugins/web-interface-guidelines/references/interactions.md`
-- `plugins/web-interface-guidelines/references/forms.md`
-- `plugins/web-interface-guidelines/references/content-accessibility.md`
-- `plugins/web-interface-guidelines/references/layout-motion.md`
-- `plugins/web-interface-guidelines/references/performance.md`
-- `plugins/web-interface-guidelines/references/design-copywriting.md`
+- `plugins/web-design-guidelines/references/interactions.md`
+- `plugins/web-design-guidelines/references/forms.md`
+- `plugins/web-design-guidelines/references/content-accessibility.md`
+- `plugins/web-design-guidelines/references/layout-motion.md`
+- `plugins/web-design-guidelines/references/performance.md`
+- `plugins/web-design-guidelines/references/design-copywriting.md`
 
 ## Task 1: Establish the three-skill plugin contract
 
 **Files:**
-- Create: `plugins/web-interface-guidelines/tests/test_plugin_layout.py`
-- Create: `plugins/web-interface-guidelines/skills/web-interface-guidelines-design/SKILL.md`
-- Create: `plugins/web-interface-guidelines/skills/web-interface-guidelines-design/agents/openai.yaml`
-- Modify: `plugins/web-interface-guidelines/.codex-plugin/plugin.json`
-- Test: `plugins/web-interface-guidelines/tests/test_plugin_layout.py`
+- Create: `plugins/web-design-guidelines/tests/test_plugin_layout.py`
+- Create: `plugins/web-design-guidelines/skills/web-design-guidelines-design/SKILL.md`
+- Create: `plugins/web-design-guidelines/skills/web-design-guidelines-design/agents/openai.yaml`
+- Modify: `plugins/web-design-guidelines/.codex-plugin/plugin.json`
+- Test: `plugins/web-design-guidelines/tests/test_plugin_layout.py`
 
 - [ ] **Step 1: Write the failing structure test**
 
@@ -67,7 +67,7 @@ import unittest
 
 
 ROOT = pathlib.Path(__file__).resolve().parents[3]
-PLUGIN = ROOT / "plugins/web-interface-guidelines"
+PLUGIN = ROOT / "plugins/web-design-guidelines"
 
 
 class WebInterfaceGuidelinesLayoutTest(unittest.TestCase):
@@ -78,20 +78,20 @@ class WebInterfaceGuidelinesLayoutTest(unittest.TestCase):
         self.assertEqual(
             manifest["interface"]["defaultPrompt"],
             [
-                "Use $web-interface-guidelines-design to define the visual direction for this UI before implementation.",
-                "Use $web-interface-guidelines-apply to build or update this UI with the shared design and interface guidelines.",
-                "Use $web-interface-guidelines-review to audit this UI or diff against the shared design and interface guidelines.",
+                "Use $web-design-guidelines-design to define the visual direction for this UI before implementation.",
+                "Use $web-design-guidelines-apply to build or update this UI with the shared design and interface guidelines.",
+                "Use $web-design-guidelines-review to audit this UI or diff against the shared design and interface guidelines.",
             ],
         )
 
     def test_design_skill_exists_with_agent_metadata(self) -> None:
         self.assertTrue(
-            (PLUGIN / "skills/web-interface-guidelines-design/SKILL.md").exists()
+            (PLUGIN / "skills/web-design-guidelines-design/SKILL.md").exists()
         )
         self.assertTrue(
             (
                 PLUGIN
-                / "skills/web-interface-guidelines-design/agents/openai.yaml"
+                / "skills/web-design-guidelines-design/agents/openai.yaml"
             ).exists()
         )
 
@@ -102,15 +102,15 @@ if __name__ == "__main__":
 
 - [ ] **Step 2: Run the test to verify the current plugin fails**
 
-Run: `python3 -m unittest plugins/web-interface-guidelines/tests/test_plugin_layout.py -v`
+Run: `python3 -m unittest plugins/web-design-guidelines/tests/test_plugin_layout.py -v`
 
-Expected: FAIL because `plugin.json` still advertises two prompts and the `web-interface-guidelines-design` skill files do not exist.
+Expected: FAIL because `plugin.json` still advertises two prompts and the `web-design-guidelines-design` skill files do not exist.
 
 - [ ] **Step 3: Update the plugin manifest and scaffold the new design skill**
 
 ```json
 {
-  "name": "web-interface-guidelines",
+  "name": "web-design-guidelines",
   "version": "0.2.0",
   "description": "Design, implement, and review web interfaces with shared UI guidance",
   "skills": "./skills/",
@@ -125,9 +125,9 @@ Expected: FAIL because `plugin.json` still advertises two prompts and the `web-i
       "Write"
     ],
     "defaultPrompt": [
-      "Use $web-interface-guidelines-design to define the visual direction for this UI before implementation.",
-      "Use $web-interface-guidelines-apply to build or update this UI with the shared design and interface guidelines.",
-      "Use $web-interface-guidelines-review to audit this UI or diff against the shared design and interface guidelines."
+      "Use $web-design-guidelines-design to define the visual direction for this UI before implementation.",
+      "Use $web-design-guidelines-apply to build or update this UI with the shared design and interface guidelines.",
+      "Use $web-design-guidelines-review to audit this UI or diff against the shared design and interface guidelines."
     ]
   }
 }
@@ -135,7 +135,7 @@ Expected: FAIL because `plugin.json` still advertises two prompts and the `web-i
 
 ```markdown
 ---
-name: web-interface-guidelines-design
+name: web-design-guidelines-design
 description: Use when creating, redesigning, or restyling a UI and Codex should establish a clear design direction before implementation.
 ---
 
@@ -164,12 +164,12 @@ Establish a strong, explicit design direction before UI implementation begins. T
 interface:
   display_name: "Web Interface Guidelines Design"
   short_description: "Define a UI direction before implementation"
-  default_prompt: "Use $web-interface-guidelines-design to define the visual direction for this UI before implementation."
+  default_prompt: "Use $web-design-guidelines-design to define the visual direction for this UI before implementation."
 ```
 
 - [ ] **Step 4: Run the structure test again**
 
-Run: `python3 -m unittest plugins/web-interface-guidelines/tests/test_plugin_layout.py -v`
+Run: `python3 -m unittest plugins/web-design-guidelines/tests/test_plugin_layout.py -v`
 
 Expected: PASS with `Ran 2 tests` and `OK`.
 
@@ -177,32 +177,32 @@ Expected: PASS with `Ran 2 tests` and `OK`.
 
 ```bash
 git add \
-  plugins/web-interface-guidelines/.codex-plugin/plugin.json \
-  plugins/web-interface-guidelines/skills/web-interface-guidelines-design/SKILL.md \
-  plugins/web-interface-guidelines/skills/web-interface-guidelines-design/agents/openai.yaml \
-  plugins/web-interface-guidelines/tests/test_plugin_layout.py
-git commit -m "feat(web-interface-guidelines): add three-skill plugin contract"
+  plugins/web-design-guidelines/.codex-plugin/plugin.json \
+  plugins/web-design-guidelines/skills/web-design-guidelines-design/SKILL.md \
+  plugins/web-design-guidelines/skills/web-design-guidelines-design/agents/openai.yaml \
+  plugins/web-design-guidelines/tests/test_plugin_layout.py
+git commit -m "feat(web-design-guidelines): add three-skill plugin contract"
 ```
 
 ## Task 2: Replace the flattened guidance with core references
 
 **Files:**
-- Modify: `plugins/web-interface-guidelines/tests/test_plugin_layout.py`
-- Create: `plugins/web-interface-guidelines/references/core/interactions.md`
-- Create: `plugins/web-interface-guidelines/references/core/forms.md`
-- Create: `plugins/web-interface-guidelines/references/core/animation.md`
-- Create: `plugins/web-interface-guidelines/references/core/layout.md`
-- Create: `plugins/web-interface-guidelines/references/core/content-accessibility.md`
-- Create: `plugins/web-interface-guidelines/references/core/performance.md`
-- Create: `plugins/web-interface-guidelines/references/core/theming-copy.md`
-- Create: `plugins/web-interface-guidelines/references/core/anti-patterns.md`
-- Delete: `plugins/web-interface-guidelines/references/interactions.md`
-- Delete: `plugins/web-interface-guidelines/references/forms.md`
-- Delete: `plugins/web-interface-guidelines/references/content-accessibility.md`
-- Delete: `plugins/web-interface-guidelines/references/layout-motion.md`
-- Delete: `plugins/web-interface-guidelines/references/performance.md`
-- Delete: `plugins/web-interface-guidelines/references/design-copywriting.md`
-- Test: `plugins/web-interface-guidelines/tests/test_plugin_layout.py`
+- Modify: `plugins/web-design-guidelines/tests/test_plugin_layout.py`
+- Create: `plugins/web-design-guidelines/references/core/interactions.md`
+- Create: `plugins/web-design-guidelines/references/core/forms.md`
+- Create: `plugins/web-design-guidelines/references/core/animation.md`
+- Create: `plugins/web-design-guidelines/references/core/layout.md`
+- Create: `plugins/web-design-guidelines/references/core/content-accessibility.md`
+- Create: `plugins/web-design-guidelines/references/core/performance.md`
+- Create: `plugins/web-design-guidelines/references/core/theming-copy.md`
+- Create: `plugins/web-design-guidelines/references/core/anti-patterns.md`
+- Delete: `plugins/web-design-guidelines/references/interactions.md`
+- Delete: `plugins/web-design-guidelines/references/forms.md`
+- Delete: `plugins/web-design-guidelines/references/content-accessibility.md`
+- Delete: `plugins/web-design-guidelines/references/layout-motion.md`
+- Delete: `plugins/web-design-guidelines/references/performance.md`
+- Delete: `plugins/web-design-guidelines/references/design-copywriting.md`
+- Test: `plugins/web-design-guidelines/tests/test_plugin_layout.py`
 
 - [ ] **Step 1: Extend the test to require the new core inventory and reject the old flat files**
 
@@ -235,14 +235,14 @@ git commit -m "feat(web-interface-guidelines): add three-skill plugin contract"
 
 - [ ] **Step 2: Run the test and verify it fails on the missing core files**
 
-Run: `python3 -m unittest plugins/web-interface-guidelines/tests/test_plugin_layout.py -v`
+Run: `python3 -m unittest plugins/web-design-guidelines/tests/test_plugin_layout.py -v`
 
 Expected: FAIL on `test_core_reference_inventory_matches_the_new_layout` because the `references/core/` files do not exist yet and the legacy flat files still exist.
 
 - [ ] **Step 3: Write the new core references and remove the superseded flat files**
 
 ```markdown
-# plugins/web-interface-guidelines/references/core/interactions.md
+# plugins/web-design-guidelines/references/core/interactions.md
 # Interactions
 
 ## Keyboard
@@ -277,7 +277,7 @@ Expected: FAIL on `test_core_reference_inventory_matches_the_new_layout` because
 ```
 
 ```markdown
-# plugins/web-interface-guidelines/references/core/forms.md
+# plugins/web-design-guidelines/references/core/forms.md
 # Forms
 
 - MUST: Every form control has a programmatic label.
@@ -295,7 +295,7 @@ Expected: FAIL on `test_core_reference_inventory_matches_the_new_layout` because
 ```
 
 ```markdown
-# plugins/web-interface-guidelines/references/core/animation.md
+# plugins/web-design-guidelines/references/core/animation.md
 # Animation
 
 - MUST: Honor `prefers-reduced-motion` with a reduced or disabled variant.
@@ -311,7 +311,7 @@ Expected: FAIL on `test_core_reference_inventory_matches_the_new_layout` because
 ```
 
 ```markdown
-# plugins/web-interface-guidelines/references/core/layout.md
+# plugins/web-design-guidelines/references/core/layout.md
 # Layout
 
 - SHOULD: Use optical alignment when perception beats geometry.
@@ -325,7 +325,7 @@ Expected: FAIL on `test_core_reference_inventory_matches_the_new_layout` because
 ```
 
 ```markdown
-# plugins/web-interface-guidelines/references/core/content-accessibility.md
+# plugins/web-design-guidelines/references/core/content-accessibility.md
 # Content and Accessibility
 
 - SHOULD: Prefer inline help over tooltips.
@@ -344,7 +344,7 @@ Expected: FAIL on `test_core_reference_inventory_matches_the_new_layout` because
 ```
 
 ```markdown
-# plugins/web-interface-guidelines/references/core/performance.md
+# plugins/web-design-guidelines/references/core/performance.md
 # Performance
 
 - SHOULD: Test on constrained devices and browsers, not just a fast desktop browser.
@@ -361,7 +361,7 @@ Expected: FAIL on `test_core_reference_inventory_matches_the_new_layout` because
 ```
 
 ```markdown
-# plugins/web-interface-guidelines/references/core/theming-copy.md
+# plugins/web-design-guidelines/references/core/theming-copy.md
 # Theming and Copy
 
 ## Theming
@@ -385,7 +385,7 @@ Expected: FAIL on `test_core_reference_inventory_matches_the_new_layout` because
 ```
 
 ```markdown
-# plugins/web-interface-guidelines/references/core/anti-patterns.md
+# plugins/web-design-guidelines/references/core/anti-patterns.md
 # Anti-Patterns
 
 - Flag `user-scalable=no` and `maximum-scale=1`.
@@ -402,17 +402,17 @@ Expected: FAIL on `test_core_reference_inventory_matches_the_new_layout` because
 
 ```bash
 rm \
-  plugins/web-interface-guidelines/references/interactions.md \
-  plugins/web-interface-guidelines/references/forms.md \
-  plugins/web-interface-guidelines/references/content-accessibility.md \
-  plugins/web-interface-guidelines/references/layout-motion.md \
-  plugins/web-interface-guidelines/references/performance.md \
-  plugins/web-interface-guidelines/references/design-copywriting.md
+  plugins/web-design-guidelines/references/interactions.md \
+  plugins/web-design-guidelines/references/forms.md \
+  plugins/web-design-guidelines/references/content-accessibility.md \
+  plugins/web-design-guidelines/references/layout-motion.md \
+  plugins/web-design-guidelines/references/performance.md \
+  plugins/web-design-guidelines/references/design-copywriting.md
 ```
 
 - [ ] **Step 4: Run the test again**
 
-Run: `python3 -m unittest plugins/web-interface-guidelines/tests/test_plugin_layout.py -v`
+Run: `python3 -m unittest plugins/web-design-guidelines/tests/test_plugin_layout.py -v`
 
 Expected: PASS with `Ran 3 tests` and `OK`.
 
@@ -420,24 +420,24 @@ Expected: PASS with `Ran 3 tests` and `OK`.
 
 ```bash
 git add \
-  plugins/web-interface-guidelines/references/core \
-  plugins/web-interface-guidelines/tests/test_plugin_layout.py \
-  plugins/web-interface-guidelines/references/source-notes.md \
-  plugins/web-interface-guidelines/references
-git commit -m "refactor(web-interface-guidelines): split core reference corpus"
+  plugins/web-design-guidelines/references/core \
+  plugins/web-design-guidelines/tests/test_plugin_layout.py \
+  plugins/web-design-guidelines/references/source-notes.md \
+  plugins/web-design-guidelines/references
+git commit -m "refactor(web-design-guidelines): split core reference corpus"
 ```
 
 ## Task 3: Add design and framework-specific references
 
 **Files:**
-- Modify: `plugins/web-interface-guidelines/tests/test_plugin_layout.py`
-- Create: `plugins/web-interface-guidelines/references/design/direction.md`
-- Create: `plugins/web-interface-guidelines/references/design/typography-color.md`
-- Create: `plugins/web-interface-guidelines/references/design/motion-composition.md`
-- Create: `plugins/web-interface-guidelines/references/design/anti-slop.md`
-- Create: `plugins/web-interface-guidelines/references/frameworks/react-next.md`
-- Modify: `plugins/web-interface-guidelines/references/source-notes.md`
-- Test: `plugins/web-interface-guidelines/tests/test_plugin_layout.py`
+- Modify: `plugins/web-design-guidelines/tests/test_plugin_layout.py`
+- Create: `plugins/web-design-guidelines/references/design/direction.md`
+- Create: `plugins/web-design-guidelines/references/design/typography-color.md`
+- Create: `plugins/web-design-guidelines/references/design/motion-composition.md`
+- Create: `plugins/web-design-guidelines/references/design/anti-slop.md`
+- Create: `plugins/web-design-guidelines/references/frameworks/react-next.md`
+- Modify: `plugins/web-design-guidelines/references/source-notes.md`
+- Test: `plugins/web-design-guidelines/tests/test_plugin_layout.py`
 
 - [ ] **Step 1: Extend the test with design and framework reference expectations**
 
@@ -457,14 +457,14 @@ git commit -m "refactor(web-interface-guidelines): split core reference corpus"
 
 - [ ] **Step 2: Run the test and confirm it fails on the new reference files**
 
-Run: `python3 -m unittest plugins/web-interface-guidelines/tests/test_plugin_layout.py -v`
+Run: `python3 -m unittest plugins/web-design-guidelines/tests/test_plugin_layout.py -v`
 
 Expected: FAIL on `test_design_and_framework_references_exist` because the design and framework files do not exist yet.
 
 - [ ] **Step 3: Write the Anthropic-derived design refs, React/Next add-on, and explicit source notes**
 
 ```markdown
-# plugins/web-interface-guidelines/references/design/direction.md
+# plugins/web-design-guidelines/references/design/direction.md
 # Direction
 
 - Start by identifying the purpose, audience, and tone of the interface.
@@ -476,7 +476,7 @@ Expected: FAIL on `test_design_and_framework_references_exist` because the desig
 ```
 
 ```markdown
-# plugins/web-interface-guidelines/references/design/typography-color.md
+# plugins/web-design-guidelines/references/design/typography-color.md
 # Typography and Color
 
 - Make typography a first-class choice rather than falling back to common default stacks.
@@ -488,7 +488,7 @@ Expected: FAIL on `test_design_and_framework_references_exist` because the desig
 ```
 
 ```markdown
-# plugins/web-interface-guidelines/references/design/motion-composition.md
+# plugins/web-design-guidelines/references/design/motion-composition.md
 # Motion and Composition
 
 - Use motion to reinforce hierarchy, reveal structure, and clarify cause and effect.
@@ -499,7 +499,7 @@ Expected: FAIL on `test_design_and_framework_references_exist` because the desig
 ```
 
 ```markdown
-# plugins/web-interface-guidelines/references/design/anti-slop.md
+# plugins/web-design-guidelines/references/design/anti-slop.md
 # Anti-Slop
 
 - Do not ship interchangeable SaaS layouts that could belong to any product.
@@ -510,7 +510,7 @@ Expected: FAIL on `test_design_and_framework_references_exist` because the desig
 ```
 
 ```markdown
-# plugins/web-interface-guidelines/references/frameworks/react-next.md
+# plugins/web-design-guidelines/references/frameworks/react-next.md
 # React and Next.js
 
 - Treat hydration safety as a first-class concern for inputs and date or time rendering.
@@ -523,13 +523,13 @@ Expected: FAIL on `test_design_and_framework_references_exist` because the desig
 ```
 
 ```markdown
-# plugins/web-interface-guidelines/references/source-notes.md
+# plugins/web-design-guidelines/references/source-notes.md
 # Source Notes
 
 ## Upstream Sources
 
 - Vercel interface guidance:
-  - `https://github.com/vercel-labs/web-interface-guidelines`
+  - `https://github.com/vercel-labs/web-design-guidelines`
   - pinned revision: `3f6b1449dee158479deb8019f6372ff85e663406`
   - role in this plugin: concrete interface rules, anti-patterns, and review discipline
 - Anthropic frontend design guidance:
@@ -553,7 +553,7 @@ Expected: FAIL on `test_design_and_framework_references_exist` because the desig
 
 - [ ] **Step 4: Run the layout test again**
 
-Run: `python3 -m unittest plugins/web-interface-guidelines/tests/test_plugin_layout.py -v`
+Run: `python3 -m unittest plugins/web-design-guidelines/tests/test_plugin_layout.py -v`
 
 Expected: PASS with `Ran 4 tests` and `OK`.
 
@@ -561,37 +561,37 @@ Expected: PASS with `Ran 4 tests` and `OK`.
 
 ```bash
 git add \
-  plugins/web-interface-guidelines/references/design \
-  plugins/web-interface-guidelines/references/frameworks \
-  plugins/web-interface-guidelines/references/source-notes.md \
-  plugins/web-interface-guidelines/tests/test_plugin_layout.py
-git commit -m "feat(web-interface-guidelines): add design and framework guidance"
+  plugins/web-design-guidelines/references/design \
+  plugins/web-design-guidelines/references/frameworks \
+  plugins/web-design-guidelines/references/source-notes.md \
+  plugins/web-design-guidelines/tests/test_plugin_layout.py
+git commit -m "feat(web-design-guidelines): add design and framework guidance"
 ```
 
 ## Task 4: Rewrite the apply and review skills around the new corpus
 
 **Files:**
-- Modify: `plugins/web-interface-guidelines/tests/test_plugin_layout.py`
-- Modify: `plugins/web-interface-guidelines/skills/web-interface-guidelines-design/SKILL.md`
-- Modify: `plugins/web-interface-guidelines/skills/web-interface-guidelines-design/agents/openai.yaml`
-- Modify: `plugins/web-interface-guidelines/skills/web-interface-guidelines-apply/SKILL.md`
-- Modify: `plugins/web-interface-guidelines/skills/web-interface-guidelines-apply/agents/openai.yaml`
-- Modify: `plugins/web-interface-guidelines/skills/web-interface-guidelines-review/SKILL.md`
-- Modify: `plugins/web-interface-guidelines/skills/web-interface-guidelines-review/agents/openai.yaml`
-- Test: `plugins/web-interface-guidelines/tests/test_plugin_layout.py`
+- Modify: `plugins/web-design-guidelines/tests/test_plugin_layout.py`
+- Modify: `plugins/web-design-guidelines/skills/web-design-guidelines-design/SKILL.md`
+- Modify: `plugins/web-design-guidelines/skills/web-design-guidelines-design/agents/openai.yaml`
+- Modify: `plugins/web-design-guidelines/skills/web-design-guidelines-apply/SKILL.md`
+- Modify: `plugins/web-design-guidelines/skills/web-design-guidelines-apply/agents/openai.yaml`
+- Modify: `plugins/web-design-guidelines/skills/web-design-guidelines-review/SKILL.md`
+- Modify: `plugins/web-design-guidelines/skills/web-design-guidelines-review/agents/openai.yaml`
+- Test: `plugins/web-design-guidelines/tests/test_plugin_layout.py`
 
 - [ ] **Step 1: Extend the test to lock in the critical skill contract markers**
 
 ```python
     def test_skill_contract_markers_exist(self) -> None:
         design_skill = (
-            PLUGIN / "skills/web-interface-guidelines-design/SKILL.md"
+            PLUGIN / "skills/web-design-guidelines-design/SKILL.md"
         ).read_text(encoding="utf-8")
         apply_skill = (
-            PLUGIN / "skills/web-interface-guidelines-apply/SKILL.md"
+            PLUGIN / "skills/web-design-guidelines-apply/SKILL.md"
         ).read_text(encoding="utf-8")
         review_skill = (
-            PLUGIN / "skills/web-interface-guidelines-review/SKILL.md"
+            PLUGIN / "skills/web-design-guidelines-review/SKILL.md"
         ).read_text(encoding="utf-8")
 
         self.assertIn("Present two or three viable directions", design_skill)
@@ -604,7 +604,7 @@ git commit -m "feat(web-interface-guidelines): add design and framework guidance
 
 - [ ] **Step 2: Run the test and confirm it fails before the skill rewrites**
 
-Run: `python3 -m unittest plugins/web-interface-guidelines/tests/test_plugin_layout.py -v`
+Run: `python3 -m unittest plugins/web-design-guidelines/tests/test_plugin_layout.py -v`
 
 Expected: FAIL on `test_skill_contract_markers_exist` because the existing `apply` and `review` skills still point at the old flattened corpus and the design skill is only a scaffold.
 
@@ -612,7 +612,7 @@ Expected: FAIL on `test_skill_contract_markers_exist` because the existing `appl
 
 ```markdown
 ---
-name: web-interface-guidelines-design
+name: web-design-guidelines-design
 description: Use when creating, redesigning, or restyling a UI and Codex should establish a clear design direction before implementation.
 ---
 
@@ -648,7 +648,7 @@ Establish a strong design direction before implementation begins. Use this skill
 
 ```markdown
 ---
-name: web-interface-guidelines-apply
+name: web-design-guidelines-apply
 description: Use when building or modifying frontend UI and implementation choices should follow the shared design, interaction, accessibility, performance, and copy guidance.
 ---
 
@@ -690,7 +690,7 @@ Implement or update UI in a way that preserves the intended direction while meet
 
 ```markdown
 ---
-name: web-interface-guidelines-review
+name: web-design-guidelines-review
 description: Use when reviewing existing frontend UI or UI code for issues in direction, interactions, accessibility, forms, motion, performance, or copy.
 ---
 
@@ -728,32 +728,32 @@ Audit UI code or diffs against the shared guideline corpus with findings first, 
 ```
 
 ```yaml
-# plugins/web-interface-guidelines/skills/web-interface-guidelines-design/agents/openai.yaml
+# plugins/web-design-guidelines/skills/web-design-guidelines-design/agents/openai.yaml
 interface:
   display_name: "Web Interface Guidelines Design"
   short_description: "Define a strong UI direction before implementation"
-  default_prompt: "Use $web-interface-guidelines-design to define the visual direction for this UI before implementation."
+  default_prompt: "Use $web-design-guidelines-design to define the visual direction for this UI before implementation."
 ```
 
 ```yaml
-# plugins/web-interface-guidelines/skills/web-interface-guidelines-apply/agents/openai.yaml
+# plugins/web-design-guidelines/skills/web-design-guidelines-apply/agents/openai.yaml
 interface:
   display_name: "Web Interface Guidelines Apply"
   short_description: "Build UI with the shared design and interface guidance"
-  default_prompt: "Use $web-interface-guidelines-apply to build or update this UI with the shared design and interface guidelines."
+  default_prompt: "Use $web-design-guidelines-apply to build or update this UI with the shared design and interface guidelines."
 ```
 
 ```yaml
-# plugins/web-interface-guidelines/skills/web-interface-guidelines-review/agents/openai.yaml
+# plugins/web-design-guidelines/skills/web-design-guidelines-review/agents/openai.yaml
 interface:
   display_name: "Web Interface Guidelines Review"
   short_description: "Audit UI code with findings-first web guidance"
-  default_prompt: "Use $web-interface-guidelines-review to audit this UI or diff against the shared design and interface guidelines."
+  default_prompt: "Use $web-design-guidelines-review to audit this UI or diff against the shared design and interface guidelines."
 ```
 
 - [ ] **Step 4: Run the layout test again**
 
-Run: `python3 -m unittest plugins/web-interface-guidelines/tests/test_plugin_layout.py -v`
+Run: `python3 -m unittest plugins/web-design-guidelines/tests/test_plugin_layout.py -v`
 
 Expected: PASS with `Ran 5 tests` and `OK`.
 
@@ -761,18 +761,18 @@ Expected: PASS with `Ran 5 tests` and `OK`.
 
 ```bash
 git add \
-  plugins/web-interface-guidelines/skills/web-interface-guidelines-design \
-  plugins/web-interface-guidelines/skills/web-interface-guidelines-apply \
-  plugins/web-interface-guidelines/skills/web-interface-guidelines-review \
-  plugins/web-interface-guidelines/tests/test_plugin_layout.py
-git commit -m "feat(web-interface-guidelines): rewrite skill contracts"
+  plugins/web-design-guidelines/skills/web-design-guidelines-design \
+  plugins/web-design-guidelines/skills/web-design-guidelines-apply \
+  plugins/web-design-guidelines/skills/web-design-guidelines-review \
+  plugins/web-design-guidelines/tests/test_plugin_layout.py
+git commit -m "feat(web-design-guidelines): rewrite skill contracts"
 ```
 
 ## Task 5: Validate the finished plugin end to end
 
 **Files:**
-- Modify: `plugins/web-interface-guidelines/tests/test_plugin_layout.py`
-- Test: `plugins/web-interface-guidelines/tests/test_plugin_layout.py`
+- Modify: `plugins/web-design-guidelines/tests/test_plugin_layout.py`
+- Test: `plugins/web-design-guidelines/tests/test_plugin_layout.py`
 - Test: `scripts/validate-skills.sh`
 
 - [ ] **Step 1: Add one final test that asserts the review skill preserves the terse findings-first output rule**
@@ -780,7 +780,7 @@ git commit -m "feat(web-interface-guidelines): rewrite skill contracts"
 ```python
     def test_review_skill_keeps_findings_first_output_contract(self) -> None:
         review_skill = (
-            PLUGIN / "skills/web-interface-guidelines-review/SKILL.md"
+            PLUGIN / "skills/web-design-guidelines-review/SKILL.md"
         ).read_text(encoding="utf-8")
         self.assertIn("findings first", review_skill)
         self.assertIn("grouped by file", review_skill)
@@ -789,7 +789,7 @@ git commit -m "feat(web-interface-guidelines): rewrite skill contracts"
 
 - [ ] **Step 2: Run the Python test suite**
 
-Run: `python3 -m unittest plugins/web-interface-guidelines/tests/test_plugin_layout.py -v`
+Run: `python3 -m unittest plugins/web-design-guidelines/tests/test_plugin_layout.py -v`
 
 Expected: PASS with `Ran 6 tests` and `OK`.
 
@@ -801,7 +801,7 @@ Expected: PASS and output ending with `All skills validated successfully.`
 
 - [ ] **Step 4: Inspect the final diff before committing**
 
-Run: `git diff --stat -- plugins/web-interface-guidelines docs/superpowers/plans/2026-03-31-web-interface-guidelines.md`
+Run: `git diff --stat -- plugins/web-design-guidelines docs/superpowers/plans/2026-03-31-web-design-guidelines.md`
 
 Expected: Shows the new design skill, the restructured references tree, the rewritten `apply` and `review` skills, the structure test, and no unrelated files.
 
@@ -809,7 +809,7 @@ Expected: Shows the new design skill, the restructured references tree, the rewr
 
 ```bash
 git add \
-  plugins/web-interface-guidelines \
-  docs/superpowers/plans/2026-03-31-web-interface-guidelines.md
-git commit -m "test(web-interface-guidelines): validate redesigned plugin"
+  plugins/web-design-guidelines \
+  docs/superpowers/plans/2026-03-31-web-design-guidelines.md
+git commit -m "test(web-design-guidelines): validate redesigned plugin"
 ```

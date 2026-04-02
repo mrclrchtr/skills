@@ -1,9 +1,9 @@
 ---
-name: web-interface-guidelines-apply
+name: web-design-guidelines-apply
 description: Use when building or modifying frontend UI and implementation choices should follow shared web interface guidelines for interactions, accessibility, forms, motion, performance, responsive behavior, or copy.
 ---
 
-# Web Interface Guidelines Apply
+# Web Design Guidelines Apply
 
 ## Overview
 

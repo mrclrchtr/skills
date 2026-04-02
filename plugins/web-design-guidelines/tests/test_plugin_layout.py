@@ -9,17 +9,17 @@ REPO_ROOT = ROOT.parents[1]
 PLUGIN_JSON = ROOT / ".codex-plugin" / "plugin.json"
 CLAUDE_PLUGIN_JSON = ROOT / ".claude-plugin" / "plugin.json"
 ROOT_MARKETPLACE_JSON = REPO_ROOT / ".claude-plugin" / "marketplace.json"
-DESIGN_SKILL = ROOT / "skills" / "web-interface-guidelines-design" / "SKILL.md"
-DESIGN_AGENT = ROOT / "skills" / "web-interface-guidelines-design" / "agents" / "openai.yaml"
-APPLY_SKILL = ROOT / "skills" / "web-interface-guidelines-apply" / "SKILL.md"
-APPLY_AGENT = ROOT / "skills" / "web-interface-guidelines-apply" / "agents" / "openai.yaml"
-REVIEW_SKILL = ROOT / "skills" / "web-interface-guidelines-review" / "SKILL.md"
-REVIEW_AGENT = ROOT / "skills" / "web-interface-guidelines-review" / "agents" / "openai.yaml"
+DESIGN_SKILL = ROOT / "skills" / "web-design-guidelines-design" / "SKILL.md"
+DESIGN_AGENT = ROOT / "skills" / "web-design-guidelines-design" / "agents" / "openai.yaml"
+APPLY_SKILL = ROOT / "skills" / "web-design-guidelines-apply" / "SKILL.md"
+APPLY_AGENT = ROOT / "skills" / "web-design-guidelines-apply" / "agents" / "openai.yaml"
+REVIEW_SKILL = ROOT / "skills" / "web-design-guidelines-review" / "SKILL.md"
+REVIEW_AGENT = ROOT / "skills" / "web-design-guidelines-review" / "agents" / "openai.yaml"
 
 EXPECTED_DEFAULT_PROMPT = [
-    "Use $web-interface-guidelines-design to define the visual direction for this UI before implementation.",
-    "Use $web-interface-guidelines-apply to build or update this UI with the shared design and interface guidelines.",
-    "Use $web-interface-guidelines-review to audit this UI or diff against the shared design and interface guidelines.",
+    "Use $web-design-guidelines-design to define the visual direction for this UI before implementation.",
+    "Use $web-design-guidelines-apply to build or update this UI with the shared design and interface guidelines.",
+    "Use $web-design-guidelines-review to audit this UI or diff against the shared design and interface guidelines.",
 ]
 
 EXPECTED_DESIGN_DESCRIPTION = (
@@ -28,24 +28,24 @@ EXPECTED_DESIGN_DESCRIPTION = (
 )
 
 EXPECTED_AGENT_DEFAULT_PROMPT = (
-    "Use $web-interface-guidelines-design to define the visual direction for this UI before implementation."
+    "Use $web-design-guidelines-design to define the visual direction for this UI before implementation."
 )
 
 EXPECTED_AGENT_METADATA = {
     DESIGN_AGENT: {
-        "display_name": "Web Interface Guidelines Design",
+        "display_name": "Web Design Guidelines Design",
         "short_description": "Define a strong UI direction before implementation",
         "default_prompt": EXPECTED_AGENT_DEFAULT_PROMPT,
     },
     APPLY_AGENT: {
-        "display_name": "Web Interface Guidelines Apply",
+        "display_name": "Web Design Guidelines Apply",
         "short_description": "Build UI with the shared design and interface guidance",
-        "default_prompt": "Use $web-interface-guidelines-apply to build or update this UI with the shared design and interface guidelines.",
+        "default_prompt": "Use $web-design-guidelines-apply to build or update this UI with the shared design and interface guidelines.",
     },
     REVIEW_AGENT: {
-        "display_name": "Web Interface Guidelines Review",
+        "display_name": "Web Design Guidelines Review",
         "short_description": "Audit UI code with findings-first web guidance",
-        "default_prompt": "Use $web-interface-guidelines-review to audit this UI or diff against the shared design and interface guidelines.",
+        "default_prompt": "Use $web-design-guidelines-review to audit this UI or diff against the shared design and interface guidelines.",
     },
 }
 
@@ -226,7 +226,7 @@ class PluginLayoutTest(unittest.TestCase):
             )
 
         with self.subTest("design skill frontmatter"):
-            self.assertEqual(frontmatter["name"], "web-interface-guidelines-design")
+            self.assertEqual(frontmatter["name"], "web-design-guidelines-design")
             self.assertEqual(frontmatter["description"], EXPECTED_DESIGN_DESCRIPTION)
 
         with self.subTest("design skill body"):
@@ -260,7 +260,7 @@ class PluginLayoutTest(unittest.TestCase):
 
         claude_manifest = json.loads(CLAUDE_PLUGIN_JSON.read_text(encoding="utf-8"))
         with self.subTest("claude plugin manifest metadata"):
-            self.assertEqual(claude_manifest["name"], "web-interface-guidelines")
+            self.assertEqual(claude_manifest["name"], "web-design-guidelines")
             self.assertRegex(
                 claude_manifest["version"],
                 r"^\d+\.\d+\.\d+$",
@@ -278,11 +278,11 @@ class PluginLayoutTest(unittest.TestCase):
         entry = next(
             item
             for item in marketplace["plugins"]
-            if item["name"] == "web-interface-guidelines"
+            if item["name"] == "web-design-guidelines"
         )
 
         with self.subTest("claude marketplace entry"):
-            self.assertEqual(entry["source"], "./plugins/web-interface-guidelines")
+            self.assertEqual(entry["source"], "./plugins/web-design-guidelines")
             self.assertEqual(
                 entry["description"],
                 "Design, implement, and review web interfaces with shared UI guidance",

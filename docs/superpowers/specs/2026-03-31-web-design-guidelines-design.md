@@ -2,19 +2,19 @@
 
 ## Summary
 
-Redesign the repo-local `web-interface-guidelines` plugin so it combines the best parts of Anthropic's `frontend-design` plugin and Vercel's `web-interface-guidelines` repository without collapsing them into one vague skill.
+Redesign the repo-local `web-design-guidelines` plugin so it combines the best parts of Anthropic's `frontend-design` plugin and Vercel's `web-design-guidelines` repository without collapsing them into one vague skill.
 
 The resulting plugin should expose three distinct skills backed by one shared reference corpus:
 
-- `web-interface-guidelines-design`
-- `web-interface-guidelines-apply`
-- `web-interface-guidelines-review`
+- `web-design-guidelines-design`
+- `web-design-guidelines-apply`
+- `web-design-guidelines-review`
 
 This is a deliberate shift away from the current two-skill, condensed-guidance model. The new design keeps the plugin balanced across design direction, implementation guidance, and review rigor.
 
 ## Goals
 
-- Preserve a thin repo-local plugin wrapper at `plugins/web-interface-guidelines/`.
+- Preserve a thin repo-local plugin wrapper at `plugins/web-design-guidelines/`.
 - Split design, implementation, and review into separate skills with explicit contracts.
 - Keep a shared reference corpus that is close to source and only lightly adapted.
 - Maintain a framework-agnostic core with optional React/Next.js add-ons.
@@ -35,7 +35,7 @@ This is a deliberate shift away from the current two-skill, condensed-guidance m
 The plugin should synthesize two upstream sources with different roles:
 
 1. Vercel source of truth
-   - `https://github.com/vercel-labs/web-interface-guidelines`
+   - `https://github.com/vercel-labs/web-design-guidelines`
    - Primary source for concrete interface rules, anti-patterns, and review criteria.
 2. Anthropic source of truth
    - `https://github.com/anthropics/claude-code/tree/main/plugins/frontend-design`
@@ -66,17 +66,17 @@ These intents are close enough to share references but different enough to justi
 
 The plugin should remain thin and repo-local:
 
-- `plugins/web-interface-guidelines/.codex-plugin/plugin.json`
-- `plugins/web-interface-guidelines/skills/web-interface-guidelines-design/`
-- `plugins/web-interface-guidelines/skills/web-interface-guidelines-apply/`
-- `plugins/web-interface-guidelines/skills/web-interface-guidelines-review/`
-- `plugins/web-interface-guidelines/references/`
+- `plugins/web-design-guidelines/.codex-plugin/plugin.json`
+- `plugins/web-design-guidelines/skills/web-design-guidelines-design/`
+- `plugins/web-design-guidelines/skills/web-design-guidelines-apply/`
+- `plugins/web-design-guidelines/skills/web-design-guidelines-review/`
+- `plugins/web-design-guidelines/references/`
 
 The manifest should advertise design, implementation, and review explicitly. The logic should remain concentrated in the skills and shared references.
 
 ## Skill Contracts
 
-### `web-interface-guidelines-design`
+### `web-design-guidelines-design`
 
 Purpose:
 
@@ -96,7 +96,7 @@ Primary source emphasis:
 - Anthropic-derived design guidance
 - Selected Vercel-derived constraints where accessibility, responsiveness, or interaction rules materially shape the design
 
-### `web-interface-guidelines-apply`
+### `web-design-guidelines-apply`
 
 Purpose:
 
@@ -115,7 +115,7 @@ Primary source emphasis:
 - Anthropic-derived design direction
 - Vercel-derived implementation rules
 
-### `web-interface-guidelines-review`
+### `web-design-guidelines-review`
 
 Purpose:
 
@@ -257,9 +257,9 @@ No automated fetch pipeline is required for v1 unless the implementation introdu
 
 The redesign is successful when:
 
-- `web-interface-guidelines-design` reliably produces a distinct, non-generic design direction before UI implementation.
-- `web-interface-guidelines-apply` can use that direction while still enforcing accessibility, interaction, performance, and responsive standards.
-- `web-interface-guidelines-review` produces terse, actionable, `file:line` findings rather than general frontend opinions.
+- `web-design-guidelines-design` reliably produces a distinct, non-generic design direction before UI implementation.
+- `web-design-guidelines-apply` can use that direction while still enforcing accessibility, interaction, performance, and responsive standards.
+- `web-design-guidelines-review` produces terse, actionable, `file:line` findings rather than general frontend opinions.
 - The framework-agnostic core remains usable outside React/Next codebases.
 - The React/Next add-on is clearly optional and additive.
 - `source-notes.md` makes provenance and adaptation choices auditable.

@@ -45,8 +45,8 @@
       "keywords": ["web", "fetch", "markdown", "scraping"]
     },
     {
-      "name": "web-interface-guidelines",
-      "source": "./plugins/web-interface-guidelines",
+      "name": "web-design-guidelines",
+      "source": "./plugins/web-design-guidelines",
       "description": "Design, implement, and review web interfaces with shared UI guidance",
       "keywords": ["web", "ui", "frontend", "design", "accessibility"]
     },
