@@ -21,8 +21,8 @@
       "keywords": ["orchestration", "multi-agent", "audit", "review", "standalone"]
     },
     {
-      "name": "git-commit",
-      "source": "./skills/git-commit",
+      "name": "commit",
+      "source": "./skills/commit",
       "description": "Create safe, repo-convention commits: inspect and stage changes, write a clear subject, add a body when useful, and commit.",
       "keywords": ["git", "commit", "workflow"]
     },

@@ -1,5 +1,5 @@
 ---
-name: git-commit
+name: commit
 description: "Creates a commit: detects conventions, stages intentionally, writes a clear subject, add a concise body when useful, and commits."
 ---
 
