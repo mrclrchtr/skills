@@ -34,15 +34,27 @@ glob: "**/DESIGN_SYSTEM.md"
 
 ## Step 3: Spawn Agent
 
+**Do NOT gather content yourself.** Just pass identifiers — the agent gets the content.
+
 ```yaml
 tool: Agent
 parameters:
   description: "UI review: [target]"
   subagent_type: "web-design-guidelines:ui-reviewer"
   prompt: |
-    Review: [TARGET]
+    Review: [TARGET IDENTIFIER - e.g. "commit abc123", "src/Button.tsx", "uncommitted changes"]
     Design system: [PATH or "none"]
-    Context: [RELEVANT SESSION CONTEXT]
+    Context: [BRIEF SESSION CONTEXT - what feature, what spec, focus areas]
 ```
+
+**Don't:**
+- Run `git diff` or `git show`
+- Read file contents
+- Write diffs to temp files
+
+**Do:**
+- Pass commit hash, file path, or "uncommitted changes"
+- Pass design system path
+- Pass brief context (feature name, spec reference, focus areas)
 
 ## Step 4: Return findings to user
