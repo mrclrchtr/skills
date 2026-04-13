@@ -12,66 +12,47 @@ allowed-tools:
 
 # Web Design Guidelines Review (Subagent)
 
-Delegate UI review work to a subagent with fresh context. The subagent uses the `web-design-guidelines-review` skill internally, keeping the main conversation clean.
+Pre-gather all context, then spawn a minimal agent that only applies the review methodology.
 
-## Workflow
+## Step 1: Gather Everything (YOU do this)
 
-1. Determine the review target from arguments:
-   - No argument or `changes`: review uncommitted git changes (`git diff` + `git diff --staged`)
-   - File path (e.g., `src/components/Button.tsx`): review that specific file
-   - Directory path (e.g., `src/components/`): review files in that directory
-   - Specification file (e.g., `spec.md`, `design.md`): review the specification before implementation
+### 1a. Determine target
+- No argument or `changes`: git diff
+- File path: that file
+- Directory: files in that directory  
+- Spec file: the specification
 
-2. Spawn an Explore agent with this prompt structure:
-
+### 1b. Find and READ design system
+```bash
+# Search (parallel)
+glob: "docs/**/design-system.md"
+glob: "**/DESIGN_SYSTEM.md"
+glob: "docs/**/style-guide.md"
+grep -i "design.system\|style.guide" CLAUDE.md
 ```
-Review [TARGET] for UI/UX issues using web design guidelines.
+**Read the first match found** — pass its content to the agent.
 
-Instructions:
-1. Check for a project-local design system first (DESIGN_SYSTEM.md, theme files, CLAUDE.md references)
-2. Use the web-design-guidelines-review skill - it provides the full review methodology
-3. Prioritize anti-patterns and concrete violations over aesthetic opinions
-4. Classify issues as: bug, regression risk, or polish
-5. For specifications: flag potential implementation pitfalls before code is written
+### 1c. Get content to review
+- **Git changes**: `git diff && git diff --staged` — capture full output
+- **File**: Read the file
+- **Directory**: Glob for UI files, read them
+- **Spec**: Read the spec file
 
-Report findings grouped by file with file:line references.
-If nothing is provably wrong, say so explicitly.
-```
+## Step 2: Spawn Agent (minimal work)
 
-3. Return the agent's findings to the user.
-
-## Agent Tool Call
+Pass ALL content inline. The `ui-reviewer` agent auto-loads the review skill.
 
 ```yaml
 tool: Agent
 parameters:
-  description: "UI review with design guidelines"
-  subagent_type: "Explore"
-  prompt: [constructed prompt with target substituted]
+  description: "UI review: [target]"
+  subagent_type: "web-design-guidelines:ui-reviewer"
+  prompt: |
+    ## Project Design System
+    [PASTE DESIGN SYSTEM CONTENT HERE, or "None found — use universal guidelines"]
+    
+    ## Content to Review
+    [PASTE DIFF / FILE CONTENT / SPEC CONTENT HERE]
 ```
 
-## Examples
-
-### Review git changes (default)
-```
-/web-design-guidelines:review
-```
-Spawns agent to review uncommitted changes.
-
-### Review specific file
-```
-/web-design-guidelines:review src/components/Modal.tsx
-```
-Spawns agent to review that component.
-
-### Review specification
-```
-/web-design-guidelines:review docs/feature-spec.md
-```
-Spawns agent to review the spec for potential UI issues before implementation.
-
-### Review directory
-```
-/web-design-guidelines:review src/pages/
-```
-Spawns agent to review all UI files in that directory.
+## Step 3: Return findings to user
