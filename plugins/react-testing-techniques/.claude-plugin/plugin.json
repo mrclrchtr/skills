@@ -1,0 +1,9 @@
+{
+  "name": "react-testing-techniques",
+  "version": "1.0.0",
+  "description": "Best practices for testing React components with Vitest, React Testing Library, and MSW",
+  "author": {
+    "name": "Marcel Richter"
+  },
+  "keywords": ["react", "testing", "vitest", "rtl", "msw", "tanstack"]
+}

@@ -27,3 +27,12 @@ Auto-triggered skills only need `name` and `description`.
 ## Plugin Validation
 
 Use `/plugin-dev:create-plugin` workflow for guided plugin creation with validation.
+
+## Fetching External Documentation
+
+- `gh api repos/{owner}/{repo}/contents/{path} --jq '.content' | base64 -d` - Fetch file from GitHub
+- `npx ctx7@latest library "<name>" "<question>"` then `npx ctx7@latest docs "<id>" "<question>"` - Fetch library docs
+
+## Agent Naming
+
+Use full agent names with prefix: `plugin-dev:plugin-validator`, `plugin-dev:skill-reviewer` (not just `plugin-validator`)
