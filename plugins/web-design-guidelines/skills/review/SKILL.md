@@ -1,46 +1,26 @@
 ---
 name: review
 description: Delegate UI code reviews to a subagent. Reviews components, pages, git changes, or specification files using web design guidelines.
-argument-hint: "[target] - optional file path, directory, or 'changes' for git diff"
+argument-hint: "[target] - optional file path, directory, commit hash, or 'changes' for git diff"
 allowed-tools:
   - Agent
-  - Bash
   - Glob
-  - Grep
-  - Read
 ---
 
 # Web Design Guidelines Review (Subagent)
 
-Pre-gather all context, then spawn a minimal agent that only applies the review methodology.
+Spawn the `ui-reviewer` agent with minimal context. The agent does the work.
 
-## Step 1: Gather Everything (YOU do this)
+## Step 1: Find Design System Path (quick glob)
 
-### 1a. Determine target
-- No argument or `changes`: git diff
-- File path: that file
-- Directory: files in that directory  
-- Spec file: the specification
-
-### 1b. Find and READ design system
-```bash
-# Search (parallel)
+```
 glob: "docs/**/design-system.md"
 glob: "**/DESIGN_SYSTEM.md"
-glob: "docs/**/style-guide.md"
-grep -i "design.system\|style.guide" CLAUDE.md
 ```
-**Read the first match found** — pass its content to the agent.
 
-### 1c. Get content to review
-- **Git changes**: `git diff && git diff --staged` — capture full output
-- **File**: Read the file
-- **Directory**: Glob for UI files, read them
-- **Spec**: Read the spec file
+Just get the **path** — don't read it. Pass path to agent.
 
-## Step 2: Spawn Agent (minimal work)
-
-Pass ALL content inline. The `ui-reviewer` agent auto-loads the review skill.
+## Step 2: Spawn Agent Immediately
 
 ```yaml
 tool: Agent
@@ -48,11 +28,21 @@ parameters:
   description: "UI review: [target]"
   subagent_type: "web-design-guidelines:ui-reviewer"
   prompt: |
-    ## Project Design System
-    [PASTE DESIGN SYSTEM CONTENT HERE, or "None found — use universal guidelines"]
-    
-    ## Content to Review
-    [PASTE DIFF / FILE CONTENT / SPEC CONTENT HERE]
+    Review: [TARGET]
+    Design system: [PATH if found, or "none"]
+    Context: [ANY ADDITIONAL CONTEXT from conversation, or "none"]
 ```
+
+**Target examples:**
+- No argument or `changes` → `"uncommitted changes (git diff)"`
+- `src/Button.tsx` → `"src/Button.tsx"`
+- `src/components/` → `"src/components/ directory"`
+- `471051c7` → `"commit 471051c7"`
+- `docs/spec.md` → `"docs/spec.md (specification)"`
+
+**Context examples:**
+- User mentioned focus area → `"focus on form validation"`
+- Prior conversation about feature → `"this implements haulage event editing per the spec at openspec/changes/haulage-event-edit/"`
+- No extra context → `"none"`
 
 ## Step 3: Return findings to user
