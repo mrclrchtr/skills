@@ -14,7 +14,7 @@
     "start": "node ./dist/fetchmd.js",
     "test": "node --test",
     "build": "tsc -p tsconfig.build.json",
-    "bundle:skill": "pnpm build && node -e \"const fs=require('fs'); const path=require('path'); const files=[['../../.agents/skills/web-fetch-to-markdown/scripts/fetchmd.js','../../../../lib/web-fetch-md/dist/fetchmd.js'],['../../skills/web-fetch-to-markdown/scripts/fetchmd.js','../../../lib/web-fetch-md/dist/fetchmd.js']]; for (const [out, rel] of files) { const content=['#!/usr/bin/env node','const path = require(\\'node:path\\');','const { pathToFileURL } = require(\\'node:url\\');','const target = pathToFileURL(path.resolve(__dirname, ' + JSON.stringify(rel) + ')).href;','import(target);',''].join('\\n'); fs.writeFileSync(out, content, 'utf8'); try{fs.chmodSync(out,0o755);}catch{} }\"",
+    "bundle:skill": "node build.mjs",
     "typecheck": "tsc -p tsconfig.json"
   },
   "dependencies": {
