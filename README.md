@@ -10,6 +10,7 @@ This repo currently contains:
 - `stitch-downloader`: Download Stitch (stitch.withgoogle.com) screenshots at full resolution (normalize `lh3.googleusercontent.com` size params; avoid committing signed URLs).
 - `web-fetch-to-markdown`: Fetch http/https pages as clean Markdown by preferring content negotiation, then trying sibling `*.md` endpoints, then extracting HTML via Readability and converting to Markdown.
 - `web-design-guidelines` plugin: Design, implement, and review web interfaces with shared UI guidance for both Codex and Claude.
+- `react-testing-techniques` plugin: Best practices for testing React components with Vitest, React Testing Library, MSW, TanStack Query/Router, and Mantine.
 
 ## How `agent-orchestrator` differs from `agent-orchestrator-standalone`
 
@@ -32,6 +33,7 @@ This repository is a [Claude Code plugin marketplace](https://code.claude.com/do
 /plugin install skill-creator@mrclrchtr-skills
 /plugin install web-fetch-to-markdown@mrclrchtr-skills
 /plugin install web-design-guidelines@mrclrchtr-skills
+/plugin install react-testing-techniques@mrclrchtr-skills
 ```
 
 But be cautious: All content in this repo is optimized for OpenAI Codex.
