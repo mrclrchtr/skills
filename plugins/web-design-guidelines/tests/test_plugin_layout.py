@@ -66,6 +66,11 @@ EXPECTED_DESIGN_AND_FRAMEWORK_REFERENCE_FILES = [
     "references/design/motion-composition.md",
     "references/design/anti-slop.md",
     "references/frameworks/react-next.md",
+    "references/frameworks/mantine.md",
+    "references/frameworks/tailwind-integration.md",
+]
+
+EXPECTED_META_REFERENCE_FILES = [
     "references/source-notes.md",
 ]
 
@@ -101,6 +106,21 @@ EXPECTED_DESIGN_REFERENCE_CONTENT = {
         "URL state",
         "loading primitives",
     ],
+    "references/frameworks/mantine.md": [
+        "# Mantine",
+        "createTheme",
+        "ColorSchemeScript",
+        "Styles API",
+        "defaultRadius",
+        "autoContrast",
+    ],
+    "references/frameworks/tailwind-integration.md": [
+        "# Tailwind Integration",
+        "CSS variables",
+        "dark mode variants",
+        "theme extension",
+        "component library",
+    ],
 }
 
 EXPECTED_LEGACY_REFERENCE_FILES = [
@@ -126,18 +146,27 @@ EXPECTED_REVIEW_CORE_REFERENCES = EXPECTED_APPLY_CORE_REFERENCES + [
     "../../references/core/anti-patterns.md",
 ]
 
+EXPECTED_FRAMEWORK_REFERENCES = [
+    "../../references/frameworks/react-next.md",
+    "../../references/frameworks/mantine.md",
+    "../../references/frameworks/tailwind-integration.md",
+]
+
 EXPECTED_SKILL_CONTRACT_MARKERS = {
     DESIGN_SKILL: [
         "Present two or three viable directions",
         "references/design/",
+        "project-local design system",
     ],
     APPLY_SKILL: [
         "references/core/",
         "references/frameworks/react-next.md",
+        "project-local design system",
     ],
     REVIEW_SKILL: [
         "file:line",
         "anti-patterns",
+        "project-local design system",
     ],
 }
 
@@ -149,6 +178,7 @@ EXPECTED_SOURCE_NOTES_SNIPPETS = [
     "organized for consumption by the skill files",
     "packaged for both Codex and Claude",
     ".claude-plugin/plugin.json",
+    "Project-Local Discovery",
 ]
 
 REMOVED_REFERENCE_PATHS = [
@@ -300,6 +330,12 @@ class PluginLayoutTest(unittest.TestCase):
                 path = ROOT / relative_path
                 self.assertTrue(path.exists(), f"missing {path}")
 
+    def test_meta_reference_layout(self):
+        for relative_path in EXPECTED_META_REFERENCE_FILES:
+            with self.subTest(file=relative_path):
+                path = ROOT / relative_path
+                self.assertTrue(path.exists(), f"missing {path}")
+
     def test_design_and_framework_reference_content(self):
         for relative_path, snippets in EXPECTED_DESIGN_REFERENCE_CONTENT.items():
             path = ROOT / relative_path
@@ -335,6 +371,14 @@ class PluginLayoutTest(unittest.TestCase):
             self.assertIn("`../../references/design/anti-slop.md`", review_text)
             for relative_path in REMOVED_REFERENCE_PATHS:
                 self.assertNotIn(relative_path, review_text)
+
+        with self.subTest("apply skill framework references"):
+            for relative_path in EXPECTED_FRAMEWORK_REFERENCES:
+                self.assertIn(relative_path, apply_text)
+
+        with self.subTest("review skill framework references"):
+            for relative_path in EXPECTED_FRAMEWORK_REFERENCES:
+                self.assertIn(relative_path, review_text)
 
     def test_source_notes_provenance_and_adaptation(self):
         text = (ROOT / "references/source-notes.md").read_text(encoding="utf-8")

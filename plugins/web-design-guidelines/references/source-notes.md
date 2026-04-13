@@ -21,7 +21,13 @@ The `references/design/` files preserve that aesthetic-direction guidance in loc
 - `references/core/` remains the closest local match to the Vercel source by topic and severity.
 - `references/design/` holds the local design-point-of-view guidance and keeps the Anthropic influence focused on art direction rather than implementation mechanics.
 - `references/frameworks/react-next.md` holds framework-specific guidance so React and Next.js constraints do not get buried inside the broader core rules.
-- The shared references are organized for consumption by the skill files: `apply` and `review` already point into `references/core/`, while the design and framework docs are prepared for the next skill rewrites.
+- `references/frameworks/mantine.md` covers Mantine-specific theming, Styles API, and component conventions.
+- `references/frameworks/tailwind-integration.md` covers the mechanics of bridging a component library with Tailwind (CSS variable mapping, dark mode sync, role boundaries).
+- The shared references are organized for consumption by the skill files: all three skills point into the relevant reference trees (`core/`, `design/`, `frameworks/`).
+
+## Project-Local Discovery
+
+All three skills include a workflow step that checks the project for a local design system or style guide before reading plugin references. When a project-local document is found, its explicit decisions take precedence over universal plugin guidance on specifics; the plugin guidance fills gaps the project document does not address. This keeps the plugin technology-agnostic at its core while supporting project-specific overrides without forking.
 
 ## Packaging
 
