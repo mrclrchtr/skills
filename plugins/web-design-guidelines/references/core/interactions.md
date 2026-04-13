@@ -12,6 +12,7 @@
 
 - SHOULD make visible targets match hit targets. If a control is visually small, expand the interactive area instead of shrinking usability.
 - MUST eliminate dead zones: if part of a control looks interactive, it must be interactive.
+- SHOULD design forgiving interactions with generous hit targets, clear affordances, and predictable behavior. Use techniques like prediction cones for dropdown menus so diagonal mouse movement toward submenu items does not accidentally close the menu.
 - SHOULD set `touch-action: manipulation` on interactive controls to prevent double-tap zoom.
 - MAY customize `-webkit-tap-highlight-color` to match the design system.
 

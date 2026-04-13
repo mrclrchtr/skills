@@ -21,6 +21,7 @@
 
 - MUST use semantic HTML before ARIA: real buttons, links, labels, headings, tables, and lists whenever possible.
 - MUST hide decorative elements from assistive tech with `aria-hidden="true"` and give meaningful content accessible names.
+- SHOULD separate visual presentation from accessibility: layouts may omit visible labels, but accessible names and labels must still exist for assistive tech. Do not ship the schema to the screen.
 
 ## Text and Layout
 
