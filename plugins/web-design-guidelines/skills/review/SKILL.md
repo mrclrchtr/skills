@@ -18,12 +18,19 @@ allowed-tools:
 - Clear single target (one commit, one file) → use it
 - Ambiguous (multiple commits, unclear scope) → ask user via `AskUserQuestion`
 
-**Ask when unclear.** Example options:
-- "All session changes" — all commits made in this conversation
-- "Whole feature" — all commits on this branch vs main
-- "Last commit only (abc123)"
-- "Uncommitted changes"
-- "Specific file..."
+**Ask when unclear.** Use `AskUserQuestion` with options:
+
+**Always include:**
+- **All session changes** — all commits made in this conversation (if multiple)
+- **Whole feature branch** — diff of current branch vs main
+- **Last commit (hash)** — most recent commit only
+- **Uncommitted changes** — only if they exist
+
+**Add context-specific options** if identifiable:
+- Specific component/file discussed in session
+- Particular commit mentioned earlier
+- Directory being worked on
+- Spec/design file referenced
 
 ## Step 2: Find Design System Path
 
