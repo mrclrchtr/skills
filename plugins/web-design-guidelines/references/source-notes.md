@@ -8,6 +8,22 @@
 
 The `references/core/` files stay close to this source by topic and intent, but they are rewritten into shorter local rules that are easier to apply during implementation and review.
 
+## Vercel Design Website
+
+- Source URL: `https://vercel.com/design/guidelines`
+- Date accessed: 2026-04-13
+- Role: comprehensive interface guidelines across interactions, animations, layout, content, forms, performance, and design
+
+The public Vercel design guidelines website informed extensive updates across all `references/core/` files:
+- `interactions.md`: focus management, touch-action, overscroll-behavior, deep-linking, inert during drag, tooltip timing, locale-aware shortcuts
+- `animation.md`: input-driven motion, SVG transform wrappers, text anti-aliasing
+- `content-accessibility.md`: stable skeletons, scroll-margin-top, translate="no"
+- `forms.md`: spellcheck control, password manager avoidance, Windows select styling
+- `performance.md`: iOS Low Power Mode testing, React DevTools, 500ms mutation targets, font subsetting
+- `copywriting.md`: error message guidance, placeholder formats
+- `layout.md`: ultra-wide testing, macOS scrollbar settings
+- `typography-color.md`: theme-color meta, color-scheme, accessible charts, gradient banding
+
 ## Anthropic Source
 
 - Source URL: `https://github.com/anthropics/claude-code/tree/main/plugins/frontend-design`
