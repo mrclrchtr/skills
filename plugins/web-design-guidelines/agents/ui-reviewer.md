@@ -1,7 +1,7 @@
 ---
 name: ui-reviewer
 description: |
-  Use this agent when reviewing UI code for design guideline violations. Spawned by the /review skill.
+  Use this agent when reviewing UI code for design guideline violations. Spawned by the `/web-design-guidelines:review` command.
 
   <example>
   Context: User wants to review uncommitted changes

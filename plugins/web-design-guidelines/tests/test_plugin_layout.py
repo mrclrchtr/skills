@@ -1,5 +1,4 @@
 import json
-import re
 import unittest
 from pathlib import Path
 
@@ -15,6 +14,12 @@ APPLY_SKILL = ROOT / "skills" / "web-design-guidelines-apply" / "SKILL.md"
 APPLY_AGENT = ROOT / "skills" / "web-design-guidelines-apply" / "agents" / "openai.yaml"
 REVIEW_SKILL = ROOT / "skills" / "web-design-guidelines-review" / "SKILL.md"
 REVIEW_AGENT = ROOT / "skills" / "web-design-guidelines-review" / "agents" / "openai.yaml"
+REVIEW_COMMAND = ROOT / "commands" / "review.md"
+UI_REVIEWER_AGENT = ROOT / "agents" / "ui-reviewer.md"
+UNIFIED_SKILL_DIR = ROOT / "skills" / "web-design-guidelines"
+DESIGN_REFERENCES = ROOT / "skills" / "web-design-guidelines-design" / "references"
+APPLY_REFERENCES = ROOT / "skills" / "web-design-guidelines-apply" / "references"
+REVIEW_REFERENCES = ROOT / "skills" / "web-design-guidelines-review" / "references"
 
 EXPECTED_DEFAULT_PROMPT = [
     "Use $web-design-guidelines-design to define the visual direction for this UI before implementation.",
@@ -74,84 +79,6 @@ EXPECTED_META_REFERENCE_FILES = [
     "references/source-notes.md",
 ]
 
-EXPECTED_DESIGN_REFERENCE_CONTENT = {
-    "references/design/direction.md": [
-        "# Design Direction",
-        "purpose, audience, and tone",
-        "2-3 distinct directions",
-        "memorable differentiator",
-    ],
-    "references/design/typography-color.md": [
-        "# Typography and Color",
-        "typography as a first-class design choice",
-        "interchangeable sans stacks",
-        "purple-on-white startup gradients",
-    ],
-    "references/design/motion-composition.md": [
-        "# Motion and Composition",
-        "motion to reinforce hierarchy",
-        "cause and effect",
-        "gradients, texture, pattern, shadow, and depth",
-    ],
-    "references/design/anti-slop.md": [
-        "# Anti-Slop",
-        "interchangeable SaaS layouts",
-        "Distinctive minimalism",
-    ],
-    "references/frameworks/react-next.md": [
-        "# React and Next.js",
-        "hydration-safe rendering",
-        "controlled inputs",
-        "uncontrolled inputs",
-        "URL state",
-        "loading primitives",
-    ],
-    "references/frameworks/mantine.md": [
-        "# Mantine",
-        "createTheme",
-        "ColorSchemeScript",
-        "Styles API",
-        "defaultRadius",
-        "autoContrast",
-    ],
-    "references/frameworks/tailwind-integration.md": [
-        "# Tailwind Integration",
-        "CSS variables",
-        "dark mode variants",
-        "theme extension",
-        "component library",
-    ],
-}
-
-EXPECTED_LEGACY_REFERENCE_FILES = [
-    "references/interactions.md",
-    "references/forms.md",
-    "references/content-accessibility.md",
-    "references/layout-motion.md",
-    "references/performance.md",
-    "references/design-copywriting.md",
-]
-
-EXPECTED_APPLY_CORE_REFERENCES = [
-    "../../references/core/interactions.md",
-    "../../references/core/forms.md",
-    "../../references/core/animation.md",
-    "../../references/core/layout.md",
-    "../../references/core/content-accessibility.md",
-    "../../references/core/performance.md",
-    "../../references/core/theming-copy.md",
-]
-
-EXPECTED_REVIEW_CORE_REFERENCES = EXPECTED_APPLY_CORE_REFERENCES + [
-    "../../references/core/anti-patterns.md",
-]
-
-EXPECTED_FRAMEWORK_REFERENCES = [
-    "../../references/frameworks/react-next.md",
-    "../../references/frameworks/mantine.md",
-    "../../references/frameworks/tailwind-integration.md",
-]
-
 EXPECTED_SKILL_CONTRACT_MARKERS = {
     DESIGN_SKILL: [
         "Present two or three viable directions",
@@ -169,26 +96,6 @@ EXPECTED_SKILL_CONTRACT_MARKERS = {
         "project-local design system",
     ],
 }
-
-EXPECTED_SOURCE_NOTES_SNIPPETS = [
-    "https://github.com/vercel-labs/web-interface-guidelines",
-    "3f6b1449dee158479deb8019f6372ff85e663406",
-    "https://github.com/anthropics/claude-code/tree/main/plugins/frontend-design",
-    "2d5c1bab92971bbdaecdb1767481973215ee7f2d",
-    "organized for consumption by the skill files",
-    "packaged for both Codex and Claude",
-    ".claude-plugin/plugin.json",
-    "Project-Local Discovery",
-]
-
-REMOVED_REFERENCE_PATHS = [
-    "../../references/interactions.md",
-    "../../references/forms.md",
-    "../../references/content-accessibility.md",
-    "../../references/layout-motion.md",
-    "../../references/performance.md",
-    "../../references/design-copywriting.md",
-]
 
 
 def parse_frontmatter(text):
@@ -233,76 +140,51 @@ def parse_interface_yaml(text):
 
 
 class PluginLayoutTest(unittest.TestCase):
-    def test_three_skill_plugin_contract(self):
+    def test_specialized_skill_plugin_contract(self):
         with PLUGIN_JSON.open("r", encoding="utf-8") as handle:
             manifest = json.load(handle)
 
-        with self.subTest("design skill exists"):
-            self.assertTrue(DESIGN_SKILL.exists(), f"missing {DESIGN_SKILL}")
+        self.assertTrue(DESIGN_SKILL.exists(), f"missing {DESIGN_SKILL}")
+        self.assertTrue(APPLY_SKILL.exists(), f"missing {APPLY_SKILL}")
+        self.assertTrue(REVIEW_SKILL.exists(), f"missing {REVIEW_SKILL}")
+        self.assertTrue(DESIGN_AGENT.exists(), f"missing {DESIGN_AGENT}")
+        self.assertTrue(APPLY_AGENT.exists(), f"missing {APPLY_AGENT}")
+        self.assertTrue(REVIEW_AGENT.exists(), f"missing {REVIEW_AGENT}")
+        self.assertTrue(REVIEW_COMMAND.exists(), f"missing {REVIEW_COMMAND}")
+        self.assertTrue(UI_REVIEWER_AGENT.exists(), f"missing {UI_REVIEWER_AGENT}")
+        self.assertFalse(UNIFIED_SKILL_DIR.exists(), f"unexpected {UNIFIED_SKILL_DIR}")
+        self.assertTrue(DESIGN_REFERENCES.is_symlink(), f"expected symlink: {DESIGN_REFERENCES}")
+        self.assertTrue(APPLY_REFERENCES.is_symlink(), f"expected symlink: {APPLY_REFERENCES}")
+        self.assertTrue(REVIEW_REFERENCES.is_symlink(), f"expected symlink: {REVIEW_REFERENCES}")
 
-        skill_text = DESIGN_SKILL.read_text(encoding="utf-8")
-        frontmatter, body = parse_frontmatter(skill_text)
+        design_frontmatter, design_body = parse_frontmatter(
+            DESIGN_SKILL.read_text(encoding="utf-8")
+        )
+        design_agent = parse_interface_yaml(DESIGN_AGENT.read_text(encoding="utf-8"))
+        apply_agent = parse_interface_yaml(APPLY_AGENT.read_text(encoding="utf-8"))
+        review_agent = parse_interface_yaml(REVIEW_AGENT.read_text(encoding="utf-8"))
 
-        with self.subTest("design agent exists"):
-            self.assertTrue(DESIGN_AGENT.exists(), f"missing {DESIGN_AGENT}")
-
-        agent_text = DESIGN_AGENT.read_text(encoding="utf-8")
-        agent = parse_interface_yaml(agent_text)
-
-        with self.subTest("defaultPrompt"):
-            self.assertEqual(
-                manifest["interface"]["defaultPrompt"],
-                EXPECTED_DEFAULT_PROMPT,
-            )
-
-        with self.subTest("design skill frontmatter"):
-            self.assertEqual(frontmatter["name"], "web-design-guidelines-design")
-            self.assertEqual(frontmatter["description"], EXPECTED_DESIGN_DESCRIPTION)
-
-        with self.subTest("design skill body"):
-            self.assertIn("## Overview", body)
-            self.assertIn("## Workflow", body)
-            self.assertIn("## Guardrails", body)
-            self.assertIn("two or three viable directions with trade-offs", body)
-
-        with self.subTest("design agent interface"):
-            self.assertEqual(agent["interface"], EXPECTED_AGENT_METADATA[DESIGN_AGENT])
-
-        with self.subTest("apply agent interface"):
-            apply_agent = parse_interface_yaml(APPLY_AGENT.read_text(encoding="utf-8"))
-            self.assertEqual(
-                apply_agent["interface"], EXPECTED_AGENT_METADATA[APPLY_AGENT]
-            )
-
-        with self.subTest("review agent interface"):
-            review_agent = parse_interface_yaml(
-                REVIEW_AGENT.read_text(encoding="utf-8")
-            )
-            self.assertEqual(
-                review_agent["interface"], EXPECTED_AGENT_METADATA[REVIEW_AGENT]
-            )
+        self.assertEqual(manifest["interface"]["defaultPrompt"], EXPECTED_DEFAULT_PROMPT)
+        self.assertEqual(design_frontmatter["name"], "web-design-guidelines-design")
+        self.assertEqual(design_frontmatter["description"], EXPECTED_DESIGN_DESCRIPTION)
+        self.assertIn("two or three viable directions with trade-offs", design_body)
+        self.assertEqual(design_agent["interface"], EXPECTED_AGENT_METADATA[DESIGN_AGENT])
+        self.assertEqual(apply_agent["interface"], EXPECTED_AGENT_METADATA[APPLY_AGENT])
+        self.assertEqual(review_agent["interface"], EXPECTED_AGENT_METADATA[REVIEW_AGENT])
 
     def test_claude_plugin_manifest_and_marketplace_entry(self):
-        with self.subTest("claude plugin manifest exists"):
-            self.assertTrue(
-                CLAUDE_PLUGIN_JSON.exists(), f"missing {CLAUDE_PLUGIN_JSON}"
-            )
+        self.assertTrue(CLAUDE_PLUGIN_JSON.exists(), f"missing {CLAUDE_PLUGIN_JSON}")
 
         claude_manifest = json.loads(CLAUDE_PLUGIN_JSON.read_text(encoding="utf-8"))
-        with self.subTest("claude plugin manifest metadata"):
-            self.assertEqual(claude_manifest["name"], "web-design-guidelines")
-            self.assertRegex(
-                claude_manifest["version"],
-                r"^\d+\.\d+\.\d+$",
-                "version must be a semver string",
-            )
-            self.assertEqual(
-                claude_manifest["description"],
-                "Design, implement, and review web interfaces with shared UI guidance",
-            )
-            self.assertEqual(claude_manifest["author"]["name"], "mrclrchtr")
-            self.assertNotIn("interface", claude_manifest)
-            self.assertNotIn("skills", claude_manifest)
+        self.assertEqual(claude_manifest["name"], "web-design-guidelines")
+        self.assertRegex(claude_manifest["version"], r"^\d+\.\d+\.\d+$")
+        self.assertEqual(
+            claude_manifest["description"],
+            "Design, implement, and review web interfaces with shared UI guidance",
+        )
+        self.assertEqual(claude_manifest["author"]["name"], "mrclrchtr")
+        self.assertNotIn("interface", claude_manifest)
+        self.assertNotIn("skills", claude_manifest)
 
         marketplace = json.loads(ROOT_MARKETPLACE_JSON.read_text(encoding="utf-8"))
         entry = next(
@@ -311,93 +193,35 @@ class PluginLayoutTest(unittest.TestCase):
             if item["name"] == "web-design-guidelines"
         )
 
-        with self.subTest("claude marketplace entry"):
-            self.assertEqual(entry["source"], "./plugins/web-design-guidelines")
-            self.assertEqual(
-                entry["description"],
-                "Design, implement, and review web interfaces with shared UI guidance",
-            )
+        self.assertEqual(entry["source"], "./plugins/web-design-guidelines")
+        self.assertEqual(
+            entry["description"],
+            "Design, implement, and review web interfaces with shared UI guidance",
+        )
 
-    def test_core_reference_corpus_layout(self):
-        for relative_path in EXPECTED_CORE_REFERENCE_FILES:
+    def test_shared_reference_corpus_layout(self):
+        for relative_path in EXPECTED_CORE_REFERENCE_FILES + EXPECTED_DESIGN_AND_FRAMEWORK_REFERENCE_FILES + EXPECTED_META_REFERENCE_FILES:
             with self.subTest(file=relative_path):
                 path = ROOT / relative_path
                 self.assertTrue(path.exists(), f"missing {path}")
-
-    def test_design_and_framework_reference_layout(self):
-        for relative_path in EXPECTED_DESIGN_AND_FRAMEWORK_REFERENCE_FILES:
-            with self.subTest(file=relative_path):
-                path = ROOT / relative_path
-                self.assertTrue(path.exists(), f"missing {path}")
-
-    def test_meta_reference_layout(self):
-        for relative_path in EXPECTED_META_REFERENCE_FILES:
-            with self.subTest(file=relative_path):
-                path = ROOT / relative_path
-                self.assertTrue(path.exists(), f"missing {path}")
-
-    def test_design_and_framework_reference_content(self):
-        for relative_path, snippets in EXPECTED_DESIGN_REFERENCE_CONTENT.items():
-            path = ROOT / relative_path
-            text = path.read_text(encoding="utf-8")
-
-            with self.subTest(file=relative_path):
-                for snippet in snippets:
-                    self.assertIn(snippet, text)
-
-    def test_legacy_reference_paths_removed(self):
-        for relative_path in EXPECTED_LEGACY_REFERENCE_FILES:
-            with self.subTest(file=relative_path):
-                path = ROOT / relative_path
-                self.assertFalse(
-                    path.exists(), f"legacy file should be removed: {path}"
-                )
-
-    def test_apply_and_review_skill_reference_maps(self):
-        apply_text = APPLY_SKILL.read_text(encoding="utf-8")
-        review_text = REVIEW_SKILL.read_text(encoding="utf-8")
-
-        with self.subTest("apply skill core references"):
-            for relative_path in EXPECTED_APPLY_CORE_REFERENCES:
-                self.assertIn(relative_path, apply_text)
-            self.assertIn("`../../references/core/`", apply_text)
-            for relative_path in REMOVED_REFERENCE_PATHS:
-                self.assertNotIn(relative_path, apply_text)
-
-        with self.subTest("review skill core references"):
-            for relative_path in EXPECTED_REVIEW_CORE_REFERENCES:
-                self.assertIn(relative_path, review_text)
-            self.assertIn("`../../references/core/anti-patterns.md`", review_text)
-            self.assertIn("`../../references/design/anti-slop.md`", review_text)
-            for relative_path in REMOVED_REFERENCE_PATHS:
-                self.assertNotIn(relative_path, review_text)
-
-        with self.subTest("apply skill framework references"):
-            for relative_path in EXPECTED_FRAMEWORK_REFERENCES:
-                self.assertIn(relative_path, apply_text)
-
-        with self.subTest("review skill framework references"):
-            for relative_path in EXPECTED_FRAMEWORK_REFERENCES:
-                self.assertIn(relative_path, review_text)
-
-    def test_source_notes_provenance_and_adaptation(self):
-        text = (ROOT / "references/source-notes.md").read_text(encoding="utf-8")
-
-        for snippet in EXPECTED_SOURCE_NOTES_SNIPPETS:
-            with self.subTest(snippet=snippet):
-                self.assertIn(snippet, text)
 
     def test_skill_contract_markers(self):
         for path, snippets in EXPECTED_SKILL_CONTRACT_MARKERS.items():
             text = path.read_text(encoding="utf-8")
-
             for snippet in snippets:
                 with self.subTest(file=path.name, snippet=snippet):
                     self.assertIn(snippet, text)
 
-    def test_review_skill_keeps_findings_first_output_contract(self):
-        review_text = REVIEW_SKILL.read_text(encoding="utf-8")
+    def test_review_command_and_agent_contract(self):
+        command_text = REVIEW_COMMAND.read_text(encoding="utf-8")
+        agent_text = UI_REVIEWER_AGENT.read_text(encoding="utf-8")
 
-        self.assertIn("findings first", review_text)
-        self.assertIn("grouped by file", review_text)
-        self.assertIn("file:line", review_text)
+        self.assertIn("name: review", command_text)
+        self.assertIn("ui-reviewer", command_text)
+        self.assertIn("/web-design-guidelines:review", agent_text)
+        self.assertIn("Invoke the `web-design-guidelines-review` skill", agent_text)
+        self.assertNotIn("Invoke the `web-design-guidelines` skill. Use its **Review mode** workflow", agent_text)
+
+
+if __name__ == "__main__":
+    unittest.main()

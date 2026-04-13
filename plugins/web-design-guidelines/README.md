@@ -2,6 +2,26 @@
 
 Design, implement, and review web interfaces with shared UI guidance.
 
+## Install
+
+### As normal skills
+
+Install the specialized skills individually:
+
+```bash
+npx skills add mrclrchtr/skills --skill web-design-guidelines-design
+npx skills add mrclrchtr/skills --skill web-design-guidelines-apply
+npx skills add mrclrchtr/skills --skill web-design-guidelines-review
+```
+
+### As a Claude Code plugin
+
+```bash
+/plugin install web-design-guidelines@mrclrchtr-skills
+```
+
+Use the plugin when you want the same specialized skills plus the `/web-design-guidelines:review` command.
+
 ## Skills
 
 ### Auto-triggered (contextual)
@@ -30,7 +50,7 @@ These skills load automatically when Claude detects relevant context:
 
 ## Reference Library
 
-The plugin includes comprehensive guidance organized by category:
+The plugin keeps one shared reference corpus at `references/` and all specialized skills read from it.
 
 ### Core (`references/core/`)
 - `interactions.md` - Keyboard, focus, hover, press states
@@ -66,4 +86,4 @@ Local design system decisions take precedence; plugin guidance fills gaps.
 
 ## Version
 
-0.2.1
+0.2.3

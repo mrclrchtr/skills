@@ -11,19 +11,36 @@ if ! command -v uvx >/dev/null 2>&1; then
   exit 2
 fi
 
+search_roots=()
+[ -d skills ] && search_roots+=("skills")
+# Some plugin-packaged skills are also intended to be installable via skills.sh.
+# Validate those explicit skill roots here without sweeping in every plugin-local skill.
+[ -d plugins/web-design-guidelines/skills/web-design-guidelines-design ] && \
+  search_roots+=("plugins/web-design-guidelines/skills/web-design-guidelines-design")
+[ -d plugins/web-design-guidelines/skills/web-design-guidelines-apply ] && \
+  search_roots+=("plugins/web-design-guidelines/skills/web-design-guidelines-apply")
+[ -d plugins/web-design-guidelines/skills/web-design-guidelines-review ] && \
+  search_roots+=("plugins/web-design-guidelines/skills/web-design-guidelines-review")
+
 skill_manifests=()
-if command -v fd >/dev/null 2>&1; then
-  while IFS= read -r manifest; do
-    skill_manifests+=("${manifest}")
-  done < <(fd --type file --glob "SKILL.md" skills | sort)
-else
-  while IFS= read -r manifest; do
-    skill_manifests+=("${manifest}")
-  done < <(find skills -type f -name "SKILL.md" | sort)
+if [ "${#search_roots[@]}" -gt 0 ]; then
+  if command -v fd >/dev/null 2>&1; then
+    while IFS= read -r manifest; do
+      skill_manifests+=("${manifest}")
+    done < <(fd --type file --glob "SKILL.md" "${search_roots[@]}" | sort)
+  else
+    while IFS= read -r manifest; do
+      skill_manifests+=("${manifest}")
+    done < <(
+      for root in "${search_roots[@]}"; do
+        find "${root}" -type f -name "SKILL.md"
+      done | sort
+    )
+  fi
 fi
 
 if [ "${#skill_manifests[@]}" -eq 0 ]; then
-  echo "No SKILL.md files found under skills/."
+  echo "No SKILL.md files found under configured skill roots."
   exit 0
 fi
 

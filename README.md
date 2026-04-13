@@ -9,7 +9,7 @@ This repo currently contains:
 - `skill-creator`: Create a new skill or update an existing skill (created by https://github.com/openai/skills/tree/main/skills/.system/skill-creator)
 - `stitch-downloader`: Download Stitch (stitch.withgoogle.com) screenshots at full resolution (normalize `lh3.googleusercontent.com` size params; avoid committing signed URLs).
 - `web-fetch-to-markdown`: Fetch http/https pages as clean Markdown by preferring content negotiation, then trying sibling `*.md` endpoints, then extracting HTML via Readability and converting to Markdown.
-- `web-design-guidelines` plugin: Design, implement, and review web interfaces with shared UI guidance for both Codex and Claude.
+- `web-design-guidelines` plugin: Specialized design/apply/review UI skills with a shared reference corpus, plus a `/web-design-guidelines:review` command for Claude Code.
 - `react-testing-techniques` plugin: Best practices for testing React components with Vitest, React Testing Library, MSW, TanStack Query/Router, and Mantine.
 
 ## How `agent-orchestrator` differs from `agent-orchestrator-standalone`
@@ -93,6 +93,9 @@ npx skills add mrclrchtr/skills --skill commit
 npx skills add mrclrchtr/skills --skill skill-creator
 npx skills add mrclrchtr/skills --skill stitch-downloader
 npx skills add mrclrchtr/skills --skill web-fetch-to-markdown
+npx skills add mrclrchtr/skills --skill web-design-guidelines-design
+npx skills add mrclrchtr/skills --skill web-design-guidelines-apply
+npx skills add mrclrchtr/skills --skill web-design-guidelines-review
 ```
 
 Use `-g, --global` to install to your user directory instead of the current project:
@@ -105,6 +108,9 @@ npx skills add mrclrchtr/skills --skill commit -g
 npx skills add mrclrchtr/skills --skill skill-creator -g
 npx skills add mrclrchtr/skills --skill stitch-downloader -g
 npx skills add mrclrchtr/skills --skill web-fetch-to-markdown -g
+npx skills add mrclrchtr/skills --skill web-design-guidelines-design -g
+npx skills add mrclrchtr/skills --skill web-design-guidelines-apply -g
+npx skills add mrclrchtr/skills --skill web-design-guidelines-review -g
 ```
 
 Tip: install only what you need. Loading everything can dilute context and reduce quality.
@@ -119,6 +125,9 @@ Once installed, invoke skills by name in your prompt:
 - `$skill-creator` — “$skill-creator”
 - `$stitch-downloader` — “$stitch-downloader download this Stitch screenshot at 2560x2048”
 - `$web-fetch-to-markdown` — “$web-fetch-to-markdown https://example.com/docs/page”
+- `$web-design-guidelines-design` — “$web-design-guidelines-design propose a direction for this analytics dashboard before I build it”
+- `$web-design-guidelines-apply` — “$web-design-guidelines-apply implement this settings page in our React app”
+- `$web-design-guidelines-review` — “$web-design-guidelines-review audit this diff for accessibility and interaction issues”
 
 ## More install options
 
@@ -130,10 +139,16 @@ npx skills add mrclrchtr/skills --list
 npx skills add https://github.com/mrclrchtr/skills/tree/main/skills/agent-orchestrator
 npx skills add https://github.com/mrclrchtr/skills/tree/main/skills/commit
 npx skills add https://github.com/mrclrchtr/skills/tree/main/skills/skill-creator
+npx skills add https://github.com/mrclrchtr/skills/tree/main/plugins/web-design-guidelines/skills/web-design-guidelines-design
+npx skills add https://github.com/mrclrchtr/skills/tree/main/plugins/web-design-guidelines/skills/web-design-guidelines-apply
+npx skills add https://github.com/mrclrchtr/skills/tree/main/plugins/web-design-guidelines/skills/web-design-guidelines-review
 
 # Install from a local checkout
 npx skills add . --skill agent-orchestrator
 npx skills add . --skill commit
+npx skills add . --skill web-design-guidelines-design
+npx skills add . --skill web-design-guidelines-apply
+npx skills add . --skill web-design-guidelines-review
 ```
 
 ## Development

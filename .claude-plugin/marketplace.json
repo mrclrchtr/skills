@@ -5,7 +5,7 @@
   },
   "metadata": {
     "description": "A collection of Claude Code skills for Git workflows, agent orchestration, skill creation, web fetching, and more.",
-    "version": "1.1.0"
+    "version": "1.1.2"
   },
   "plugins": [
     {
