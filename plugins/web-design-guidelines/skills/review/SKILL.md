@@ -19,10 +19,11 @@ allowed-tools:
 - Ambiguous (multiple commits, unclear scope) → ask user via `AskUserQuestion`
 
 **Ask when unclear.** Example options:
-- "Review all 3 commits on this branch"
-- "Review only the last commit (abc123)"
-- "Review uncommitted changes"
-- "Review specific files..."
+- "All session changes" — all commits made in this conversation
+- "Whole feature" — all commits on this branch vs main
+- "Last commit only (abc123)"
+- "Uncommitted changes"
+- "Specific file..."
 
 ## Step 2: Find Design System Path
 
