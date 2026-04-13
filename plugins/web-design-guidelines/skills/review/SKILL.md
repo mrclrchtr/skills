@@ -5,23 +5,34 @@ argument-hint: "[target] - optional file path, directory, commit hash, or 'chang
 allowed-tools:
   - Agent
   - Glob
+  - AskUserQuestion
 ---
 
 # Web Design Guidelines Review (Subagent)
 
-Spawn the `ui-reviewer` agent with minimal context. The agent does the work.
+## Step 1: Determine Target
 
-## Step 1: Determine Target + Find Design System
+**With argument:** Use it directly.
 
-**Target:** Use argument if provided, otherwise determine from session context (what was just implemented, discussed, committed).
+**Without argument:** Determine from session context:
+- Clear single target (one commit, one file) → use it
+- Ambiguous (multiple commits, unclear scope) → ask user via `AskUserQuestion`
 
-**Design system:** Quick glob for path (don't read):
+**Ask when unclear.** Example options:
+- "Review all 3 commits on this branch"
+- "Review only the last commit (abc123)"
+- "Review uncommitted changes"
+- "Review specific files..."
+
+## Step 2: Find Design System Path
+
+Quick glob (don't read):
 ```
-glob: "docs/**/design-system.md"
+glob: "docs/**/design-system.md"  
 glob: "**/DESIGN_SYSTEM.md"
 ```
 
-## Step 2: Spawn Agent
+## Step 3: Spawn Agent
 
 ```yaml
 tool: Agent
@@ -31,9 +42,7 @@ parameters:
   prompt: |
     Review: [TARGET]
     Design system: [PATH or "none"]
-    Context: [RELEVANT SESSION CONTEXT or "none"]
+    Context: [RELEVANT SESSION CONTEXT]
 ```
 
-Pass what you know — the agent handles the rest.
-
-## Step 3: Return findings to user
+## Step 4: Return findings to user
