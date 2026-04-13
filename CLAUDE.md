@@ -6,6 +6,12 @@
 - `skills/` - Single-skill plugins (simpler structure)
 - `.claude-plugin/marketplace.json` - Registry of all plugins
 
+## Adding a Plugin
+
+1. Create plugin in `plugins/` or `skills/`
+2. Register in `.claude-plugin/marketplace.json` (add to `plugins` array)
+3. Bump `metadata.version` (minor for new plugin, patch for fixes)
+
 ## Creating User-Invokable Skills (Slash Commands)
 
 For skills that should be invokable via `/plugin:skill-name`:

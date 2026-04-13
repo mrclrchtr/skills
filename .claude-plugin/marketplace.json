@@ -5,7 +5,7 @@
   },
   "metadata": {
     "description": "A collection of Claude Code skills for Git workflows, agent orchestration, skill creation, web fetching, and more.",
-    "version": "1.0.0"
+    "version": "1.1.0"
   },
   "plugins": [
     {
@@ -49,6 +49,12 @@
       "source": "./plugins/web-design-guidelines",
       "description": "Design, implement, and review web interfaces with shared UI guidance",
       "keywords": ["web", "ui", "frontend", "design", "accessibility"]
+    },
+    {
+      "name": "react-testing-techniques",
+      "source": "./plugins/react-testing-techniques",
+      "description": "Best practices for testing React components with Vitest, React Testing Library, and MSW",
+      "keywords": ["react", "testing", "vitest", "rtl", "msw", "tanstack"]
     },
     {
       "name": "agent-roles",
