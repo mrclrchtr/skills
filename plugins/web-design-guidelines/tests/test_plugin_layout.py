@@ -97,6 +97,8 @@ EXPECTED_SKILL_CONTRACT_MARKERS = {
     ],
 }
 
+LEGACY_REFERENCE_PATH_MARKER = "../../references/"
+
 
 def parse_frontmatter(text):
     lines = text.splitlines()
@@ -211,6 +213,8 @@ class PluginLayoutTest(unittest.TestCase):
             for snippet in snippets:
                 with self.subTest(file=path.name, snippet=snippet):
                     self.assertIn(snippet, text)
+            with self.subTest(file=path.name, snippet=LEGACY_REFERENCE_PATH_MARKER):
+                self.assertNotIn(LEGACY_REFERENCE_PATH_MARKER, text)
 
     def test_review_command_and_agent_contract(self):
         command_text = REVIEW_COMMAND.read_text(encoding="utf-8")
