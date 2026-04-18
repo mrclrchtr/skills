@@ -1,0 +1,31 @@
+{
+  "name": "@mrclrchtr-internal/web-fetch-md",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.33.0",
+  "engines": {
+    "node": ">=20.19.0"
+  },
+  "scripts": {
+    "dev": "tsx ./src/fetchmd.ts",
+    "start": "node ./dist/fetchmd.js",
+    "test": "node --test",
+    "build": "pnpm build:local && pnpm build:skill",
+    "build:local": "tsc -p tsconfig.build.json",
+    "build:skill": "node build.mjs",
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@mozilla/readability": "^0.6.0",
+    "jsdom": "^29.0.1",
+    "turndown": "^7.2.0",
+    "turndown-plugin-gfm": "^1.0.2"
+  },
+  "devDependencies": {
+    "@types/jsdom": "28.0.1",
+    "@types/node": "24.12.2",
+    "esbuild": "0.28.0",
+    "tsx": "4.21.0",
+    "typescript": "5.9.3"
+  }
+}

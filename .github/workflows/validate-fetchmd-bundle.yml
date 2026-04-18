@@ -1,0 +1,50 @@
+name: Validate fetchmd.js Bundle
+
+on:
+  pull_request:
+    paths:
+      - tools/web-fetch-md/src/**
+      - tools/web-fetch-md/package.json
+      - tools/web-fetch-md/pnpm-lock.yaml
+      - tools/web-fetch-md/tsconfig*.json
+      - tools/web-fetch-md/build.mjs
+      - skills/web-fetch-to-markdown/scripts/fetchmd.js
+      - .github/workflows/validate-fetchmd-bundle.yml
+  push:
+    branches:
+      - main
+    paths:
+      - tools/web-fetch-md/src/**
+      - tools/web-fetch-md/package.json
+      - tools/web-fetch-md/pnpm-lock.yaml
+      - tools/web-fetch-md/tsconfig*.json
+      - tools/web-fetch-md/build.mjs
+      - skills/web-fetch-to-markdown/scripts/fetchmd.js
+      - .github/workflows/validate-fetchmd-bundle.yml
+
+jobs:
+  check-fetchmd-bundle:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - name: Setup mise
+        uses: jdx/mise-action@1648a7812b9aeae629881980618f079932869151 # v4.0.1
+      - name: Enable Corepack (pnpm)
+        run: corepack enable
+      - name: Install deps
+        working-directory: tools/web-fetch-md
+        run: pnpm install --frozen-lockfile
+      - name: Bundle skill script
+        working-directory: tools/web-fetch-md
+        run: pnpm run build:skill
+      - name: Check bundle is committed
+        shell: bash
+        run: |
+          if git diff --exit-code -- skills/web-fetch-to-markdown/scripts/fetchmd.js; then
+            exit 0
+          fi
+
+          echo "fetchmd.js bundle is out of date." >&2
+          echo "Run: pnpm -C tools/web-fetch-md run build:skill" >&2
+          exit 1

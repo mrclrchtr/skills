@@ -16,29 +16,3 @@ jobs:
         uses: jdx/mise-action@1648a7812b9aeae629881980618f079932869151 # v4.0.1
       - name: Validate skills
         run: bash scripts/validate-skills.sh
-
-  check-fetchmd-bundle:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-      - name: Setup mise
-        uses: jdx/mise-action@1648a7812b9aeae629881980618f079932869151 # v4.0.1
-      - name: Enable Corepack (pnpm)
-        run: corepack enable
-      - name: Install deps
-        working-directory: lib/web-fetch-md
-        run: pnpm install --frozen-lockfile
-      - name: Bundle skill script
-        working-directory: lib/web-fetch-md
-        run: pnpm run bundle:skill
-      - name: Check bundle is committed
-        shell: bash
-        run: |
-          if git diff --exit-code -- skills/web-fetch-to-markdown/scripts/fetchmd.js; then
-            exit 0
-          fi
-
-          echo "fetchmd.js bundle is out of date." >&2
-          echo "Run: pnpm -C lib/web-fetch-md run bundle:skill" >&2
-          exit 1

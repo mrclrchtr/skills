@@ -6,10 +6,11 @@ on:
     branches:
       - renovate/**
     paths:
-      - lib/web-fetch-md/src/**
-      - lib/web-fetch-md/package.json
-      - lib/web-fetch-md/pnpm-lock.yaml
-      - lib/web-fetch-md/tsconfig*.json
+      - tools/web-fetch-md/src/**
+      - tools/web-fetch-md/package.json
+      - tools/web-fetch-md/pnpm-lock.yaml
+      - tools/web-fetch-md/tsconfig*.json
+      - tools/web-fetch-md/build.mjs
 
 concurrency:
   group: update-fetchmd-bundle-${{ github.ref }}
@@ -48,11 +49,11 @@ jobs:
       - name: Enable Corepack (pnpm)
         run: corepack enable
       - name: Install deps
-        working-directory: lib/web-fetch-md
+        working-directory: tools/web-fetch-md
         run: pnpm install --frozen-lockfile
       - name: Bundle skill script
-        working-directory: lib/web-fetch-md
-        run: pnpm run bundle:skill
+        working-directory: tools/web-fetch-md
+        run: pnpm run build:skill
       - name: Detect bundle changes
         id: bundle-diff
         shell: bash

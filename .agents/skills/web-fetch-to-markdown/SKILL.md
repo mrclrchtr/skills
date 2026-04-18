@@ -14,22 +14,22 @@ Fetch a single `http(s)` URL and output clean Markdown.
 Fetch a URL and print Markdown to stdout:
 
 ```bash
-bash skills/web-fetch-to-markdown/scripts/fetchmd "<url>"
+bash "${CLAUDE_PLUGIN_ROOT:-skills/web-fetch-to-markdown}/scripts/fetchmd" "<url>"
 ```
 
 OR write Markdown to a file:
 
 ```bash
-bash skills/web-fetch-to-markdown/scripts/fetchmd "<url>" page.md
+bash "${CLAUDE_PLUGIN_ROOT:-skills/web-fetch-to-markdown}/scripts/fetchmd" "<url>" page.md
 ```
 
 ## Useful flags
 
 ```bash
-bash skills/web-fetch-to-markdown/scripts/fetchmd --help
-bash skills/web-fetch-to-markdown/scripts/fetchmd --timeout-ms 60000 "<url>" > page.md
-bash skills/web-fetch-to-markdown/scripts/fetchmd --debug "<url>" > page.md
-bash skills/web-fetch-to-markdown/scripts/fetchmd --no-abs-links "<url>" > page.md
+bash "${CLAUDE_PLUGIN_ROOT:-skills/web-fetch-to-markdown}/scripts/fetchmd" --help
+bash "${CLAUDE_PLUGIN_ROOT:-skills/web-fetch-to-markdown}/scripts/fetchmd" --timeout-ms 60000 "<url>" > page.md
+bash "${CLAUDE_PLUGIN_ROOT:-skills/web-fetch-to-markdown}/scripts/fetchmd" --debug "<url>" > page.md
+bash "${CLAUDE_PLUGIN_ROOT:-skills/web-fetch-to-markdown}/scripts/fetchmd" --no-abs-links "<url>" > page.md
 ```
 
 Note: links/images are absolute by default; use `--no-abs-links` to keep them as-is.
@@ -43,4 +43,4 @@ Note: links/images are absolute by default; use `--no-abs-links` to keep them as
 
 - Slow or flaky fetch: retry with a larger `--timeout-ms` and use `--debug`.
 - Output looks like placeholders (common for SPAs/JS-rendered pages): ask the user for rendered HTML/text (or a browser capture) and then convert.
-- Output is mostly navigation/footer: try an alternate official Markdown source (docs `.md`, README) or a “printable” version if available.
+- Output is mostly navigation/footer: try an alternate official Markdown source (docs `.md`, README) or a "printable" version if available.

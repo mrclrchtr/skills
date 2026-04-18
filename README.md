@@ -139,19 +139,29 @@ npx skills add mrclrchtr/skills --list
 npx skills add https://github.com/mrclrchtr/skills/tree/main/skills/agent-orchestrator
 npx skills add https://github.com/mrclrchtr/skills/tree/main/skills/commit
 npx skills add https://github.com/mrclrchtr/skills/tree/main/skills/skill-creator
+npx skills add https://github.com/mrclrchtr/skills/tree/main/skills/web-fetch-to-markdown
 npx skills add https://github.com/mrclrchtr/skills/tree/main/plugins/web-design-guidelines/skills/web-design-guidelines-design
 npx skills add https://github.com/mrclrchtr/skills/tree/main/plugins/web-design-guidelines/skills/web-design-guidelines-apply
 npx skills add https://github.com/mrclrchtr/skills/tree/main/plugins/web-design-guidelines/skills/web-design-guidelines-review
 
-# Install from a local checkout
+# Install from a local checkout (from this repo root)
 npx skills add . --skill agent-orchestrator
 npx skills add . --skill commit
+npx skills add . --skill web-fetch-to-markdown
 npx skills add . --skill web-design-guidelines-design
 npx skills add . --skill web-design-guidelines-apply
 npx skills add . --skill web-design-guidelines-review
+
+# Install from a local checkout globally
+npx skills add . --skill web-fetch-to-markdown -g
 ```
 
 ## Development
+
+Installable artifacts live under `skills/`, `plugins/`, and `agents/`.
+Internal build/test source for shipped runtimes lives under `tools/` (for example,
+`tools/web-fetch-md` builds the bundled runtime shipped in
+`skills/web-fetch-to-markdown/scripts/fetchmd.js`).
 
 This repo validates skill metadata with [`skills-ref`](https://github.com/agentskills/agentskills/tree/main/skills-ref)
 
