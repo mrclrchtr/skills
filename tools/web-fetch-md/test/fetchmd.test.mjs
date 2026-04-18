@@ -14,7 +14,6 @@ const packageJsonPath = path.join(repoRoot, "tools/web-fetch-md/package.json");
 const shippedSkillDir = path.join(repoRoot, "skills/web-fetch-to-markdown");
 const shippedSkillScript = path.join(shippedSkillDir, "scripts/fetchmd.js");
 const launchers = [
-  ".agents/skills/web-fetch-to-markdown/scripts/fetchmd.js",
   "skills/web-fetch-to-markdown/scripts/fetchmd.js",
 ];
 

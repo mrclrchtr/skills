@@ -1,14 +1,13 @@
 #!/usr/bin/env node
 import { build } from "esbuild";
 import { createRequire } from "node:module";
-import { chmodSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { chmodSync, readFileSync } from "node:fs";
 import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const repoRoot = resolve(__dirname, "../..");
 const shippedSkillScript = resolve(repoRoot, "skills/web-fetch-to-markdown/scripts/fetchmd.js");
-const agentsLauncher = resolve(repoRoot, ".agents/skills/web-fetch-to-markdown/scripts/fetchmd.js");
 
 function replaceOnceOrThrow(source, pattern, replacement, label) {
   if (!pattern.test(source)) {
@@ -101,20 +100,4 @@ await build({
   ],
 });
 
-// Rewrite the internal `.agents/` launcher as a thin shim that delegates to
-// the shipped skill bundle. The launcher is only used by agents running inside
-// this repo; it is not part of the distributed skill.
-mkdirSync(dirname(agentsLauncher), { recursive: true });
-writeFileSync(
-  agentsLauncher,
-  [
-    "#!/usr/bin/env node",
-    "const path = require('node:path');",
-    "require(path.resolve(__dirname, '../../../../skills/web-fetch-to-markdown/scripts/fetchmd.js'));",
-    "",
-  ].join("\n"),
-  "utf8",
-);
-
 chmodSync(shippedSkillScript, 0o755);
-chmodSync(agentsLauncher, 0o755);

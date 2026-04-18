@@ -46,11 +46,10 @@ node ./dist/fetchmd.js --help
 
 1. builds `dist/fetchmd.js` for local package usage
 2. refreshes the shipped, installable skill runtime at
-   `skills/web-fetch-to-markdown/scripts/fetchmd.js` and the matching
-   `.agents/skills/web-fetch-to-markdown/scripts/fetchmd.js` launcher
+   `skills/web-fetch-to-markdown/scripts/fetchmd.js`
 
 Step 2 writes files outside this directory — expect unstaged changes under
-`skills/` and `.agents/` after a successful build.
+`skills/` after a successful build.
 
 That bundled `skills/web-fetch-to-markdown/scripts/fetchmd.js` file is the
 self-contained artifact used by marketplace / skill installs. It must not
@@ -60,7 +59,7 @@ The bundle is committed and ships with `jsdom` inlined, so it weighs several
 megabytes. We accept that cost in exchange for a single-file install that
 needs no `node_modules` and no extra build step on the user's machine.
 
-To refresh only the shipped skill runtime and the internal `.agents` launcher:
+To refresh only the shipped skill runtime:
 
 ```bash
 pnpm build:skill
