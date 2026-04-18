@@ -1,5 +1,5 @@
 ---
-name: review
+name: review-changes
 description: >
   Use when the user asks to review code, audit changes, check a PR or commit,
   look over a file or directory, review a design/architecture document, or says

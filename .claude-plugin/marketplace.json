@@ -33,8 +33,8 @@
       "keywords": ["skills", "authoring", "development"]
     },
     {
-      "name": "review",
-      "source": "./skills/review",
+      "name": "review-changes",
+      "source": "./skills/review-changes",
       "description": "Review code, audit changes, check a PR/commit, or review a design/architecture document. Executes directly with grouped severity findings (critical/high/medium/positive) — no brainstorming, no interactive dialogue.",
       "keywords": ["review", "audit", "code-review", "pr", "quality"]
     },
