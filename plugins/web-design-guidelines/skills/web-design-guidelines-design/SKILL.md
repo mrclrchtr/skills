@@ -20,6 +20,8 @@ Use this skill to establish a strong design direction before implementation and 
 
 ## Reference Map
 
+> All paths below are relative to this file's directory. Resolve them as `{dir_of_SKILL.md}/{path}` before reading.
+
 - `references/design/direction.md`
 - `references/design/typography-color.md`
 - `references/design/motion-composition.md`

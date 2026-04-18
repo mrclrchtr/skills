@@ -20,6 +20,8 @@ Implement or update UI while preserving the intended design direction and shared
 
 ## Reference Map
 
+> All paths below are relative to this file's directory. Resolve them as `{dir_of_SKILL.md}/{path}` before reading.
+
 - `references/core/interactions.md`
 - `references/core/forms.md`
 - `references/core/animation.md`
