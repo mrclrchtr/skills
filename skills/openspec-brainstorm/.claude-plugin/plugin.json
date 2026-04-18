@@ -1,0 +1,10 @@
+{
+  "name": "openspec-brainstorm",
+  "version": "1.0.0",
+  "description": "You MUST use this before creative OpenSpec work - creating features, building components, adding functionality, or modifying behavior. Explores user intent, requirements and design before implementation, then hands off to the best matching OpenSpec skill or command without managing OpenSpec artifacts.",
+  "author": {
+    "name": "Marcel Richter"
+  },
+  "keywords": ["openspec", "brainstorm", "design", "requirements"],
+  "skills": ["./"]
+}

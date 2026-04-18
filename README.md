@@ -33,6 +33,7 @@ Repository rules:
 | commit | `commit` | `commit@mrclrchtr-skills` |
 | review-changes | `review-changes` | `review-changes@mrclrchtr-skills` |
 | skill-creator | `skill-creator` | `skill-creator@mrclrchtr-skills` |
+| openspec-brainstorm | `openspec-brainstorm` | `openspec-brainstorm@mrclrchtr-skills` |
 | stitch-downloader | `stitch-downloader` | `stitch-downloader@mrclrchtr-skills` |
 | web-fetch-to-markdown | `web-fetch-to-markdown` | `web-fetch-to-markdown@mrclrchtr-skills` |
 | web-design-guidelines | `web-design-guidelines-design`, `web-design-guidelines-apply`, `web-design-guidelines-review` | `web-design-guidelines@mrclrchtr-skills` |
