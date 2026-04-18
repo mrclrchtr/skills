@@ -5,7 +5,7 @@
   },
   "metadata": {
     "description": "A collection of Claude Code skills for Git workflows, agent orchestration, skill creation, web fetching, and more.",
-    "version": "1.1.2"
+    "version": "1.2.0"
   },
   "plugins": [
     {
@@ -31,6 +31,12 @@
       "source": "./skills/skill-creator",
       "description": "Guide for creating effective skills. This skill should be used when users want to create a new skill (or update an existing skill) that extends Codex's capabilities with specialized knowledge, workflows, or tool integrations.",
       "keywords": ["skills", "authoring", "development"]
+    },
+    {
+      "name": "review",
+      "source": "./skills/review",
+      "description": "Review code, audit changes, check a PR/commit, or review a design/architecture document. Executes directly with grouped severity findings (critical/high/medium/positive) — no brainstorming, no interactive dialogue.",
+      "keywords": ["review", "audit", "code-review", "pr", "quality"]
     },
     {
       "name": "stitch-downloader",
