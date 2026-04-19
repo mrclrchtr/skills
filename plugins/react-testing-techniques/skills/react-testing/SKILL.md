@@ -1,7 +1,6 @@
 ---
-name: React Testing
+name: react-testing
 description: This skill should be used when the user asks to "write React tests", "test a component", "set up test utils", "mock an API", "use React Testing Library", "configure MSW", "test async behavior", "choose query type", "test Mantine components", "test a modal", or when writing tests for React components using Vitest, RTL, MSW, or Mantine. Provides best practices for component and integration testing.
-version: 1.0.0
 ---
 
 # React Testing Techniques
