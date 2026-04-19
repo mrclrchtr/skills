@@ -188,6 +188,13 @@ class PluginLayoutTest(unittest.TestCase):
         self.assertNotIn("interface", claude_manifest)
         self.assertNotIn("skills", claude_manifest)
 
+        codex_manifest = json.loads(PLUGIN_JSON.read_text(encoding="utf-8"))
+        self.assertEqual(
+            codex_manifest["version"],
+            claude_manifest["version"],
+            "version drift between .codex-plugin/plugin.json and .claude-plugin/plugin.json",
+        )
+
         marketplace = json.loads(ROOT_MARKETPLACE_JSON.read_text(encoding="utf-8"))
         entry = next(
             item
