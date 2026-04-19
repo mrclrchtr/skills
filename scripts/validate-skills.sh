@@ -13,14 +13,23 @@ fi
 
 search_roots=()
 [ -d skills ] && search_roots+=("skills")
-# Some plugin-packaged skills are also intended to be installable via skills.sh.
-# Validate those explicit skill roots here without sweeping in every plugin-local skill.
-[ -d plugins/web-design-guidelines/skills/web-design-guidelines-design ] && \
-  search_roots+=("plugins/web-design-guidelines/skills/web-design-guidelines-design")
-[ -d plugins/web-design-guidelines/skills/web-design-guidelines-apply ] && \
-  search_roots+=("plugins/web-design-guidelines/skills/web-design-guidelines-apply")
-[ -d plugins/web-design-guidelines/skills/web-design-guidelines-review ] && \
-  search_roots+=("plugins/web-design-guidelines/skills/web-design-guidelines-review")
+# Discover plugin-packaged skill roots so adding a new plugins/<name>/skills/<skill>
+# does not require editing this script.
+if [ -d plugins ]; then
+  while IFS= read -r plugin_skill_root; do
+    [ -n "${plugin_skill_root}" ] || continue
+    search_roots+=("${plugin_skill_root}")
+  done < <(
+    if command -v fd >/dev/null 2>&1; then
+      fd --type directory --max-depth 3 --glob "skills" plugins | while IFS= read -r skills_dir; do
+        # Each immediate subdir of plugins/<plugin>/skills/ is a skill root.
+        find "${skills_dir}" -mindepth 1 -maxdepth 1 -type d
+      done | sort
+    else
+      find plugins -mindepth 3 -maxdepth 3 -type d -path "*/skills/*" | sort
+    fi
+  )
+fi
 
 skill_manifests=()
 if [ "${#search_roots[@]}" -gt 0 ]; then
