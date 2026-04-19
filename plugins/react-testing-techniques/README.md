@@ -1,6 +1,8 @@
 # React Testing Techniques
 
-A Claude Code plugin providing best practices for testing React components with Vitest, React Testing Library, and Mock Service Worker.
+A shared source for:
+- the `react-testing` skill on `skills.sh`
+- the `react-testing-techniques` Claude Code marketplace plugin
 
 ## Features
 
@@ -13,12 +15,17 @@ A Claude Code plugin providing best practices for testing React components with 
 
 ## Installation
 
-```bash
-# Via --plugin-dir
-claude --plugin-dir /path/to/react-testing-techniques
+### skills.sh
 
-# Or copy to your project
-cp -r react-testing-techniques .claude-plugin/
+```bash
+npx skills add mrclrchtr/skills --skill react-testing
+```
+
+### Claude Code Marketplace
+
+```bash
+/plugin marketplace add mrclrchtr/skills
+/plugin install react-testing-techniques@mrclrchtr-skills
 ```
 
 ## Usage
@@ -49,7 +56,7 @@ Optimized for:
 ## Skill Structure
 
 ```
-skills/react-testing/
+plugins/react-testing-techniques/skills/react-testing/
 ├── SKILL.md                    # Core principles and quick reference
 └── references/
     ├── test-utils-setup.md     # Custom render with providers
@@ -69,4 +76,3 @@ skills/react-testing/
 3. **Use userEvent.setup()** - Never fireEvent
 4. **Choose the right query** - getBy (sync), findBy (async), queryBy (absence)
 5. **Avoid snapshot tests** - Test behavior, not structure
-

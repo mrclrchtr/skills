@@ -86,4 +86,4 @@ Local design system decisions take precedence; plugin guidance fills gaps.
 
 ## Version
 
-0.2.3
+0.5.2

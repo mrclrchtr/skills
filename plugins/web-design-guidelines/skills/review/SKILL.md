@@ -1,7 +1,6 @@
 ---
 name: review
 description: Delegate UI code reviews to a subagent. Reviews components, pages, git changes, or specification files using web design guidelines.
-argument-hint: "[target] - optional file path, directory, commit hash, or 'changes' for git diff"
 allowed-tools:
   - Agent
   - Glob

@@ -1,0 +1,10 @@
+{
+  "name": "commit",
+  "version": "1.0.0",
+  "description": "Create a safe, intentional git commit that matches the repository's commit style.",
+  "author": {
+    "name": "Marcel Richter"
+  },
+  "keywords": ["git", "commit", "conventional-commits", "workflow"],
+  "skills": ["./"]
+}
