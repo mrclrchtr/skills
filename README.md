@@ -5,7 +5,7 @@ Reusable skills for agent workflows (Codex / agent-skill loaders).
 This repo currently contains:
 - `agent-orchestrator`: Coordinate complex work using a phase-gated, multi-agent engineering loop (audit → design → implement → review → validate → deliver).
 - `agent-orchestrator-standalone`: Run the same phase-gated workflow without relying on preconfigured agent roles (embeds role cards in the skill).
-- `commit`: Create safe, repo-convention commits by inspecting diffs, staging intentionally, and writing high-quality commit messages (prefer Conventional Commits when the repo uses them).
+- `review-changes`: Review code, audit changes, check a PR/commit, or review a design/architecture document; emits findings grouped by severity.
 - `skill-creator`: Create a new skill or update an existing skill (created by https://github.com/openai/skills/tree/main/skills/.system/skill-creator)
 - `stitch-downloader`: Download Stitch (stitch.withgoogle.com) screenshots at full resolution (normalize `lh3.googleusercontent.com` size params; avoid committing signed URLs).
 - `web-fetch-to-markdown`: Fetch http/https pages as clean Markdown by preferring content negotiation, then trying sibling `*.md` endpoints, then extracting HTML via Readability and converting to Markdown.
@@ -29,14 +29,16 @@ This repository is a [Claude Code plugin marketplace](https://code.claude.com/do
 
 # Install individual plugins
 /plugin install agent-orchestrator@mrclrchtr-skills
-/plugin install commit@mrclrchtr-skills
+/plugin install agent-orchestrator-standalone@mrclrchtr-skills
+/plugin install review-changes@mrclrchtr-skills
 /plugin install skill-creator@mrclrchtr-skills
+/plugin install stitch-downloader@mrclrchtr-skills
 /plugin install web-fetch-to-markdown@mrclrchtr-skills
 /plugin install web-design-guidelines@mrclrchtr-skills
 /plugin install react-testing-techniques@mrclrchtr-skills
 ```
 
-But be cautious: All content in this repo is optimized for OpenAI Codex.
+Heads up: skill bodies and agent-orchestrator role configs are written for OpenAI Codex (e.g. `$skill-name` invocation, TOML role cards). Most skills work in Claude Code, but expect Codex-flavored phrasing and references.
 
 ### Codex Local Marketplace
 
@@ -89,7 +91,7 @@ Install one skill at a time via the `skills` CLI from `vercel-labs/skills`:
 # Install from this repo (recommended)
 npx skills add mrclrchtr/skills --skill agent-orchestrator
 npx skills add mrclrchtr/skills --skill agent-orchestrator-standalone
-npx skills add mrclrchtr/skills --skill commit
+npx skills add mrclrchtr/skills --skill review-changes
 npx skills add mrclrchtr/skills --skill skill-creator
 npx skills add mrclrchtr/skills --skill stitch-downloader
 npx skills add mrclrchtr/skills --skill web-fetch-to-markdown
@@ -104,7 +106,7 @@ Use `-g, --global` to install to your user directory instead of the current proj
 # Install globally (available across projects; not meant to be committed)
 npx skills add mrclrchtr/skills --skill agent-orchestrator -g
 npx skills add mrclrchtr/skills --skill agent-orchestrator-standalone -g
-npx skills add mrclrchtr/skills --skill commit -g
+npx skills add mrclrchtr/skills --skill review-changes -g
 npx skills add mrclrchtr/skills --skill skill-creator -g
 npx skills add mrclrchtr/skills --skill stitch-downloader -g
 npx skills add mrclrchtr/skills --skill web-fetch-to-markdown -g
@@ -121,7 +123,7 @@ Once installed, invoke skills by name in your prompt:
 
 - `$agent-orchestrator` — “$agent-orchestrator implement milestone 1”
 - `$agent-orchestrator-standalone` — “$agent-orchestrator-standalone implement milestone 1”
-- `$commit` — Simply “$commit”
+- `$review-changes` — “$review-changes” (or pass a path / PR number)
 - `$skill-creator` — “$skill-creator”
 - `$stitch-downloader` — “$stitch-downloader download this Stitch screenshot at 2560x2048”
 - `$web-fetch-to-markdown` — “$web-fetch-to-markdown https://example.com/docs/page”
@@ -137,7 +139,7 @@ npx skills add mrclrchtr/skills --list
 
 # Install directly from a skill directory path
 npx skills add https://github.com/mrclrchtr/skills/tree/main/skills/agent-orchestrator
-npx skills add https://github.com/mrclrchtr/skills/tree/main/skills/commit
+npx skills add https://github.com/mrclrchtr/skills/tree/main/skills/review-changes
 npx skills add https://github.com/mrclrchtr/skills/tree/main/skills/skill-creator
 npx skills add https://github.com/mrclrchtr/skills/tree/main/skills/web-fetch-to-markdown
 npx skills add https://github.com/mrclrchtr/skills/tree/main/plugins/web-design-guidelines/skills/web-design-guidelines-design
@@ -146,7 +148,7 @@ npx skills add https://github.com/mrclrchtr/skills/tree/main/plugins/web-design-
 
 # Install from a local checkout (from this repo root)
 npx skills add . --skill agent-orchestrator
-npx skills add . --skill commit
+npx skills add . --skill review-changes
 npx skills add . --skill web-fetch-to-markdown
 npx skills add . --skill web-design-guidelines-design
 npx skills add . --skill web-design-guidelines-apply
