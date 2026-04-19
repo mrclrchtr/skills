@@ -1,0 +1,10 @@
+{
+  "name": "agent-orchestrator",
+  "version": "1.0.0",
+  "description": "Orchestrate complex work via a phase-gated multi-agent loop (audit → design → implement → review → validate → deliver).",
+  "author": {
+    "name": "Marcel Richter"
+  },
+  "keywords": ["orchestration", "multi-agent", "audit", "review"],
+  "skills": ["./"]
+}

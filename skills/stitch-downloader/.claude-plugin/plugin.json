@@ -1,0 +1,10 @@
+{
+  "name": "stitch-downloader",
+  "version": "1.0.0",
+  "description": "Download Stitch (stitch.withgoogle.com) screenshots at best quality from screenshot.downloadUrl.",
+  "author": {
+    "name": "Marcel Richter"
+  },
+  "keywords": ["stitch", "screenshot", "download", "google"],
+  "skills": ["./"]
+}

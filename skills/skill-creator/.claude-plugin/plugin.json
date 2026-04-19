@@ -1,0 +1,10 @@
+{
+  "name": "skill-creator",
+  "version": "1.0.0",
+  "description": "Guide for creating effective skills. Use when creating a new skill or updating an existing skill.",
+  "author": {
+    "name": "Marcel Richter"
+  },
+  "keywords": ["skills", "authoring", "development"],
+  "skills": ["./"]
+}

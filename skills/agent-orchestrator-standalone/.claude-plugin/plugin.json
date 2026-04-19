@@ -1,0 +1,10 @@
+{
+  "name": "agent-orchestrator-standalone",
+  "version": "1.0.0",
+  "description": "Standalone version of the agent orchestrator. Embeds role cards in the skill so it works without preconfigured agent roles.",
+  "author": {
+    "name": "Marcel Richter"
+  },
+  "keywords": ["orchestration", "multi-agent", "audit", "review", "standalone"],
+  "skills": ["./"]
+}
