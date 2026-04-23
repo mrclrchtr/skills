@@ -2,7 +2,7 @@
 hk = "1.43.0"
 pkl = "latest"
 uv = "0.11.7"
-node = "24.14.1"
+node = "24.15.0"
 
 [tasks.validate-skills]
 description = "Validate all skills with pinned skills-ref"
