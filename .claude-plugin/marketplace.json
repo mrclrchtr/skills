@@ -5,7 +5,7 @@
   },
   "metadata": {
     "description": "Canonical source for skills.sh skills and Claude Code marketplace plugins.",
-    "version": "1.5.1"
+    "version": "1.6.0"
   },
   "plugins": [
     {
@@ -55,6 +55,12 @@
       "source": "./skills/web-fetch-to-markdown",
       "description": "Fetches and normalizes http(s) web pages into clean Markdown for LLM ingestion. Use when a task includes a URL, needs to fetch docs or asks to convert web docs/articles/pages into Markdown for summarizing, quoting, diffing, or saving.",
       "keywords": ["web", "fetch", "markdown", "scraping"]
+    },
+    {
+      "name": "pi-upgrade",
+      "source": "./skills/pi-upgrade",
+      "description": "Check for available upgrades to the pi coding agent framework by comparing the current @mariozechner/pi-* version in package.json against releases on badlogic/pi-mono.",
+      "keywords": ["pi", "upgrade", "version", "dependencies", "changelog"]
     },
     {
       "name": "web-design-guidelines",
