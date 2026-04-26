@@ -2,7 +2,7 @@
 set -euo pipefail
 
 # Pinned for reproducible validation behavior. Update intentionally.
-SKILLS_REF_SHA="b7442eb9acf4c05545ea9c26b139acbda15eb718"
+SKILLS_REF_SHA="2d3e01f590f68bee2cb76a3200823e93b2cc9eaa"
 SKILLS_REF_FROM="git+https://github.com/agentskills/agentskills.git@${SKILLS_REF_SHA}#subdirectory=skills-ref"
 
 if ! command -v uvx >/dev/null 2>&1; then
@@ -58,9 +58,9 @@ run_skills_ref_validate() {
   local validate_dir="${skill_dir}"
   local tmp_dir=""
 
-  # Pi supports disable-model-invocation as an extension to the Agent Skills
-  # standard. Strip it only for the pinned upstream validator, which rejects
-  # unknown fields, while keeping the source skill usable by Pi.
+  # Pi supports disable-model-invocation as a client extension referenced by
+  # the Agent Skills implementation guide. Strip it only for the pinned upstream
+  # validator, which still rejects unknown top-level fields.
   if grep -q '^disable-model-invocation:' "${skill_dir}/SKILL.md"; then
     tmp_dir="$(mktemp -d)"
     validate_dir="${tmp_dir}/$(basename "${skill_dir}")"
