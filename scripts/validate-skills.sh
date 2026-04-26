@@ -55,6 +55,19 @@ fi
 
 run_skills_ref_validate() {
   local skill_dir="$1"
+  local validate_dir="${skill_dir}"
+  local tmp_dir=""
+
+  # Pi supports disable-model-invocation as an extension to the Agent Skills
+  # standard. Strip it only for the pinned upstream validator, which rejects
+  # unknown fields, while keeping the source skill usable by Pi.
+  if grep -q '^disable-model-invocation:' "${skill_dir}/SKILL.md"; then
+    tmp_dir="$(mktemp -d)"
+    validate_dir="${tmp_dir}/$(basename "${skill_dir}")"
+    cp -R "${skill_dir}" "${validate_dir}"
+    sed -i.bak '/^disable-model-invocation:/d' "${validate_dir}/SKILL.md"
+    rm -f "${validate_dir}/SKILL.md.bak"
+  fi
 
   (
     # Git hooks export repository-local GIT_* variables. Clear them before uvx
@@ -66,8 +79,12 @@ run_skills_ref_validate() {
       done < <(git rev-parse --local-env-vars 2>/dev/null || true)
     fi
 
-    uvx --from "${SKILLS_REF_FROM}" skills-ref validate "${skill_dir}"
+    uvx --from "${SKILLS_REF_FROM}" skills-ref validate "${validate_dir}"
   )
+  local status=$?
+
+  [ -z "${tmp_dir}" ] || rm -rf "${tmp_dir}"
+  return "${status}"
 }
 
 failures=0

@@ -1,10 +1,7 @@
 ---
 name: review-changes
-description: >
-  Use when the user asks to review code, audit changes, check a PR or commit,
-  look over a file or directory, review a design/architecture document, or says
-  "what do you think of this", "check this", "anything wrong here", "review before merge".
-  Execute directly — no brainstorming, no interactive questions.
+description: Structured code and document review workflow for finding actionable issues in diffs, PRs, commits, files, directories, and architecture docs.
+disable-model-invocation: true
 ---
 
 # Code Review
