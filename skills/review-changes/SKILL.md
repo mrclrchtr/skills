@@ -87,7 +87,7 @@ Check for:
 Use this format for every finding:
 
 ```
-### [P0–P3] Short imperative title
+### {n}. [P0–P3] Short imperative title
 
 **File:** `path/to/file.ts:42-48`
 
