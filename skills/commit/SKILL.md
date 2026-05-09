@@ -9,33 +9,26 @@ description: "Creates a commit: detects conventions, stages intentionally, write
 
 Make a logical, reviewable concise commit using the commit style of the repository.
 
+## Available scripts
+
+- **`scripts/git-info.sh`** — Prints repository state (branch, status, diffs, recent log) for commit preparation.
+
 ## Guardrails
 
 - If potential secrets are found: **STOP and ask** what to do.
 - No `--no-verify`, no `--amend`/rebase/force-push, no pushing unless asked.
-- If changes look like multiple commits: **STOP and propose a split plan** (don’t commit yet).
+- If changes look like multiple commits: **STOP and propose a split plan** (don't commit yet).
 
 ## Fast workflow
 
 1) Gather information
 
     ```bash
-    echo "## DATE" \
-    && date \
-    && echo "## BRANCH" \
-    && git branch --show-current \
-    && echo "## STATUS" \
-    && git status --porcelain=v1 \
-    && echo "## DIFF (unstaged)" \
-    && git --no-pager diff \
-    && echo "## DIFF (staged)" \
-    && git --no-pager diff --staged \
-    && echo "## LOG (last 20)" \
-    && git --no-pager log --oneline -20 --graph
+    bash scripts/git-info.sh
     ```
 
-   > **NOTE**:
-   > Run as one command.
+    > **NOTE**:
+    > Run `bash scripts/git-info.sh --help` for usage details.
 
 2) Stage changes intentionally
 
@@ -59,7 +52,7 @@ Make a logical, reviewable concise commit using the commit style of the reposito
     - Include scope only if the repo typically does
 
    Body rules:
-    - Add a body **only** if it answers “why” or prevents confusion:
+    - Add a body **only** if it answers "why" or prevents confusion:
         - Why this change is needed
         - Key tradeoffs or constraints
         - Notable side effects/follow-ups
