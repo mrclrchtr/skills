@@ -1,13 +1,9 @@
 ---
 name: commit
-description: "Creates a commit: detects conventions, stages intentionally, writes a clear subject, add a concise body when useful, and commits."
+description: "Creates a commit with repo-matching style and intentional staging."
 ---
 
-# Git Commit
-
-## Goal
-
-Make a logical, reviewable concise commit using the commit style of the repository.
+# Git workflow
 
 ## Available scripts
 
@@ -70,7 +66,7 @@ Make a logical, reviewable concise commit using the commit style of the reposito
 3) Write a concise commit message
 
    Infer commit style from recent subjects:
-    - If they look like `type(scope): msg` → use Conventional Commits.
+    - If recent subjects look like `type(scope): msg`, use Conventional Commits.
     - Otherwise, match the common pattern (caps, prefixes, ticket IDs, etc.).
 
    Subject rules:
@@ -84,7 +80,7 @@ Make a logical, reviewable concise commit using the commit style of the reposito
         - Key tradeoffs or constraints
         - Notable side effects/follow-ups
 
-4) Commit and verify
+4) Create the commit
    Use multiple `-m` flags for multi-line messages (no \n).
 
    ```bash
