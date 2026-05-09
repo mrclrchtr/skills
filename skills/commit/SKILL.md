@@ -11,13 +11,18 @@ Make a logical, reviewable concise commit using the commit style of the reposito
 
 ## Available scripts
 
-- **`scripts/git-info.sh`** — Prints repository state (branch, status, diffs, recent log) for commit preparation.
+- **`scripts/git-info.sh`** — Emits a JSON snapshot of repository state for commit preparation.
 
 ## Guardrails
 
 - If potential secrets are found: **STOP and ask** what to do.
 - No `--no-verify`, no `--amend`/rebase/force-push, no pushing unless asked.
-- If changes look like multiple commits: **STOP and propose a split plan** (don't commit yet).
+- Ask the user **only** if one of these is true:
+  - Changes appear to span multiple logical commits
+  - Potential secrets are present
+  - Recent commit subjects do not make the repo's commit style clear
+  - The staged diff does not match the intended commit
+- Do **not** run `bash scripts/git-info.sh --help` during normal flow. Use `--help` only if the script fails or you are editing the script itself.
 
 ## Fast workflow
 
@@ -27,8 +32,23 @@ Make a logical, reviewable concise commit using the commit style of the reposito
     bash scripts/git-info.sh
     ```
 
-    > **NOTE**:
-    > Run `bash scripts/git-info.sh --help` for usage details.
+   Read the JSON snapshot first. Use it to inspect:
+   - `repoRoot`, `branch`
+   - `status.hasStaged`, `status.hasUnstaged`, `status.hasUntracked`
+   - `files.staged`, `files.unstaged`, `files.untracked`
+   - `stats.staged`, `stats.unstaged`
+   - `recentCommits`
+
+   If ambiguity remains after the JSON snapshot, inspect only the needed files with normal git commands:
+
+   ```bash
+   git diff -- path/to/file
+   git diff --cached -- path/to/file
+   git diff --stat
+   git diff --cached --stat
+   git status --short
+   git log --oneline -20
+   ```
 
 2) Stage changes intentionally
 
@@ -36,6 +56,13 @@ Make a logical, reviewable concise commit using the commit style of the reposito
    git add path/to/file1 path/to/file2
    # or:
    git add -A # when all changes belong to the commit to create
+   ```
+
+   Verify the staged set before committing:
+
+   ```bash
+   git diff --cached --stat
+   git diff --cached
    ```
 
    If the staged diff contains unrelated changes, **STOP and ask** what to do.
