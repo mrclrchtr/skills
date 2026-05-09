@@ -8,6 +8,8 @@ description: "Creates a commit with repo-matching style and intentional staging.
 ## Available scripts
 
 - **`scripts/git-info.sh`** — Emits a JSON snapshot of repository state for commit preparation.
+  
+> Resolve the path relative to this `SKILL.md` file's directory;
 
 ## Guardrails
 
