@@ -5,21 +5,9 @@
   },
   "metadata": {
     "description": "Canonical source for skills.sh skills and Claude Code marketplace plugins.",
-    "version": "1.6.0"
+    "version": "1.7.0"
   },
   "plugins": [
-    {
-      "name": "agent-orchestrator",
-      "source": "./skills/agent-orchestrator",
-      "description": "Orchestrate complex work via a phase-gated multi-agent loop (audit → design → implement → review → validate → deliver). Use when you need to split work into subsystems, run independent audits, reconcile findings into a confirmed issue list, delegate fixes in clusters, enforce PASS/FAIL review gates, and drive an end-to-end validated delivery.",
-      "keywords": ["orchestration", "multi-agent", "audit", "review"]
-    },
-    {
-      "name": "agent-orchestrator-standalone",
-      "source": "./skills/agent-orchestrator-standalone",
-      "description": "Standalone version of the agent orchestrator. Orchestrate complex work via a phase-gated multi-agent loop (audit → design → implement → review → validate → deliver). Use when you need to split work into subsystems, run independent audits, reconcile findings into a confirmed issue list, delegate fixes in clusters, enforce PASS/FAIL review gates, and drive an end-to-end validated delivery.",
-      "keywords": ["orchestration", "multi-agent", "audit", "review", "standalone"]
-    },
     {
       "name": "commit",
       "source": "./skills/commit",
@@ -33,22 +21,10 @@
       "keywords": ["skills", "authoring", "development"]
     },
     {
-      "name": "openspec-brainstorm",
-      "source": "./skills/openspec-brainstorm",
-      "description": "You MUST use this before creative OpenSpec work - creating features, building components, adding functionality, or modifying behavior. Explores user intent, requirements and design before implementation, then hands off to the best matching OpenSpec skill or command without managing OpenSpec artifacts.",
-      "keywords": ["openspec", "brainstorm", "design", "requirements"]
-    },
-    {
       "name": "review-changes",
       "source": "./skills/review-changes",
       "description": "Review code, audit changes, check a PR/commit, or review a design/architecture document. Executes directly with grouped severity findings (critical/high/medium/positive) — no brainstorming, no interactive dialogue.",
       "keywords": ["review", "audit", "code-review", "pr", "quality"]
-    },
-    {
-      "name": "stitch-downloader",
-      "source": "./skills/stitch-downloader",
-      "description": "Download Stitch (stitch.withgoogle.com) screenshots at best quality from screenshot.downloadUrl. Use to normalize googleusercontent size parameters from canvas dimensions, download with curl, optionally verify pixel dimensions, and avoid committing signed URLs.",
-      "keywords": ["stitch", "screenshot", "download", "google"]
     },
     {
       "name": "web-fetch-to-markdown",

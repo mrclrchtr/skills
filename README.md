@@ -28,13 +28,9 @@ Repository rules:
 
 | Capability | `skills.sh` install | Claude Marketplace install |
 | --- | --- | --- |
-| agent-orchestrator | `agent-orchestrator` | `agent-orchestrator@mrclrchtr-skills` |
-| agent-orchestrator-standalone | `agent-orchestrator-standalone` | `agent-orchestrator-standalone@mrclrchtr-skills` |
 | commit | `commit` | `commit@mrclrchtr-skills` |
 | review-changes | `review-changes` | `review-changes@mrclrchtr-skills` |
 | skill-creator | `skill-creator` | `skill-creator@mrclrchtr-skills` |
-| openspec-brainstorm | `openspec-brainstorm` | `openspec-brainstorm@mrclrchtr-skills` |
-| stitch-downloader | `stitch-downloader` | `stitch-downloader@mrclrchtr-skills` |
 | pi-upgrade | `pi-upgrade` | `pi-upgrade@mrclrchtr-skills` |
 | web-fetch-to-markdown | `web-fetch-to-markdown` | `web-fetch-to-markdown@mrclrchtr-skills` |
 | web-design-guidelines | `web-design-guidelines-design`, `web-design-guidelines-apply`, `web-design-guidelines-review` | `web-design-guidelines@mrclrchtr-skills` |
@@ -91,12 +87,9 @@ Heads up: many skill bodies are still written in Codex-flavored language, so Cla
 ## Use
 
 Once installed, invoke skills by name in your prompt:
-- `$agent-orchestrator` - "$agent-orchestrator implement milestone 1"
-- `$agent-orchestrator-standalone` - "$agent-orchestrator-standalone implement milestone 1"
 - `$commit` - "$commit"
 - `$review-changes` - "$review-changes"
 - `$skill-creator` - "$skill-creator"
-- `$stitch-downloader` - "$stitch-downloader download this Stitch screenshot at 2560x2048"
 - `$pi-upgrade` — "$pi-upgrade check if there's a new pi release"
 - `$web-fetch-to-markdown` — "$web-fetch-to-markdown https://example.com/docs/page"
 - `$web-design-guidelines-design` - "$web-design-guidelines-design propose a direction for this analytics dashboard before I build it"
