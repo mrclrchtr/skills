@@ -42,3 +42,13 @@ Use `/plugin-dev:create-plugin` workflow for guided plugin creation with validat
 ## Agent Naming
 
 Use full agent names with prefix: `plugin-dev:plugin-validator`, `plugin-dev:skill-reviewer` (not just `plugin-validator`)
+
+## Skill Authoring
+
+- In `Available scripts` section, add a note about how to resolve paths to the helper scripts:
+
+```md
+- **`scripts/example.sh`** — This is an example for demonstration purposes.
+
+> Resolve the path relative to this `SKILL.md` file's directory;
+```
