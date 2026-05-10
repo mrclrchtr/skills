@@ -1,7 +1,7 @@
 {
   "name": "pi-upgrade",
-  "version": "1.0.0",
-  "description": "Check for available upgrades to the pi coding agent framework by comparing the current @mariozechner/pi-* version in package.json against releases on badlogic/pi-mono.",
+  "version": "1.0.1",
+  "description": "Check for available upgrades to the pi coding agent framework by comparing the current @earendil-works/pi-* or legacy @mariozechner/pi-* version in package.json against releases on earendil-works/pi.",
   "author": {
     "name": "Marcel Richter"
   },

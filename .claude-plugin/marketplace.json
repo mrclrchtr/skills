@@ -5,7 +5,7 @@
   },
   "metadata": {
     "description": "Canonical source for skills.sh skills and Claude Code marketplace plugins.",
-    "version": "1.7.0"
+    "version": "1.7.1"
   },
   "plugins": [
     {
@@ -35,7 +35,7 @@
     {
       "name": "pi-upgrade",
       "source": "./skills/pi-upgrade",
-      "description": "Check for available upgrades to the pi coding agent framework by comparing the current @mariozechner/pi-* version in package.json against releases on badlogic/pi-mono.",
+      "description": "Check for available upgrades to the pi coding agent framework by comparing the current @earendil-works/pi-* or legacy @mariozechner/pi-* version in package.json against releases on earendil-works/pi.",
       "keywords": ["pi", "upgrade", "version", "dependencies", "changelog"]
     },
     {
