@@ -99,7 +99,7 @@ Once installed, invoke skills by name in your prompt:
 
 ## Development
 
-Internal build or test sources for shipped runtimes live under `tools/`. For example, [`tools/web-fetch-md`](./tools/web-fetch-md) builds the bundled runtime shipped in [`skills/web-fetch-to-markdown/scripts/fetchmd.js`](./skills/web-fetch-to-markdown/scripts/fetchmd.js).
+Internal build or test sources for shipped runtimes live under `tools/`. For example, [`tools/web-fetch-md`](./tools/web-fetch-md) builds the bundled runtime shipped in [`skills/web-fetch-to-markdown/scripts/fetchmd.cjs`](./skills/web-fetch-to-markdown/scripts/fetchmd.cjs).
 
 Validate the published catalog:
 

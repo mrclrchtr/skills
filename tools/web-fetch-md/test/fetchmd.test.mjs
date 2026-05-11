@@ -12,9 +12,9 @@ const testDir = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(testDir, "..", "..", "..");
 const packageJsonPath = path.join(repoRoot, "tools/web-fetch-md/package.json");
 const shippedSkillDir = path.join(repoRoot, "skills/web-fetch-to-markdown");
-const shippedSkillScript = path.join(shippedSkillDir, "scripts/fetchmd.js");
+const shippedSkillScript = path.join(shippedSkillDir, "scripts/fetchmd.cjs");
 const launchers = [
-  "skills/web-fetch-to-markdown/scripts/fetchmd.js",
+  "skills/web-fetch-to-markdown/scripts/fetchmd.cjs",
 ];
 
 async function withServer(handler, run) {

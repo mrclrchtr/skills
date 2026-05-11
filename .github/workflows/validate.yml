@@ -51,7 +51,7 @@ jobs:
               tools/web-fetch-md/pnpm-lock.yaml|\
               tools/web-fetch-md/tsconfig*.json|\
               tools/web-fetch-md/build.mjs|\
-              skills/web-fetch-to-markdown/scripts/fetchmd.js|\
+              skills/web-fetch-to-markdown/scripts/fetchmd.cjs|\
               .github/workflows/validate.yml)
                 fetchmd=true
                 break
@@ -93,11 +93,11 @@ jobs:
       - name: Check bundle is committed
         shell: bash
         run: |
-          if git diff --exit-code -- skills/web-fetch-to-markdown/scripts/fetchmd.js; then
+          if git diff --exit-code -- skills/web-fetch-to-markdown/scripts/fetchmd.cjs; then
             exit 0
           fi
 
-          echo "fetchmd.js bundle is out of date." >&2
+          echo "fetchmd.cjs bundle is out of date." >&2
           echo "Run: pnpm -C tools/web-fetch-md run build:skill" >&2
           exit 1
 

@@ -39,19 +39,19 @@ corepack prepare pnpm@latest --activate
 
 ```bash
 pnpm build
-node ./dist/fetchmd.js --help
+node ./dist/fetchmd.cjs --help
 ```
 
 `pnpm build` does two things:
 
-1. builds `dist/fetchmd.js` for local package usage
+1. builds `dist/fetchmd.cjs` for local package usage
 2. refreshes the shipped, installable skill runtime at
-   `skills/web-fetch-to-markdown/scripts/fetchmd.js`
+   `skills/web-fetch-to-markdown/scripts/fetchmd.cjs`
 
 Step 2 writes files outside this directory — expect unstaged changes under
 `skills/` after a successful build.
 
-That bundled `skills/web-fetch-to-markdown/scripts/fetchmd.js` file is the
+That bundled `skills/web-fetch-to-markdown/scripts/fetchmd.cjs` file is the
 self-contained artifact used by marketplace / skill installs. It must not
 import `tools/web-fetch-md/dist/*` or any other repo-external path.
 

@@ -99,7 +99,7 @@ jobs:
         with:
           commit_author: ${{ steps.last-commit.outputs.author }}
           commit_message: ${{ steps.last-commit.outputs.message }}
-          file_pattern: skills/web-fetch-to-markdown/scripts/fetchmd.js
+          file_pattern: skills/web-fetch-to-markdown/scripts/fetchmd.cjs
           commit_options: "--amend --no-edit"
           push_options: "--force-with-lease"
           skip_fetch: true
@@ -109,5 +109,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
         with:
-          commit_message: "chore(web-fetch-to-markdown): update fetchmd.js bundle"
-          file_pattern: skills/web-fetch-to-markdown/scripts/fetchmd.js
+          commit_message: "chore(web-fetch-to-markdown): update fetchmd.cjs bundle"
+          file_pattern: skills/web-fetch-to-markdown/scripts/fetchmd.cjs

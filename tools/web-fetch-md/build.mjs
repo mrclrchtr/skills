@@ -7,7 +7,7 @@ import { fileURLToPath } from "node:url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const repoRoot = resolve(__dirname, "../..");
-const shippedSkillScript = resolve(repoRoot, "skills/web-fetch-to-markdown/scripts/fetchmd.js");
+const shippedSkillScript = resolve(repoRoot, "skills/web-fetch-to-markdown/scripts/fetchmd.cjs");
 
 function replaceOnceOrThrow(source, pattern, replacement, label) {
   if (!pattern.test(source)) {
