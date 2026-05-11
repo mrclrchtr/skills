@@ -58,7 +58,7 @@ jobs:
         id: bundle-diff
         shell: bash
         run: |
-          if git diff --quiet -- skills/web-fetch-to-markdown/scripts/fetchmd.js; then
+          if git diff --quiet -- skills/web-fetch-to-markdown/scripts/fetchmd.cjs; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
           else
             echo "changed=true" >> "$GITHUB_OUTPUT"
