@@ -2,7 +2,7 @@
   "name": "@mrclrchtr-internal/web-fetch-md",
   "private": true,
   "type": "module",
-  "packageManager": "pnpm@11.2.0",
+  "packageManager": "pnpm@11.2.1",
   "engines": {
     "node": ">=20.19.0"
   },
