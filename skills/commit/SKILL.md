@@ -81,8 +81,8 @@ description: "Creates a commit with repo-matching style and intentional staging.
         - Why this change is needed
         - Key tradeoffs or constraints
         - Notable side effects/follow-ups
-    - Wrap body at 72 chars — repos often reject lines > 72 or > 100.
-      Split into multiple `-m` paragraphs rather than one long line.
+    - Body lines must be ≤ 72 chars. Split into multiple `-m` paragraphs
+      rather than one long line.
 
 4) Create the commit
    Use multiple `-m` flags for multi-line messages (no \n).
