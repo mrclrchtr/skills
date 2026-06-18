@@ -2,7 +2,7 @@
 hk = "1.48.0"
 pkl = "latest"
 uv = "0.11.21"
-node = "24.16.0"
+node = "24.17.0"
 pnpm = "latest"
 
 [tasks.validate-skills]
