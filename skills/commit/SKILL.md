@@ -81,16 +81,21 @@ description: "Creates a commit with repo-matching style and intentional staging.
         - Why this change is needed
         - Key tradeoffs or constraints
         - Notable side effects/follow-ups
-    - Body lines must be ≤ 72 chars. Split into multiple `-m` paragraphs
-      rather than one long line.
+    - Use a heredoc for the full message — it avoids all quoting/escaping issues.
 
 4) Create the commit
-   Use multiple `-m` flags for multi-line messages (no \n).
+   Always use `git commit -F -` with a quoted heredoc delimiter so the shell
+   does not expand variables or backticks inside the message.
 
    ```bash
-   git commit -m "type(scope): concise summary"
+   git commit -F - <<'COMMIT_MSG'
+   type(scope): concise summary
+   COMMIT_MSG
    # or with body:
-   git commit -m "type(scope): concise summary" \
-     -m "Why this change was needed — keep body lines short." \
-     -m "Notable side effects or follow-ups on a separate -m."
+   git commit -F - <<'COMMIT_MSG'
+   type(scope): concise summary
+
+   Body paragraph that can span multiple lines naturally.
+   No artificial splits, no embedded-newline breakage.
+   COMMIT_MSG
    ```
