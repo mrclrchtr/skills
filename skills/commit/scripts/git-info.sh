@@ -8,7 +8,7 @@ Usage: git-info.sh
 Emit a JSON snapshot of repository state for commit preparation:
   - repo root and branch
   - staged / unstaged / untracked files
-  - staged / unstaged diff stats
+  - staged / unstaged / untracked diff stats
   - recent commit subjects
 
 Options:
@@ -34,10 +34,11 @@ if ! git rev-parse --git-dir &>/dev/null; then
 fi
 
 repo_root=$(git rev-parse --show-toplevel)
+cd "$repo_root"
 branch=$(git branch --show-current)
 
 parse_status_json() {
-  git status --porcelain=v1 -z | jq -Rsc '
+  git status --porcelain=v1 -z --untracked-files=all | jq -Rsc '
     def parse_entries:
       . as $raw
       | ($raw | split("\u0000") | map(select(length > 0))) as $entries
@@ -98,6 +99,36 @@ numstat_json() {
   '
 }
 
+untracked_numstat_json() {
+  {
+    while IFS= read -r -d '' path; do
+      local absolute_path="$repo_root/$path"
+      local row insertions=0 deletions=0 diff_status=0
+
+      if [[ -L "$absolute_path" ]]; then
+        insertions=1
+      elif [[ -f "$absolute_path" ]]; then
+        row=$(git diff --no-index --numstat -- /dev/null "$absolute_path") || diff_status=$?
+        ((diff_status <= 1)) || return "$diff_status"
+        IFS=$'\t' read -r insertions deletions _ <<<"$row"
+        [[ "$insertions" == "-" ]] && insertions=0
+        [[ "$deletions" == "-" ]] && deletions=0
+      fi
+
+      jq -cn \
+        --arg path "$path" \
+        --argjson insertions "$insertions" \
+        --argjson deletions "$deletions" \
+        '{path: $path, insertions: $insertions, deletions: $deletions}'
+    done < <(git ls-files --others --exclude-standard -z)
+  } | jq -sc '{
+    files: length,
+    insertions: ((map(.insertions) | add) // 0),
+    deletions: ((map(.deletions) | add) // 0),
+    byFile: .
+  }'
+}
+
 recent_commits_json() {
   git log --format='%H%x09%s' --no-decorate -20 | jq -Rsc '
     split("\n")
@@ -111,6 +142,7 @@ unstaged_entries=$(jq -c '[.[] | select(.worktreeStatus != " " and .worktreeStat
 untracked_entries=$(jq -c '[.[] | select(.indexStatus == "?" and .worktreeStatus == "?")]' <<<"$status_entries")
 staged_stats=$(numstat_json staged)
 unstaged_stats=$(numstat_json unstaged)
+untracked_stats=$(untracked_numstat_json)
 recent_commits=$(recent_commits_json)
 
 jq -n \
@@ -121,6 +153,7 @@ jq -n \
   --argjson untracked "$untracked_entries" \
   --argjson stagedStats "$staged_stats" \
   --argjson unstagedStats "$unstaged_stats" \
+  --argjson untrackedStats "$untracked_stats" \
   --argjson recentCommits "$recent_commits" \
   '{
     repoRoot: $repoRoot,
@@ -140,7 +173,8 @@ jq -n \
     },
     stats: {
       staged: $stagedStats,
-      unstaged: $unstagedStats
+      unstaged: $unstagedStats,
+      untracked: $untrackedStats
     },
     recentCommits: $recentCommits
   }'

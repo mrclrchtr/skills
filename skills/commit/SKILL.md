@@ -34,7 +34,7 @@ description: "Creates a commit with repo-matching style and intentional staging.
    - `repoRoot`, `branch`
    - `status.hasStaged`, `status.hasUnstaged`, `status.hasUntracked`
    - `files.staged`, `files.unstaged`, `files.untracked`
-   - `stats.staged`, `stats.unstaged`
+   - `stats.staged`, `stats.unstaged`, `stats.untracked`
    - `recentCommits`
 
    If ambiguity remains after the JSON snapshot, inspect only the needed files with normal git commands:

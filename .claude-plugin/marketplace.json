@@ -5,7 +5,7 @@
   },
   "metadata": {
     "description": "Canonical source for skills.sh skills and Claude Code marketplace plugins.",
-    "version": "1.7.1"
+    "version": "1.7.2"
   },
   "plugins": [
     {
