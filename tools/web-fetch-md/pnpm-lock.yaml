@@ -69,8 +69,8 @@ packages:
       '@csstools/css-parser-algorithms': ^4.0.0
       '@csstools/css-tokenizer': ^4.0.0
 
-  '@csstools/css-color-parser@4.2.0':
-    resolution: {integrity: sha512-5+5LEmFuY1AjXdYhmgjTJogtQnP1evJ1zrBZGUNZ0thkpwnnmKxcHdAMn/OtFjAb25zA+jKDVYVRl+5G7rjv1A==}
+  '@csstools/css-color-parser@4.2.1':
+    resolution: {integrity: sha512-YpAJZhaHplYQkG8ib+/Fx5Y0eF2lVWi3tIvMJA6i39TLyUNp2439cifzW8VMjhlqrBjHzK5hVGugRRm2zTKI/A==}
     engines: {node: '>=20.19.0'}
     peerDependencies:
       '@csstools/css-parser-algorithms': ^4.0.0
@@ -82,8 +82,8 @@ packages:
     peerDependencies:
       '@csstools/css-tokenizer': ^4.0.0
 
-  '@csstools/css-syntax-patches-for-csstree@1.1.8':
-    resolution: {integrity: sha512-CpMLjAvwQg3BL5S0IeqsZNMH7EQrEWi0kLKOC13ZBF0ZwERiLWlibNPJr8G1kdU3Ms/r2KiNrF81pUh2HwAHdg==}
+  '@csstools/css-syntax-patches-for-csstree@1.1.9':
+    resolution: {integrity: sha512-iGGw4OsAYsS6pD29MdJ2bX/nJx65a04ZZiw6x+VwWlP2DdXf6f++Zmuv/OzALpdyfVhjbduIIF2cXM7HWBIe9A==}
     peerDependencies:
       css-tree: ^3.2.1
     peerDependenciesMeta:
@@ -348,11 +348,11 @@ packages:
   symbol-tree@3.2.4:
     resolution: {integrity: sha512-9QNk5KwDF+Bvz+PyObkmSYjI5ksVUYtjW7AU22r2NKcfLJcXp96hkDWU3+XndOsUb+AQ9QhfzfCT2O+CNWT5Tw==}
 
-  tldts-core@7.4.10:
-    resolution: {integrity: sha512-KnQjp53ZekKgm/r3l+u8kJGGzYgrWdP8+Mql7a4vijh2WE0IrZWspQj/TpTxDho/YxO+AnOZnIjQcCD+q6iJsw==}
+  tldts-core@7.4.11:
+    resolution: {integrity: sha512-CW3WN2rIIE/Of21mulhgnGOwoDyEFNygyIBOONSdyAuSATgMMUCpLeUlB+E8sAwA5xRV9hYPl+kyZ9citHCaKg==}
 
-  tldts@7.4.10:
-    resolution: {integrity: sha512-GgouD1B+sWwvkaEq8vXC15DjQitxbvs12oIXELpconwm+Tg3zfcEv4jgzq3vtKverDXsg3VI8aRgNL2Nra0Iog==}
+  tldts@7.4.11:
+    resolution: {integrity: sha512-aBiNayCfTQxuIJBm06M+xR14cYaYlDlSXZbgsnKzKNxDKUVq7KFwTjwBSsb7m9Y5xO8WfPnBc63WaYFMTGlvqw==}
     hasBin: true
 
   tough-cookie@6.0.2:
@@ -419,7 +419,7 @@ snapshots:
     dependencies:
       '@asamuzakjp/generational-cache': 1.0.1
       '@csstools/css-calc': 3.3.0(@csstools/css-parser-algorithms@4.0.0(@csstools/css-tokenizer@4.0.0))(@csstools/css-tokenizer@4.0.0)
-      '@csstools/css-color-parser': 4.2.0(@csstools/css-parser-algorithms@4.0.0(@csstools/css-tokenizer@4.0.0))(@csstools/css-tokenizer@4.0.0)
+      '@csstools/css-color-parser': 4.2.1(@csstools/css-parser-algorithms@4.0.0(@csstools/css-tokenizer@4.0.0))(@csstools/css-tokenizer@4.0.0)
       '@csstools/css-parser-algorithms': 4.0.0(@csstools/css-tokenizer@4.0.0)
       '@csstools/css-tokenizer': 4.0.0
 
@@ -446,7 +446,7 @@ snapshots:
       '@csstools/css-parser-algorithms': 4.0.0(@csstools/css-tokenizer@4.0.0)
       '@csstools/css-tokenizer': 4.0.0
 
-  '@csstools/css-color-parser@4.2.0(@csstools/css-parser-algorithms@4.0.0(@csstools/css-tokenizer@4.0.0))(@csstools/css-tokenizer@4.0.0)':
+  '@csstools/css-color-parser@4.2.1(@csstools/css-parser-algorithms@4.0.0(@csstools/css-tokenizer@4.0.0))(@csstools/css-tokenizer@4.0.0)':
     dependencies:
       '@csstools/color-helpers': 6.1.1
       '@csstools/css-calc': 3.3.0(@csstools/css-parser-algorithms@4.0.0(@csstools/css-tokenizer@4.0.0))(@csstools/css-tokenizer@4.0.0)
@@ -457,7 +457,7 @@ snapshots:
     dependencies:
       '@csstools/css-tokenizer': 4.0.0
 
-  '@csstools/css-syntax-patches-for-csstree@1.1.8(css-tree@3.2.1)':
+  '@csstools/css-syntax-patches-for-csstree@1.1.9(css-tree@3.2.1)':
     optionalDependencies:
       css-tree: 3.2.1
 
@@ -625,7 +625,7 @@ snapshots:
       '@asamuzakjp/css-color': 5.1.11
       '@asamuzakjp/dom-selector': 7.1.1
       '@bramus/specificity': 2.4.2
-      '@csstools/css-syntax-patches-for-csstree': 1.1.8(css-tree@3.2.1)
+      '@csstools/css-syntax-patches-for-csstree': 1.1.9(css-tree@3.2.1)
       '@exodus/bytes': 1.15.1
       css-tree: 3.2.1
       data-urls: 7.0.0
@@ -666,15 +666,15 @@ snapshots:
 
   symbol-tree@3.2.4: {}
 
-  tldts-core@7.4.10: {}
+  tldts-core@7.4.11: {}
 
-  tldts@7.4.10:
+  tldts@7.4.11:
     dependencies:
-      tldts-core: 7.4.10
+      tldts-core: 7.4.11
 
   tough-cookie@6.0.2:
     dependencies:
-      tldts: 7.4.10
+      tldts: 7.4.11
 
   tr46@6.0.0:
     dependencies:
