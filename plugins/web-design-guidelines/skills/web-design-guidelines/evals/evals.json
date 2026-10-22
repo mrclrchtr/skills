@@ -1,0 +1,46 @@
+{
+  "skill_name": "web-design-guidelines",
+  "evals": [
+    {
+      "id": 1,
+      "name": "design-only-local-conventions",
+      "prompt": "We're adding an incident dashboard to Northstar for support leads monitoring active incidents and handoffs. Use the supplied DESIGN_SYSTEM.md as our existing product conventions. Propose a visual direction before we build it. It needs a scannable incident list, severity, an owner, and a next-update time; it must also work on phones. This is a design brief only, not a request to write code.",
+      "expected_output": "A design-only proposal with two or three distinct viable directions, trade-offs, a recommendation and memorable differentiator, while preserving the supplied local design system and mobile/accessibility constraints.",
+      "files": ["evals/files/settings/DESIGN_SYSTEM.md"],
+      "assertions": [
+        "Presents two or three viable design directions with explicit trade-offs and recommends one.",
+        "Names a concrete memorable differentiator while covering incident severity, owner, and next-update time.",
+        "Preserves system-ui typography and flat, undecorated surfaces from the local design system.",
+        "Explains phone-width behavior and accessible status communication without returning implementation code."
+      ]
+    },
+    {
+      "id": 2,
+      "name": "apply-approved-direction",
+      "prompt": "Update the supplied EmailSettings.tsx for production use. Its visual direction is already approved; follow DESIGN_SYSTEM.md, keep the current Props API, and don't propose a redesign. Users need to edit their email and save it reliably on desktop or mobile, including when onSave is slow or rejects. Return the complete replacement component in a TSX code block and a short verification note; do not modify files for this exercise.",
+      "expected_output": "A complete replacement React component using native form semantics, associated labels, pending/success/error handling, no duplicate submits, responsive layout, and local tokens, without reopening the approved design direction or claiming unrun tests passed.",
+      "files": ["evals/files/settings/DESIGN_SYSTEM.md", "evals/files/settings/EmailSettings.tsx"],
+      "assertions": [
+        "Returns a complete replacement EmailSettings component preserving the email/onSave Props API, without proposing alternative design directions.",
+        "Uses a native form, an associated email label, and a native submit button for keyboard operation.",
+        "Awaits onSave, prevents duplicate pending submissions, and provides pending, success, and recoverable error feedback.",
+        "Replaces fixed-width overflow with a fluid layout and uses local design tokens without decorative additions.",
+        "Distinguishes source inspection from unrun runtime, browser, or accessibility checks."
+      ]
+    },
+    {
+      "id": 3,
+      "name": "review-only-concrete-findings",
+      "prompt": "Review the supplied EmailSettings.tsx against our DESIGN_SYSTEM.md. Focus on keyboard access, form reliability, and phone-width behavior. Give me actionable findings only, with source locations; don't implement the fixes or redesign the page.",
+      "expected_output": "A read-only, findings-first report with file:line locations and bug/regression risk/polish classifications, identifying the non-keyboard save control, missing label association, missing async states/error handling, and fixed-width mobile overflow. Note testing gaps without claiming browser verification.",
+      "files": ["evals/files/settings/DESIGN_SYSTEM.md", "evals/files/settings/EmailSettings.tsx"],
+      "assertions": [
+        "Returns findings first with EmailSettings.tsx line references and bug, regression risk, or polish classifications; does not return replacement code.",
+        "Identifies the click-only div save control as a keyboard-access problem and recommends native form/button semantics.",
+        "Identifies the missing programmatic label association and explains a concrete correction.",
+        "Identifies unhandled async save failure and lack of pending protection or feedback with actionable corrections.",
+        "Identifies the 640px fixed-width mobile overflow and notes that runtime/browser verification was not performed."
+      ]
+    }
+  ]
+}

@@ -33,7 +33,7 @@ Repository rules:
 | skill-creator | `skill-creator` | `skill-creator@mrclrchtr-skills` |
 | pi-upgrade | `pi-upgrade` | `pi-upgrade@mrclrchtr-skills` |
 | web-fetch-to-markdown | `web-fetch-to-markdown` | `web-fetch-to-markdown@mrclrchtr-skills` |
-| web-design-guidelines | `web-design-guidelines-design`, `web-design-guidelines-apply`, `web-design-guidelines-review` | `web-design-guidelines@mrclrchtr-skills` |
+| web-design-guidelines | `web-design-guidelines` | `web-design-guidelines@mrclrchtr-skills` |
 | react-testing-techniques | `react-testing` | `react-testing-techniques@mrclrchtr-skills` |
 
 ## Install
@@ -56,7 +56,7 @@ npx skills add mrclrchtr/skills --skill review-changes
 Install a specialized skill from a shared plugin:
 
 ```bash
-npx skills add mrclrchtr/skills --skill web-design-guidelines-review
+npx skills add mrclrchtr/skills --skill web-design-guidelines
 npx skills add mrclrchtr/skills --skill react-testing
 ```
 
@@ -92,9 +92,10 @@ Once installed, invoke skills by name in your prompt:
 - `$skill-creator` - "$skill-creator"
 - `$pi-upgrade` — "$pi-upgrade check if there's a new pi release"
 - `$web-fetch-to-markdown` — "$web-fetch-to-markdown https://example.com/docs/page"
-- `$web-design-guidelines-design` - "$web-design-guidelines-design propose a direction for this analytics dashboard before I build it"
-- `$web-design-guidelines-apply` - "$web-design-guidelines-apply implement this settings page in our React app"
-- `$web-design-guidelines-review` - "$web-design-guidelines-review audit this diff for accessibility and interaction issues"
+- `$web-design-guidelines` — Design, apply, or review based on the request:
+  - "$web-design-guidelines propose a direction for this analytics dashboard before I build it"
+  - "$web-design-guidelines implement this settings page in our React app"
+  - "$web-design-guidelines audit this diff for accessibility and interaction issues"
 - `$react-testing` - "$react-testing write tests for this modal"
 
 ## Development

@@ -39,11 +39,11 @@ The `references/design/` files preserve that aesthetic-direction guidance in loc
 - `references/frameworks/react-next.md` holds framework-specific guidance so React and Next.js constraints do not get buried inside the broader core rules.
 - `references/frameworks/mantine.md` covers Mantine-specific theming, Styles API, and component conventions.
 - `references/frameworks/tailwind-integration.md` covers the mechanics of bridging a component library with Tailwind (CSS variable mapping, dark mode sync, role boundaries).
-- The shared references are organized for consumption by the skill files: all three skills point into the relevant reference trees (`core/`, `design/`, `frameworks/`).
+- The unified `web-design-guidelines` skill selects the relevant reference trees (`core/`, `design/`, `frameworks/`) for its Design, Apply, and Review modes.
 
 ## Project-Local Discovery
 
-All three skills include a workflow step that checks the project for a local design system or style guide before reading plugin references. When a project-local document is found, its explicit decisions take precedence over universal plugin guidance on specifics; the plugin guidance fills gaps the project document does not address. This keeps the plugin technology-agnostic at its core while supporting project-specific overrides without forking.
+The unified skill checks the project for a local design system or style guide before reading plugin references in every mode. When a project-local document is found, its explicit decisions take precedence over universal plugin guidance on specifics; the plugin guidance fills gaps the project document does not address. This keeps the plugin technology-agnostic at its core while supporting project-specific overrides without forking.
 
 ## Packaging
 

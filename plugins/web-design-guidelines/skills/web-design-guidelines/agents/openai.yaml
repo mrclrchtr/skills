@@ -1,0 +1,4 @@
+interface:
+  display_name: "Web Design Guidelines"
+  short_description: "Design, build, and review UI with shared web guidance"
+  default_prompt: "Use $web-design-guidelines to design, implement, or review this UI with the shared web interface guidelines."

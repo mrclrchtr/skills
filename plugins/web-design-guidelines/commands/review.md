@@ -5,7 +5,7 @@ description: Review UI code, diffs, or specifications against the web design gui
 
 # Web Design Guidelines Review Command
 
-Use this command to delegate a UI review to the `ui-reviewer` agent with fresh context.
+Use this command to delegate a UI review to the `web-design-guidelines:ui-reviewer` agent with fresh context.
 
 ## Step 1: Determine target
 
@@ -36,7 +36,7 @@ Pass the path if found; otherwise pass `none`.
 
 Do not gather the diff or file contents yourself unless the command environment requires it. Pass identifiers so the reviewer agent can fetch only what it needs.
 
-Spawn `ui-reviewer` with:
+Spawn `web-design-guidelines:ui-reviewer` with:
 - review target
 - design system path
 - brief task context
