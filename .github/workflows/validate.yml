@@ -14,53 +14,6 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  changes:
-    runs-on: ubuntu-latest
-    outputs:
-      fetchmd: ${{ steps.filter.outputs.fetchmd }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
-        with:
-          fetch-depth: 0
-      - name: Detect fetchmd-related changes
-        id: filter
-        shell: bash
-        run: |
-          set -euo pipefail
-
-          if [ "${{ github.event_name }}" = "pull_request" ]; then
-            base_sha="${{ github.event.pull_request.base.sha }}"
-            head_sha="${{ github.event.pull_request.head.sha }}"
-          else
-            base_sha="${{ github.event.before }}"
-            head_sha="${{ github.sha }}"
-          fi
-
-          if [ "$base_sha" = "0000000000000000000000000000000000000000" ]; then
-            echo "fetchmd=true" >> "$GITHUB_OUTPUT"
-            exit 0
-          fi
-
-          fetchmd=false
-
-          while IFS= read -r file; do
-            case "$file" in
-              tools/web-fetch-md/src/*|\
-              tools/web-fetch-md/package.json|\
-              tools/web-fetch-md/pnpm-lock.yaml|\
-              tools/web-fetch-md/tsconfig*.json|\
-              tools/web-fetch-md/build.mjs|\
-              skills/web-fetch-to-markdown/scripts/fetchmd.cjs|\
-              .github/workflows/validate.yml)
-                fetchmd=true
-                break
-                ;;
-            esac
-          done < <(git diff --name-only "$base_sha" "$head_sha")
-
-          echo "fetchmd=$fetchmd" >> "$GITHUB_OUTPUT"
-
   validate-skills:
     runs-on: ubuntu-latest
     steps:
@@ -73,40 +26,10 @@ jobs:
       - name: Run plugin layout tests
         run: python3 -m unittest discover -s plugins/web-design-guidelines/tests -p 'test_*.py' -v
 
-  validate-fetchmd-bundle:
-    needs: changes
-    if: needs.changes.outputs.fetchmd == 'true'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
-      - name: Setup mise
-        uses: jdx/mise-action@c2a87611a18de5b3828c5652fe268e992400cb5c # v4.3.0
-      - name: Enable Corepack (pnpm)
-        run: corepack enable
-      - name: Install deps
-        working-directory: tools/web-fetch-md
-        run: pnpm install --frozen-lockfile
-      - name: Bundle skill script
-        working-directory: tools/web-fetch-md
-        run: pnpm run build:skill
-      - name: Check bundle is committed
-        shell: bash
-        run: |
-          if git diff --exit-code -- skills/web-fetch-to-markdown/scripts/fetchmd.cjs; then
-            exit 0
-          fi
-
-          echo "fetchmd.cjs bundle is out of date." >&2
-          echo "Run: pnpm -C tools/web-fetch-md run build:skill" >&2
-          exit 1
-
   merge-gate:
     if: always()
     needs:
-      - changes
       - validate-skills
-      - validate-fetchmd-bundle
     runs-on: ubuntu-latest
     steps:
       - name: Evaluate validation results
@@ -114,17 +37,5 @@ jobs:
         run: |
           set -euo pipefail
 
-          echo "changes: ${{ needs.changes.result }}"
           echo "validate-skills: ${{ needs.validate-skills.result }}"
-          echo "validate-fetchmd-bundle: ${{ needs.validate-fetchmd-bundle.result }}"
-
-          [ "${{ needs.changes.result }}" = "success" ]
           [ "${{ needs.validate-skills.result }}" = "success" ]
-
-          case "${{ needs.validate-fetchmd-bundle.result }}" in
-            success|skipped)
-              ;;
-            *)
-              exit 1
-              ;;
-          esac

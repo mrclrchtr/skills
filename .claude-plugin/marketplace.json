@@ -5,7 +5,7 @@
   },
   "metadata": {
     "description": "Canonical source for skills.sh skills and Claude Code marketplace plugins.",
-    "version": "1.7.3"
+    "version": "1.7.4"
   },
   "plugins": [
     {
@@ -19,24 +19,6 @@
       "source": "./skills/skill-creator",
       "description": "Guide for creating effective skills. This skill should be used when users want to create a new skill (or update an existing skill) that extends Codex's capabilities with specialized knowledge, workflows, or tool integrations.",
       "keywords": ["skills", "authoring", "development"]
-    },
-    {
-      "name": "review-changes",
-      "source": "./skills/review-changes",
-      "description": "Review code, audit changes, check a PR/commit, or review a design/architecture document. Executes directly with grouped severity findings (critical/high/medium/positive) — no brainstorming, no interactive dialogue.",
-      "keywords": ["review", "audit", "code-review", "pr", "quality"]
-    },
-    {
-      "name": "web-fetch-to-markdown",
-      "source": "./skills/web-fetch-to-markdown",
-      "description": "Fetches and normalizes http(s) web pages into clean Markdown for LLM ingestion. Use when a task includes a URL, needs to fetch docs or asks to convert web docs/articles/pages into Markdown for summarizing, quoting, diffing, or saving.",
-      "keywords": ["web", "fetch", "markdown", "scraping"]
-    },
-    {
-      "name": "pi-upgrade",
-      "source": "./skills/pi-upgrade",
-      "description": "Check for available upgrades to the pi coding agent framework by comparing the current @earendil-works/pi-* or legacy @mariozechner/pi-* version in package.json against releases on earendil-works/pi.",
-      "keywords": ["pi", "upgrade", "version", "dependencies", "changelog"]
     },
     {
       "name": "web-design-guidelines",

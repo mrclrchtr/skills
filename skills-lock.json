@@ -15,12 +15,6 @@
       "source": "anthropics/skills",
       "sourceType": "github",
       "computedHash": "b122f4d1e91aa1d83027e050b5b37c3156203ee85458d7b1360bc48167c9e02a"
-    },
-    "web-fetch-to-markdown": {
-      "source": "mrclrchtr/skills",
-      "sourceType": "github",
-      "skillPath": "skills/web-fetch-to-markdown/SKILL.md",
-      "computedHash": "5de24a33b8707e4deb9cc4f987b59729ba6b7e3fa3bec73c4fedc0fcec5c1289"
     }
   }
 }

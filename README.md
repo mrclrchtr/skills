@@ -29,10 +29,7 @@ Repository rules:
 | Capability | `skills.sh` install | Claude Marketplace install |
 | --- | --- | --- |
 | commit | `commit` | `commit@mrclrchtr-skills` |
-| review-changes | `review-changes` | `review-changes@mrclrchtr-skills` |
 | skill-creator | `skill-creator` | `skill-creator@mrclrchtr-skills` |
-| pi-upgrade | `pi-upgrade` | `pi-upgrade@mrclrchtr-skills` |
-| web-fetch-to-markdown | `web-fetch-to-markdown` | `web-fetch-to-markdown@mrclrchtr-skills` |
 | web-design-guidelines | `web-design-guidelines` | `web-design-guidelines@mrclrchtr-skills` |
 | react-testing-techniques | `react-testing` | `react-testing-techniques@mrclrchtr-skills` |
 
@@ -50,7 +47,7 @@ Install a standalone skill:
 
 ```bash
 npx skills add mrclrchtr/skills --skill commit
-npx skills add mrclrchtr/skills --skill review-changes
+npx skills add mrclrchtr/skills --skill skill-creator
 ```
 
 Install a specialized skill from a shared plugin:
@@ -63,7 +60,7 @@ npx skills add mrclrchtr/skills --skill react-testing
 Use `-g` to install globally instead of into the current project:
 
 ```bash
-npx skills add mrclrchtr/skills --skill web-fetch-to-markdown -g
+npx skills add mrclrchtr/skills --skill commit -g
 ```
 
 ### Claude Code Marketplace
@@ -88,10 +85,7 @@ Heads up: many skill bodies are still written in Codex-flavored language, so Cla
 
 Once installed, invoke skills by name in your prompt:
 - `$commit` - "$commit"
-- `$review-changes` - "$review-changes"
 - `$skill-creator` - "$skill-creator"
-- `$pi-upgrade` — "$pi-upgrade check if there's a new pi release"
-- `$web-fetch-to-markdown` — "$web-fetch-to-markdown https://example.com/docs/page"
 - `$web-design-guidelines` — Design, apply, or review based on the request:
   - "$web-design-guidelines propose a direction for this analytics dashboard before I build it"
   - "$web-design-guidelines implement this settings page in our React app"
@@ -99,8 +93,6 @@ Once installed, invoke skills by name in your prompt:
 - `$react-testing` - "$react-testing write tests for this modal"
 
 ## Development
-
-Internal build or test sources for shipped runtimes live under `tools/`. For example, [`tools/web-fetch-md`](./tools/web-fetch-md) builds the bundled runtime shipped in [`skills/web-fetch-to-markdown/scripts/fetchmd.cjs`](./skills/web-fetch-to-markdown/scripts/fetchmd.cjs).
 
 Validate the published catalog:
 
