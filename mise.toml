@@ -1,5 +1,5 @@
 [tools]
-hk = "2.8.0"
+hk = "2.8.1"
 pkl = "latest"
 uv = "0.13.5"
 node = "24.22.1"
