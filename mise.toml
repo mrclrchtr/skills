@@ -1,7 +1,7 @@
 [tools]
 hk = "2.9.0"
 pkl = "latest"
-uv = "0.13.5"
+uv = "0.13.6"
 node = "24.22.1"
 pnpm = "latest"
 
