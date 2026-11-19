@@ -29,7 +29,6 @@ Repository rules:
 | Capability | `skills.sh` install | Claude Marketplace install |
 | --- | --- | --- |
 | commit | `commit` | `commit@mrclrchtr-skills` |
-| skill-creator | `skill-creator` | `skill-creator@mrclrchtr-skills` |
 | web-design-guidelines | `web-design-guidelines` | `web-design-guidelines@mrclrchtr-skills` |
 | react-testing-techniques | `react-testing` | `react-testing-techniques@mrclrchtr-skills` |
 
@@ -47,7 +46,6 @@ Install a standalone skill:
 
 ```bash
 npx skills add mrclrchtr/skills --skill commit
-npx skills add mrclrchtr/skills --skill skill-creator
 ```
 
 Install a specialized skill from a shared plugin:
@@ -85,7 +83,6 @@ Heads up: many skill bodies are still written in Codex-flavored language, so Cla
 
 Once installed, invoke skills by name in your prompt:
 - `$commit` - "$commit"
-- `$skill-creator` - "$skill-creator"
 - `$web-design-guidelines` — Design, apply, or review based on the request:
   - "$web-design-guidelines propose a direction for this analytics dashboard before I build it"
   - "$web-design-guidelines implement this settings page in our React app"

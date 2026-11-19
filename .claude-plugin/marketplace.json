@@ -5,7 +5,7 @@
   },
   "metadata": {
     "description": "Canonical source for skills.sh skills and Claude Code marketplace plugins.",
-    "version": "1.7.4"
+    "version": "1.8.0"
   },
   "plugins": [
     {
@@ -13,12 +13,6 @@
       "source": "./skills/commit",
       "description": "Create a safe, intentional git commit. Detect the repository's commit convention, stage only the intended changes, write a concise subject, add a brief body when useful, and commit without rewriting history.",
       "keywords": ["git", "commit", "conventional-commits", "workflow"]
-    },
-    {
-      "name": "skill-creator",
-      "source": "./skills/skill-creator",
-      "description": "Guide for creating effective skills. This skill should be used when users want to create a new skill (or update an existing skill) that extends Codex's capabilities with specialized knowledge, workflows, or tool integrations.",
-      "keywords": ["skills", "authoring", "development"]
     },
     {
       "name": "web-design-guidelines",
