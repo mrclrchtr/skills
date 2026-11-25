@@ -1,8 +1,8 @@
 [tools]
-hk = "2.9.0"
+hk = "2.14.0"
 pkl = "latest"
-uv = "0.13.6"
-node = "24.22.1"
+uv = "0.13.10"
+node = "26.13.1"
 pnpm = "latest"
 
 [tasks.validate-skills]
